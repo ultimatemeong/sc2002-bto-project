@@ -1,0 +1,56 @@
+package Users;
+
+public class User {
+    private String name;
+    private String nric;
+    private int age;
+    private String maritalStatus;
+    private String password;
+
+    protected User(String name, String nric, int age, String maritalStatus, String password) {
+        this.name = name;
+        this.nric = nric;
+        this.age = age;
+        this.maritalStatus = maritalStatus;
+        this.password = password;
+    }
+
+    protected void setName(String name) {
+        this.name = name;
+    }
+    protected void setNric(String nric) {
+        this.nric = nric;
+    }
+    protected void setAge(int age) {
+        this.age = age;
+    }
+    protected void setMaritalStatus(String maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
+    protected void setPassword(String password) {
+        this.password = password;
+    }
+
+    protected String getName() {
+        return name;
+    }
+    protected String getNric() {
+        return nric;
+    }
+    protected int getAge() {
+        return age;
+    }
+    protected String getMaritalStatus() {
+        return maritalStatus;
+    }
+    protected String getPassword() {
+        return password;
+    }
+
+    public String toString() {
+        return "Name: " + name + "\nNRIC: " + nric + "\nAge: " + age + "\nMarital Status: " + maritalStatus;
+    }
+    public String toCSV() {
+        return name + "," + nric + "," + age + "," + maritalStatus + "," + password;
+    }
+}
