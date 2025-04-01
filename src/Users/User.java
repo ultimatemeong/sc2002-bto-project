@@ -27,11 +27,11 @@ public class User {
     protected void setMaritalStatus(String maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
-    protected void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    protected String getName() {
+    public String getName() {
         return name;
     }
     protected String getNric() {
@@ -43,7 +43,7 @@ public class User {
     protected String getMaritalStatus() {
         return maritalStatus;
     }
-    protected String getPassword() {
+    public String getPassword() {
         return password;
     }
 

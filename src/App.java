@@ -17,8 +17,6 @@ public class App {
 
         AccessControl.checkProjectAccess(manager);
         AccessControl.checkProjectAccess(officer);
-        AccessControl.checkProjectAccess(applicant);
-
-        
+        AccessControl.checkProjectAccess(applicant); 
     }
 }

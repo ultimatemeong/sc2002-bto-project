@@ -1,36 +1,38 @@
 package Misc;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import Users.*;
+
+
 public class AccessControl {
+    private static final Map<String, String> accessMap = new HashMap<>();
+    
+    static {
+        accessMap.put("Manager", "All");
+        accessMap.put("Officer", "Officer");
+        accessMap.put("Applicant", "Applicant");
+    }
 
-    public static void checkProjectAccess(Object user_class) {
-        switch (user_class.getClass().getSimpleName()) {
+    public static String checkAccess(User user) {
+        String result = "";
+        switch (user.getClass().getSimpleName()) {
             case "Manager":
-                System.out.println("Access granted to Manager.");
+                result = "All";
                 break;
             case "Officer":
-                System.out.println("Access granted to Officer.");
+                result = user.getName();
                 break;
             case "Applicant":
-                System.out.println("Access granted to Applicant.");
+                result = user.getName();
                 break;
             default:
                 System.out.println("Access denied.");
-        }
-    }
 
-    public static void checkEnquiryAccess(Object user_class) {
-        switch (user_class.getClass().getSimpleName()) {
-            case "Manager":
-                System.out.println("Access granted to Manager.");
-                break;
-            case "Officer":
-                System.out.println("Access granted to Officer.");
-                break;
-            case "Applicant":
-                System.out.println("Access granted to Applicant.");
-                break;
-            default:
-                System.out.println("Access denied.");
         }
+
+        return result;
     }
+    
 }
