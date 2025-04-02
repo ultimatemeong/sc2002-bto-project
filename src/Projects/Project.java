@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import Users.*;
+import Misc.*;
+
 public class Project {
     private String name;
     private String neighbourhood;
@@ -33,5 +36,19 @@ public class Project {
         this.isVisible = true; // Default to visible
     }
 
-    
+    public void addOfficer(Officer officer){
+        if (OfficerList.size() < officerSlots) {
+            OfficerList.add(officer.getName());
+        } else {
+            System.out.println("No more slots available for officers.");
+        }
+    }
+
+    public List<String> getOfficerList() {
+        return OfficerList;
+    }
+
+    public List<String> getApplicantList() {
+        return ApplicantList;
+    }
 }

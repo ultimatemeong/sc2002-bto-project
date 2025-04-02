@@ -1,10 +1,12 @@
 package Misc;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 import Users.*;
-
+import Projects.*;
 
 public class AccessControl {
     private static final Map<String, String> accessMap = new HashMap<>();
@@ -15,24 +17,41 @@ public class AccessControl {
         accessMap.put("Applicant", "Applicant");
     }
 
-    public static String checkAccess(User user) {
-        String result = "";
+    public static List<Project> checkAccess(User user, List<Project> Data) {
+        List<Project> projects = new ArrayList<>();
         switch (user.getClass().getSimpleName()) {
             case "Manager":
-                result = "All";
+                projects = Data;
                 break;
             case "Officer":
-                result = user.getName();
+                // Check if the officer is in the project officer list
+                for (Project project : Data) {
+                    if (project.getOfficerList().contains(user.getName())) {
+                        projects.add(project);
+                    }
+                }
+                
+                // Check if the officer is in the project applicant list
+                for (Project project : Data) {
+                    if (project.getApplicantList().contains(user.getName())) {
+                        projects.add(project);
+                    }
+                }
+
                 break;
             case "Applicant":
-                result = user.getName();
+                for (Project project : Data) {
+                    if (project.getApplicantList().contains(user.getName())) {
+                        projects.add(project);
+                    }
+                }
                 break;
             default:
                 System.out.println("Access denied.");
 
         }
 
-        return result;
+        return projects;
     }
     
 }
