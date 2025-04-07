@@ -41,4 +41,61 @@ public class AccessControl<T> {
         Map<String, String> data = accessMap.get(userNRIC);
         return data.get(id);
     }
+
+    public void add(T t, User user, String accessLevel) {
+        Map<String, Map<String, String>> accessMap;
+        String id;
+        switch (t.getClass().getSimpleName()) {
+            case "Project":
+                accessMap = projectAccessMap;
+                id = ((Project) t).getName();
+                break;
+
+            case "Enquiry":
+                accessMap = enquiryAccessMap;
+                id = ((Enquiry) t).getId().toString();
+                break;
+
+            case "Application":
+                accessMap = applicationAccessMap;
+                id = ((Application) t).getId().toString();
+                break;
+                
+            default:
+                return;
+        }
+
+        String userNRIC = user.getNric();
+        accessMap.putIfAbsent(userNRIC, new HashMap<>());
+        accessMap.get(userNRIC).put(id, accessLevel);
+    }
+
+    public void delete(T t, User user) {
+        Map<String, Map<String, String>> accessMap;
+        String id;
+        switch (t.getClass().getSimpleName()) {
+            case "Project":
+                accessMap = projectAccessMap;
+                id = ((Project) t).getName();
+                break;
+
+            case "Enquiry":
+                accessMap = enquiryAccessMap;
+                id = ((Enquiry) t).getId().toString();
+                break;
+
+            case "Application":
+                accessMap = applicationAccessMap;
+                id = ((Application) t).getId().toString();
+                break;
+                
+            default:
+                return;
+        }
+
+        String userNRIC = user.getNric();
+        if (accessMap.containsKey(userNRIC)) {
+            accessMap.get(userNRIC).remove(id);
+        }
+    }
 }
