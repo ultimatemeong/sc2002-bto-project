@@ -14,7 +14,7 @@ public class AccessControl<T> {
     private static Map<String, Map<String, String>> enquiryAccessMap = new HashMap<>();
     private static Map<String, Map<String, String>> applicationAccessMap = new HashMap<>();
     
-    public String checkAccess(T t, User user){
+    public String checkAccess(T t, User user) {
         Map<String, Map<String, String>> accessMap;
         String id;
         switch (t.getClass().getSimpleName()) {
@@ -38,6 +38,15 @@ public class AccessControl<T> {
         }
 
         String userNRIC = user.getNric();
+
+        if (!accessMap.containsKey(userNRIC)) {
+            return "NULL";
+        }
+
+        if (!accessMap.get(userNRIC).containsKey(id)) {
+            return "NULL";
+        } 
+        
         Map<String, String> data = accessMap.get(userNRIC);
         return data.get(id);
     }
