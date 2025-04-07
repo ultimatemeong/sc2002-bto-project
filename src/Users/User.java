@@ -34,13 +34,13 @@ public class User {
     public String getName() {
         return name;
     }
-    protected String getNric() {
+    public String getNric() {
         return nric;
     }
-    protected int getAge() {
+    public int getAge() {
         return age;
     }
-    protected String getMaritalStatus() {
+    public String getMaritalStatus() {
         return maritalStatus;
     }
     public String getPassword() {

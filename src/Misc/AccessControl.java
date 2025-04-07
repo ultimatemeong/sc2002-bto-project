@@ -1,57 +1,44 @@
 package Misc;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Users.*;
 import Projects.*;
+import Enquiries.*;
 
-public class AccessControl {
-    private static final Map<String, String> accessMap = new HashMap<>();
+public class AccessControl<T> {
+    private static Map<String, Map<String, String>> projectAccessMap = new HashMap<>();
+    private static Map<String, Map<String, String>> enquiryAccessMap = new HashMap<>();
+    private static Map<String, Map<String, String>> applicationAccessMap = new HashMap<>();
     
-    static {
-        accessMap.put("Manager", "All");
-        accessMap.put("Officer", "Officer");
-        accessMap.put("Applicant", "Applicant");
-    }
-
-    public static List<Project> checkAccess(User user, List<Project> Data) {
-        List<Project> projects = new ArrayList<>();
-        switch (user.getClass().getSimpleName()) {
-            case "Manager":
-                projects = Data;
+    public String checkAccess(T t, User user){
+        Map<String, Map<String, String>> accessMap;
+        String id;
+        switch (t.getClass().getSimpleName()) {
+            case "Project":
+                accessMap = projectAccessMap;
+                id = ((Project) t).getName();
                 break;
-            case "Officer":
-                // Check if the officer is in the project officer list
-                for (Project project : Data) {
-                    if (project.getOfficerList().contains(user.getName())) {
-                        projects.add(project);
-                    }
-                }
+
+            case "Enquiry":
+                accessMap = enquiryAccessMap;
+                id = ((Enquiry) t).getId().toString();
+                break;
+
+            case "Application":
+                accessMap = applicationAccessMap;
+                id = ((Application) t).getId().toString();
+                break;
                 
-                // Check if the officer is in the project applicant list
-                for (Project project : Data) {
-                    if (project.getApplicantList().contains(user.getName())) {
-                        projects.add(project);
-                    }
-                }
-
-                break;
-            case "Applicant":
-                for (Project project : Data) {
-                    if (project.getApplicantList().contains(user.getName())) {
-                        projects.add(project);
-                    }
-                }
-                break;
             default:
-                System.out.println("Access denied.");
-
+                return "Invalid type";
         }
 
-        return projects;
+        String userNRIC = user.getNric();
+        Map<String, String> data = accessMap.get(userNRIC);
+        return data.get(id);
     }
-    
 }

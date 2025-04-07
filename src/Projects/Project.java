@@ -22,32 +22,8 @@ public class Project {
     
     private List<String> applicationList = new ArrayList<>();
 
-    public Project(String name, String neighbourhood, String[] flatTypes, int[] sellingPrices, int[] availableUnits, LocalDate applicationOpenDate, LocalDate applicationCloseDate) {
-        this.name = name;
-        this.neighbourhood = neighbourhood;
-        this.flatTypes = flatTypes;
-        this.sellingPrices = sellingPrices;
-        this.availableUnits = availableUnits;
-        this.applicationOpenDate = applicationOpenDate;
-        this.applicationCloseDate = applicationCloseDate;
-        this.visibility = true; // Default to visible
-    }
 
-    public boolean isVisible() {return visibility;}
-
-    public void addOfficer(Officer officer){
-        if (officerList.size() < officerSlots) {
-            officerList.add(officer.getName());
-        } else {
-            System.out.println("No more slots available for officers.");
-        }
-    }
-
-    public List<String> getOfficerList() {
-        return officerList;
-    }
-
-    public List<String> getApplicantList() {
-        return applicationList;
+    public String getName() {
+        return name;
     }
 }

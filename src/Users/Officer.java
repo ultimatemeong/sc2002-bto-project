@@ -15,7 +15,7 @@ public class Officer extends Applicant{
         
     }
 
-    public void chooseProject() {
+    public void chooseFlat() {
         // Logic for choosing project
         
     }
