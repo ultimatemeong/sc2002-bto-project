@@ -15,15 +15,29 @@ public class Project {
     private LocalDate applicationCloseDate; // e.g. 2023-01-31  
     private boolean visibility;
 
-    private String manager;
+    private Manager manager;
 
     private int officerSlots = 10;
-    private List<String> officerList = new ArrayList<>();
+    private List<Officer> officerList = new ArrayList<>();
     
-    private List<String> applicationList = new ArrayList<>();
+    private List<Application> applicationList = new ArrayList<>();
 
 
     public String getName() {
         return name;
     }
+
+    public boolean isVisible(){
+        return visibility;
+    }
+
+    public Manager getManager() {
+        return manager;
+    }
+
+    public List<Officer> getOfficerList() {
+        return officerList;
+    }
+
+
 }
