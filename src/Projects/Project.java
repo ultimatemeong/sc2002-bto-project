@@ -13,7 +13,7 @@ public class Project {
     private String neighbourhood;
     private Map<String, List<Integer>> flatsInfo = new HashMap<>(); // key: flat type (e.g. 2-room, 3-room), value: [selling price, avail units]
 
-    private LocalDate applicationOpenDate; // e.g. 2023-01-01  (Does not need Date class, as we done need it to be too precise)
+    private LocalDate applicationOpenDate; // e.g. 2023-01-01  (Does not need Date class, as we dont need it to be too precise)
     private LocalDate applicationCloseDate; // e.g. 2023-01-31  
     private boolean visibility;
 
@@ -23,6 +23,7 @@ public class Project {
     private List<Officer> officerList = new ArrayList<>();
     
     private List<Application> applicationList = new ArrayList<>();
+    private List<Registration> registrationList = new ArrayList<>();
 
     public Project(String name, String neighbourhood, String unitType1, Integer numUnitsType1, Integer priceType1, String unitType2, Integer numUnitsType2, Integer priceType2,
             LocalDate applicationOpenDate, LocalDate applicationCloseDate, boolean visibility, Manager manager,
@@ -55,5 +56,31 @@ public class Project {
 
     public List<Officer> getOfficerList() {return officerList;}
 
+    public List<Application> getApplicationList() {
+        return applicationList;
+    }
 
-}
+    public List<Registration> getRegistrationList() {
+        return registrationList;
+    }
+
+    public Map<String, List<Integer>> getFlatsInfo() {
+        return flatsInfo;
+    }
+
+    public LocalDate getApplicationOpenDate() {
+        return applicationOpenDate;
+    }
+
+    public LocalDate getApplicationCloseDate() {
+        return applicationCloseDate;
+    }
+
+    public Integer getOfficerSlots() {
+        return officerSlots;
+    }
+
+    public String getNeighbourhood() {
+        return neighbourhood;
+    }
+}   
