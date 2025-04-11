@@ -1,6 +1,7 @@
 package Misc;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -58,7 +59,32 @@ public class FileOps {
         return values;
     }
 
-    public static void writeFile(String filePath, List<String> data) {
-        return;
+    public static void writeFile(String filePath, List<List<String>> data) throws Exception{
+        try (PrintWriter writer = new PrintWriter(filePath)) {
+            for (List<String> record : data) {
+                for (String i : record) {
+                    writer.print(i + ",");
+                }
+                writer.println(); // Move to the next line after writing a record
+            }
+        } catch (Exception e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
     }
+
+    // Example usage of the FileOps class
+    // public static void main(String[] args) {
+    //     try {
+    //         // Read from file example  
+    //         List<List<String>> data = readFile(APPLICANT_LIST_FILE);
+    //         for (List<String> record : data) {
+    //             System.out.println(record);
+    //         }
+    //         // Write to file example
+    //         data.add(List.of("John Doe", "12345678A"));
+    //         writeFile(APPLICANT_LIST_FILE, data);
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 }
