@@ -14,29 +14,17 @@ public class FileOps {
     private static final String APPLICATION_LIST_FILE = "src\\Data\\ApplicationList.csv";
     private static final String REGISTRATION_LIST_FILE = "src\\Data\\RegistrationList.csv";
 
-    public static String getApplicantListFile() {
-        return APPLICANT_LIST_FILE;
-    }
+    public static String getApplicantListFile() {return APPLICANT_LIST_FILE;}
 
-    public static String getOfficerListFile() {
-        return OFFICER_LIST_FILE;
-    }
+    public static String getOfficerListFile() {return OFFICER_LIST_FILE;}
 
-    public static String getManagerListFile() {
-        return MANAGER_LIST_FILE;
-    }
+    public static String getManagerListFile() {return MANAGER_LIST_FILE;}
 
-    public static String getProjectListFile() {
-        return PROJECT_LIST_FILE;
-    }
+    public static String getProjectListFile() {return PROJECT_LIST_FILE;}
 
-    public static String getApplicationListFile() {
-        return APPLICATION_LIST_FILE;
-    }
+    public static String getApplicationListFile() {return APPLICATION_LIST_FILE;}
 
-    public static String getRegistrationListFile() {
-        return REGISTRATION_LIST_FILE;
-    }
+    public static String getRegistrationListFile() {return REGISTRATION_LIST_FILE;}
 
     public static List<List<String>> readFile(String filePath) throws Exception {
         List<List<String>> records = new ArrayList<>();

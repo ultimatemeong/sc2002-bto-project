@@ -19,14 +19,14 @@ public class Project {
 
     private Manager manager;
 
-    private int officerSlots = 10;
+    private Integer officerSlots = 10;
     private List<Officer> officerList = new ArrayList<>();
     
     private List<Application> applicationList = new ArrayList<>();
 
     public Project(String name, String neighbourhood, String unitType1, Integer numUnitsType1, Integer priceType1, String unitType2, Integer numUnitsType2, Integer priceType2,
             LocalDate applicationOpenDate, LocalDate applicationCloseDate, boolean visibility, Manager manager,
-            int officerSlots, List<String> officerList) {
+            Integer officerSlots, List<Officer> officerList) {
         this.name = name;
         this.neighbourhood = neighbourhood;
 
@@ -47,21 +47,13 @@ public class Project {
         this.flatsInfo = flatsInfo;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() {return name;}
 
-    public boolean isVisible(){
-        return visibility;
-    }
+    public boolean isVisible(){return visibility;}
 
-    public Manager getManager() {
-        return manager;
-    }
+    public Manager getManager() {return manager;}
 
-    public List<Officer> getOfficerList() {
-        return officerList;
-    }
+    public List<Officer> getOfficerList() {return officerList;}
 
 
 }
