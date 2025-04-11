@@ -50,37 +50,23 @@ public class Project {
 
     public String getName() {return name;}
 
+    public String getNeighbourhood() {return neighbourhood;}
+    
+    public Map<String, List<Integer>> getFlatsInfo() {return flatsInfo;}
+
+    public LocalDate getApplicationOpenDate() {return applicationOpenDate;}
+
+    public LocalDate getApplicationCloseDate() {return applicationCloseDate;}
+
     public boolean isVisible(){return visibility;}
 
     public Manager getManager() {return manager;}
 
+    public Integer getOfficerSlots() {return officerSlots;}
+
     public List<Officer> getOfficerList() {return officerList;}
 
-    public List<Application> getApplicationList() {
-        return applicationList;
-    }
+    public List<Application> getApplicationList() {return applicationList;}
 
-    public List<Registration> getRegistrationList() {
-        return registrationList;
-    }
-
-    public Map<String, List<Integer>> getFlatsInfo() {
-        return flatsInfo;
-    }
-
-    public LocalDate getApplicationOpenDate() {
-        return applicationOpenDate;
-    }
-
-    public LocalDate getApplicationCloseDate() {
-        return applicationCloseDate;
-    }
-
-    public Integer getOfficerSlots() {
-        return officerSlots;
-    }
-
-    public String getNeighbourhood() {
-        return neighbourhood;
-    }
+    public List<Registration> getRegistrationList() {return registrationList;}
 }   

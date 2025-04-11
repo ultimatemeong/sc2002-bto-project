@@ -1,12 +1,11 @@
 package Projects;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-
 import Misc.AccessControl;
 import Users.Officer;
 import Users.User;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Registration {
     private Integer id;
@@ -23,25 +22,15 @@ public class Registration {
         this.status = status;
     }
 
-    public Integer getId() {
-        return id;
-    }
+    public Integer getId() {return id;}
 
-    public Project getProject() {
-        return project;
-    }
+    public Project getProject() {return project;}
 
-    public Officer getOfficer() {
-        return officer;
-    }
+    public Officer getOfficer() {return officer;}
 
-    public Date getRegistrationDate() {
-        return registrationDate;
-    }
+    public Date getRegistrationDate() {return registrationDate;}
 
-    public String getStatus() {
-        return status;
-    }
+    public String getStatus() {return status;}
 
     public List<Registration> viewRegistrations(User user) {
         List<Registration> all_registrations = project.getRegistrationList();

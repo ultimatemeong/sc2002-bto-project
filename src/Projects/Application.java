@@ -1,11 +1,10 @@
 package Projects;
 
+import Misc.AccessControl;
+import Users.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import Users.*;
-import Misc.AccessControl;
 
 public class Application {
     private Integer id;
@@ -24,29 +23,17 @@ public class Application {
         this.status = status;
     }
 
-    public Integer getId() {
-        return id;
-    }
+    public Integer getId() {return id;}
 
-    public Project getProject() {
-        return project;
-    }
+    public Project getProject() {return project;}
 
-    public String getFlatType() {
-        return flatType;
-    }
+    public String getFlatType() {return flatType;}
 
-    public Applicant getApplicant() {
-        return applicant;
-    }
+    public Applicant getApplicant() {return applicant;}
 
-    public Date getApplicationDate() {
-        return applicationDate;
-    }
+    public Date getApplicationDate() {return applicationDate;}
 
-    public String getStatus() {
-        return status;
-    }
+    public String getStatus() {return status;}
 
     public List<Application> viewApplications(User user) {
         List<Application> all_applications = project.getApplicationList();
