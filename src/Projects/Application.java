@@ -24,4 +24,8 @@ public class Application {
     public Integer getId() {
         return id;
     }
+
+    public Project getProject() {
+        return project;
+    }
 }
