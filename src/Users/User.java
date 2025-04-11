@@ -50,6 +50,7 @@ public class User {
     public String toString() {
         return "Name: " + name + "\nNRIC: " + nric + "\nAge: " + age + "\nMarital Status: " + maritalStatus;
     }
+    
     public String toCSV() {
         return name + "," + nric + "," + age + "," + maritalStatus + "," + password;
     }
