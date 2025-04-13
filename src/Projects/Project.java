@@ -1,5 +1,7 @@
 package Projects;
 
+import Misc.AccessControl;
+import Enquiries.*;
 import Users.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,10 +26,11 @@ public class Project {
     
     private List<Application> applicationList = new ArrayList<>();
     private List<Registration> registrationList = new ArrayList<>();
+    private List<Enquiry> enquiryList = new ArrayList<>();
 
     public Project(String name, String neighbourhood, String unitType1, Integer numUnitsType1, Integer priceType1, String unitType2, Integer numUnitsType2, Integer priceType2,
             LocalDate applicationOpenDate, LocalDate applicationCloseDate, boolean visibility, Manager manager,
-            Integer officerSlots, List<Officer> officerList) {
+            Integer officerSlots, List<Officer> officerList, List<Application> applicationList, List<Registration> registrationList, List<Enquiry> enquiryList) {
         this.name = name;
         this.neighbourhood = neighbourhood;
 
@@ -46,6 +49,10 @@ public class Project {
         flatsInfo.put(unitType2, type2Info);
 
         this.flatsInfo = flatsInfo;
+
+        this.applicationList = applicationList;
+        this.registrationList = registrationList;
+        this.enquiryList = enquiryList;
     }
 
     public String getName() {
@@ -116,15 +123,22 @@ public class Project {
         this.registrationList = registrationList;
     }
 
-
-
     public boolean isVisibility() {
         return visibility;
     }
 
-    // public List<Project> viewProjects(User user) {
+    public List<Project> viewProjects(List<Project> all_projects, User user) {
+        AccessControl<Project> accessControl = new AccessControl<>();
 
-    // }
+        List<Project> readableProjects = new ArrayList<>();
+        for (Project project : all_projects) {
+            String access = accessControl.checkAccess(project, user);
+            if (access.contains("R")){
+                readableProjects.add(project);
+            }
+        }
+        return readableProjects;
+    }
     
 
 }   
