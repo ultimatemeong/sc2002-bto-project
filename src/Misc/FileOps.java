@@ -14,19 +14,35 @@ public class FileOps {
     private static final String APPLICATION_LIST_FILE = "src\\Data\\ApplicationList.csv";
     private static final String REGISTRATION_LIST_FILE = "src\\Data\\RegistrationList.csv";
 
-    public static String getApplicantListFile() {return APPLICANT_LIST_FILE;}
+    private static String getFile(String filename) {
+        String filepath;
+        switch (filename) {
+            case "ApplicantList":
+                filepath = APPLICANT_LIST_FILE;
+                break;
+            case "OfficerList":
+                filepath = OFFICER_LIST_FILE;
+                break;
+            case "ManagerList":
+                filepath = MANAGER_LIST_FILE;
+                break;
+            case "ProjectList":
+                filepath = PROJECT_LIST_FILE;
+                break;
+            case "ApplicationList":
+                filepath = APPLICATION_LIST_FILE;
+                break;
+            case "RegistrationList":
+                filepath = REGISTRATION_LIST_FILE;
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid filename: " + filename);
+        }
+        return filepath;
+    }
 
-    public static String getOfficerListFile() {return OFFICER_LIST_FILE;}
-
-    public static String getManagerListFile() {return MANAGER_LIST_FILE;}
-
-    public static String getProjectListFile() {return PROJECT_LIST_FILE;}
-
-    public static String getApplicationListFile() {return APPLICATION_LIST_FILE;}
-
-    public static String getRegistrationListFile() {return REGISTRATION_LIST_FILE;}
-
-    public static List<List<String>> readFile(String filePath) throws Exception {
+    public static List<List<String>> readFile(String filename) throws Exception {
+        String filePath = getFile(filename);
         List<List<String>> records = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(filePath))) {
             while (scanner.hasNextLine()) {
@@ -47,7 +63,8 @@ public class FileOps {
         return values;
     }
 
-    public static void writeFile(String filePath, List<List<String>> data) throws Exception{
+    public static void writeFile(String filename, List<List<String>> data) throws Exception{
+        String filePath = getFile(filename);
         try (PrintWriter writer = new PrintWriter(filePath)) {
             for (List<String> record : data) {
                 for (String i : record) {
@@ -64,13 +81,13 @@ public class FileOps {
     // public static void main(String[] args) {
     //     try {
     //         // Read from file example  
-    //         List<List<String>> data = readFile(APPLICANT_LIST_FILE);
+    //         List<List<String>> data = readFile("ApplicantList");
     //         for (List<String> record : data) {
     //             System.out.println(record);
     //         }
     //         // Write to file example
     //         data.add(List.of("John Doe", "12345678A"));
-    //         writeFile(APPLICANT_LIST_FILE, data);
+    //         writeFile("ApplicantList", data);
     //     } catch (Exception e) {
     //         e.printStackTrace();
     //     }
