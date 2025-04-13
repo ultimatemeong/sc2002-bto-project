@@ -6,34 +6,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Application {
-    private Integer id;
-    private Project project;
+public class Application extends Form {
+    private static Integer applicationCounter = 0;
     private String flatType;
-    private Applicant applicant;
-    private Date applicationDate;
-    private String status; // e.g. "Pending", "Approved", "Rejected"
 
-    public Application(Integer id, Project project, String flatType, Applicant applicant, Date applicationDate, String status) {
-        this.id = id;
-        this.project = project;
+    // Used when loading from CSV
+    public Application(Integer id, Project project, String flatType, Applicant applicant, Date applicationDate, String formStatus, String withdrawalStatus) {
+        super(id, project, applicant, applicationDate, formStatus, withdrawalStatus);
         this.flatType = flatType;
-        this.applicant = applicant;
-        this.applicationDate = applicationDate;
-        this.status = status;
+        applicationCounter = id + 1; // Increment the counter for the next application
     }
 
-    public Integer getId() {return id;}
+    public Integer getApplicationCounter() {
+        return applicationCounter;
+    }
 
-    public Project getProject() {return project;}
-
-    public String getFlatType() {return flatType;}
-
-    public Applicant getApplicant() {return applicant;}
-
-    public Date getApplicationDate() {return applicationDate;}
-
-    public String getStatus() {return status;}
+    public String getFlatType() {
+        return flatType;
+    }
 
     public List<Application> viewApplications(User user) {
         List<Application> all_applications = project.getApplicationList();

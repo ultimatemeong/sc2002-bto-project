@@ -1,48 +1,39 @@
 package Projects;
 
-import Misc.AccessControl;
 import Users.Officer;
 import Users.User;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Registration {
-    private Integer id;
-    private Project project;
-    private Officer officer;
-    private Date registrationDate;
-    private String status; // e.g. "Pending", "Approved", "Rejected"
+public class Registration extends Form{
+    private static Integer registrationCounter = 0;
 
-    public Registration(Integer id, Project project, Officer officer, Date registrationDate, String status) {
-        this.id = id;
-        this.project = project;
-        this.officer = officer;
-        this.registrationDate = registrationDate;
-        this.status = status;
+    public Registration(Integer id, Project project, Officer officer, Date registrationDate, String formStatus, String withdrawalStatus) {
+        super(id, project, officer, registrationDate, formStatus, withdrawalStatus);
+        registrationCounter = id + 1;
     }
 
-    public Integer getId() {return id;}
-
-    public Project getProject() {return project;}
-
-    public Officer getOfficer() {return officer;}
-
-    public Date getRegistrationDate() {return registrationDate;}
-
-    public String getStatus() {return status;}
+    public Integer getRegistrationCounter() {
+        return registrationCounter;
+    }
 
     public List<Registration> viewRegistrations(User user) {
-        List<Registration> all_registrations = project.getRegistrationList();
-        AccessControl<Registration> accessControl = new AccessControl<>();
+        Project project = this.getProject();
+        List<Registration> registrations = project.getRegistrationList();
+
+        if ((user.getClass().getSimpleName()).equals("Manager")) {
+            return registrations;
+        }
 
         List<Registration> readableRegistrations = new ArrayList<>();
-        for (Registration registration : all_registrations) {
-            String access = accessControl.checkAccess(registration, user);
-            if (access.contains("R")){
+
+        for (Registration registration : registrations) {
+            if (registration.getUser().equals(user)) {
                 readableRegistrations.add(registration);
             }
         }
+
         return readableRegistrations;
     }
 }
