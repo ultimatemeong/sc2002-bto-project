@@ -1,5 +1,6 @@
 package Users;
 
+import Misc.*;
 import Projects.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,14 +24,23 @@ public class Manager extends User{
     public void createProject(String proj_name, String neighbourhood, String unitType1, Integer numUnitsType1, Integer priceType1, String unitType2, Integer numUnitsType2, Integer priceType2, LocalDate appOpenDate, LocalDate appCloseDate, boolean visibility, Integer officerSlots, List<Officer> officerList) {
         Project project = new Project(proj_name, neighbourhood, unitType1, numUnitsType1, priceType1, unitType2, numUnitsType2, priceType2, appOpenDate, appCloseDate, visibility, this, officerSlots, officerList);
 
+        AccessControl<Project> accessControl = new AccessControl<>();
+        accessControl.add(project, this, "RW");
     }
 
-    public void editProject() {
-        // Logic for editing projects
+    public void editProject(Project project, Project tempProject) {
+        // Check for different fields and update the original project object directly.
+        // Only flatsInfo, visibility, and officerSlots can be edited by Manager.
+        project.setFlatsInfo(tempProject.getFlatsInfo());
+        project.setVisibility(tempProject.isVisible());
+        project.setOfficerSlots(tempProject.getOfficerSlots());
+
+        tempProject = null;
     }
 
-    public void deleteProject() {
-        // Logic for deleting projects
+    public void deleteProject(Project project) {
+        AccessControl<Project> accessControl = new AccessControl<>();
+        accessControl.delete(project, this);
     }
 
     public void reviewRegistration() {

@@ -14,7 +14,7 @@ public class FileOps {
     private static final String APPLICATION_LIST_FILE = "src\\Data\\ApplicationList.csv";
     private static final String REGISTRATION_LIST_FILE = "src\\Data\\RegistrationList.csv";
 
-    private static String getFile(String filename) {
+    private static String getFilePath(String filename) {
         String filepath;
         switch (filename) {
             case "ApplicantList":
@@ -42,7 +42,7 @@ public class FileOps {
     }
 
     public static List<List<String>> readFile(String filename) throws Exception {
-        String filePath = getFile(filename);
+        String filePath = getFilePath(filename);
         List<List<String>> records = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(filePath))) {
             while (scanner.hasNextLine()) {
@@ -64,7 +64,7 @@ public class FileOps {
     }
 
     public static void writeFile(String filename, List<List<String>> data) throws Exception{
-        String filePath = getFile(filename);
+        String filePath = getFilePath(filename);
         try (PrintWriter writer = new PrintWriter(filePath)) {
             for (List<String> record : data) {
                 for (String i : record) {

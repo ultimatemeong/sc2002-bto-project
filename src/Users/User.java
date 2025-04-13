@@ -15,12 +15,6 @@ public class User {
         this.password = password;
     }
 
-    protected void setName(String name) {
-        this.name = name;
-    }
-    protected void setNric(String nric) {
-        this.nric = nric;
-    }
     protected void setAge(int age) {
         this.age = age;
     }

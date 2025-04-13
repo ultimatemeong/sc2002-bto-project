@@ -48,25 +48,83 @@ public class Project {
         this.flatsInfo = flatsInfo;
     }
 
-    public String getName() {return name;}
+    public String getName() {
+        return name;
+    }
 
-    public String getNeighbourhood() {return neighbourhood;}
+    public String getNeighbourhood() {
+        return neighbourhood;
+    }
+
+    public Map<String, List<Integer>> getFlatsInfo() {
+        return flatsInfo;
+    }
+
+    public LocalDate getApplicationOpenDate() {
+        return applicationOpenDate;
+    }
+
+    public LocalDate getApplicationCloseDate() {
+        return applicationCloseDate;
+    }
+     
+    public boolean isVisible() {
+        return visibility;
+    }
+
+    public Manager getManager() {
+        return manager;
+    }
+
+    public Integer getOfficerSlots() {
+        return officerSlots;
+    }
+
+    public List<Officer> getOfficerList() {
+        return officerList;
+    }
+
+    public List<Application> getApplicationList() {
+        return applicationList;
+    }
+
+    public List<Registration> getRegistrationList() {
+        return registrationList;
+    }
+
+    public void setFlatsInfo(Map<String, List<Integer>> flatsInfo) {
+        this.flatsInfo = flatsInfo;
+    }
+
+    public void setVisibility(boolean visibility) {
+        this.visibility = visibility;
+    }
+
+    public void setOfficerSlots(Integer officerSlots) {
+        this.officerSlots = officerSlots;
+    }
+
+    public void setOfficerList(List<Officer> officerList) {
+        this.officerList = officerList;
+    }
+
+    public void setApplicationList(List<Application> applicationList) {
+        this.applicationList = applicationList;
+    }
+
+    public void setRegistrationList(List<Registration> registrationList) {
+        this.registrationList = registrationList;
+    }
+
+
+
+    public boolean isVisibility() {
+        return visibility;
+    }
+
+    // public List<Project> viewProjects(User user) {
+
+    // }
     
-    public Map<String, List<Integer>> getFlatsInfo() {return flatsInfo;}
 
-    public LocalDate getApplicationOpenDate() {return applicationOpenDate;}
-
-    public LocalDate getApplicationCloseDate() {return applicationCloseDate;}
-
-    public boolean isVisible(){return visibility;}
-
-    public Manager getManager() {return manager;}
-
-    public Integer getOfficerSlots() {return officerSlots;}
-
-    public List<Officer> getOfficerList() {return officerList;}
-
-    public List<Application> getApplicationList() {return applicationList;}
-
-    public List<Registration> getRegistrationList() {return registrationList;}
 }   
