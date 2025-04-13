@@ -99,6 +99,10 @@ public class Project {
         return registrationList;
     }
 
+    public List<Enquiry> getEnquiryList() {
+        return enquiryList;
+    }
+
     public void setFlatsInfo(Map<String, List<Integer>> flatsInfo) {
         this.flatsInfo = flatsInfo;
     }
@@ -111,16 +115,20 @@ public class Project {
         this.officerSlots = officerSlots;
     }
 
-    public void setOfficerList(List<Officer> officerList) {
-        this.officerList = officerList;
+    public void addToOfficerList(Officer officer) {
+        this.officerList.add(officer);
     }
 
-    public void setApplicationList(List<Application> applicationList) {
-        this.applicationList = applicationList;
+    public void addToApplicationList(Application application) {
+        this.applicationList.add(application);
     }
 
-    public void setRegistrationList(List<Registration> registrationList) {
-        this.registrationList = registrationList;
+    public void addToRegistrationList(Registration registration) {
+        this.registrationList.add(registration);
+    }
+
+    public void addToEnquiryList(Enquiry enquiry) {
+        this.enquiryList.add(enquiry);
     }
 
     public boolean isVisibility() {
