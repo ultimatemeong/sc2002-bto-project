@@ -13,6 +13,8 @@ public class FileOps {
     private static final String PROJECT_LIST_FILE = "src\\Data\\ProjectList.csv";
     private static final String APPLICATION_LIST_FILE = "src\\Data\\ApplicationList.csv";
     private static final String REGISTRATION_LIST_FILE = "src\\Data\\RegistrationList.csv";
+    private static final String ENQUIRY_LIST_FILE = "src\\Data\\EnquiryList.csv";
+    private static final String REPLY_LIST_FILE = "src\\Data\\ReplyList.csv";
 
     private static String getFilePath(String filename) {
         String filepath;
@@ -34,6 +36,12 @@ public class FileOps {
                 break;
             case "RegistrationList":
                 filepath = REGISTRATION_LIST_FILE;
+                break;
+            case "EnquiryList":
+                filepath = ENQUIRY_LIST_FILE;
+                break;
+            case "ReplyList":
+                filepath = REPLY_LIST_FILE;
                 break;
             default:
                 throw new IllegalArgumentException("Invalid filename: " + filename);
