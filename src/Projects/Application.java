@@ -13,17 +13,26 @@ public class Application extends Form {
 
     // Used when loading from CSV
     public Application(Integer id, Project project, String flatType, Applicant applicant, Date applicationDate, String formStatus, String withdrawalStatus) {
-        super(id, project, applicant, applicationDate, formStatus, withdrawalStatus);
+        super(id, project, applicant, applicationDate, formStatus);
         this.flatType = flatType;
+        this.withdrawalStatus = Status.valueOf(withdrawalStatus.toUpperCase());
         applicationCounter = id + 1; // Increment the counter for the next application
     }
 
-    public Integer getApplicationCounter() {
+    public static Integer getApplicationCounter() {
         return applicationCounter;
     }
 
     public String getFlatType() {
         return flatType;
+    }
+
+    public String getWithdrawalStatus() {
+        return withdrawalStatus.toString();
+    }
+
+    public void setWithdrawalStatus(String withdrawalStatus) {
+        this.withdrawalStatus = Status.valueOf(withdrawalStatus);
     }
 
     public String toString(){

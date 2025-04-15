@@ -19,13 +19,12 @@ public abstract class Form{
     protected Status formStatus; // Pending, Approved, Rejected
     protected Status withdrawalStatus; // Null, Pending, Approved, Rejected
 
-    public Form(Integer id, Project project, User user, Date date, String formStatus, String withdrawalStatus) {
+    public Form(Integer id, Project project, User user, Date date, String formStatus) {
         this.id = id;
         this.project = project;
         this.user = user;
         this.date = date;
         this.formStatus = Status.valueOf(formStatus.toUpperCase()); 
-        this.withdrawalStatus = Status.valueOf(withdrawalStatus.toUpperCase());
     }
 
     public Integer getId() {
@@ -48,16 +47,8 @@ public abstract class Form{
         return formStatus.toString();
     }
 
-    public String getWithdrawalStatus() {
-        return withdrawalStatus.toString();
-    }
-
     public void setFormStatus(String formStatus) {
         this.formStatus = Status.valueOf(formStatus);
-    }
-
-    public void setWithdrawalStatus(String withdrawalStatus) {
-        this.withdrawalStatus = Status.valueOf(withdrawalStatus);
     }
 
     public abstract String toString();

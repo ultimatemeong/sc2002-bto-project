@@ -9,12 +9,12 @@ import java.util.List;
 public class Registration extends Form{
     private static Integer registrationCounter = 1;
 
-    public Registration(Integer id, Project project, Officer officer, Date registrationDate, String formStatus, String withdrawalStatus) {
-        super(id, project, officer, registrationDate, formStatus, withdrawalStatus);
+    public Registration(Integer id, Project project, Officer officer, Date registrationDate, String formStatus) {
+        super(id, project, officer, registrationDate, formStatus);
         registrationCounter = id + 1;
     }
 
-    public Integer getRegistrationCounter() {
+    public static Integer getRegistrationCounter() {
         return registrationCounter;
     }
 

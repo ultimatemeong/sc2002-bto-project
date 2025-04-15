@@ -29,7 +29,7 @@ public class Enquiry {
         
     }
 
-    public Integer getEnquiryCounter() {
+    public static Integer getEnquiryCounter() {
         return enquiryCounter;
     }
 
