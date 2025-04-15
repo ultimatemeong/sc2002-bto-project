@@ -34,7 +34,7 @@ public class Application extends Form {
         return sb.toString();
     }
 
-    public List<Application> viewApplications(List<Application> applicationList,User user) {;
+    public static List<Application> viewApplications(List<Application> applicationList,User user) {;
         AccessControl<Application> accessControl = new ApplicationAccess();
 
         List<Application> readableApplications = applicationList.stream()

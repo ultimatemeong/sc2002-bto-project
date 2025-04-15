@@ -13,15 +13,6 @@ public class Manager extends User{
         super(name, nric, age, maritalStatus, password);
     }
 
-    public String toString() {
-        return "Manager: " + super.toString();
-    }
-
-    public void viewAllProjects() {
-        // Logic for viewing all projects
-        // View all projects regardless of visibility
-    }
-
     public void createProject(String proj_name, String neighbourhood, String unitType1, Integer numUnitsType1, Integer priceType1, String unitType2, Integer numUnitsType2, Integer priceType2, LocalDate appOpenDate, LocalDate appCloseDate, boolean visibility, Integer officerSlots, List<Officer> officerList) {
         Project project = new Project(proj_name, neighbourhood, unitType1, numUnitsType1, priceType1, unitType2, numUnitsType2, priceType2, appOpenDate, appCloseDate, visibility, this, officerSlots, officerList, new ArrayList<Application>(), new ArrayList<Registration>(), new ArrayList<Enquiry>());
 

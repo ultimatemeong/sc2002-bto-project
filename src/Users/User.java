@@ -42,8 +42,8 @@ public class User {
     public String getMaritalStatus() {
         return maritalStatus.toString();
     }
-    public String getPassword() {
-        return password;
+    public boolean validatePassword(String password) {
+        return this.password == password;
     }
     
     public String toString() {

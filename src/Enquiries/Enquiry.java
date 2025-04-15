@@ -64,7 +64,7 @@ public class Enquiry {
         return sb.toString();
     }
 
-    public List<Enquiry> viewEnquiries(List<Enquiry> enquiryList, User user) {
+    public static List<Enquiry> viewEnquiries(List<Enquiry> enquiryList, User user) {
         AccessControl<Enquiry> accessControl = new EnquiryAccess();
         List<Enquiry> readibleEnquiries = enquiryList.stream()
                 .filter(enquiry -> accessControl.check(enquiry, user).contains("R"))

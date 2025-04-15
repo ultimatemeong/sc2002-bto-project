@@ -21,10 +21,6 @@ public class Officer extends Applicant{
         this.registration = registration;
     }
 
-    public String toString() {
-        return "Officer: " + super.toString();
-    }
-
     public void registerForProject() {
         // Logic for registering for projects
         

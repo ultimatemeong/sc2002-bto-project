@@ -150,7 +150,7 @@ public class Project {
         return sb.toString();
     }
 
-    public List<Project> viewProjects(List<Project> all_projects, User user) {
+    public static List<Project> viewProjects(List<Project> all_projects, User user) {
         AccessControl<Project> accessControl = new ProjectAccess();
 
         List<Project> readableProjects = new ArrayList<>();

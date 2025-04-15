@@ -26,7 +26,7 @@ public class Registration extends Form{
         return sb.toString();
     }
 
-    public List<Registration> viewRegistrations(List<Registration> registrationList,User user) {
+    public static List<Registration> viewRegistrations(List<Registration> registrationList,User user) {
 
         if ((user.getClass().getSimpleName()).equals("Manager")) {
             return registrationList;
