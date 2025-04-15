@@ -25,13 +25,9 @@ public class Applicant extends User{
         this.application = application;
     }
 
-    public String toString() {
-        return "Applicant: " + super.toString();
-    }
-
-    protected void viewAllProjects() {
-        // Logic for viewing all projects
+    protected void viewAllRelevantProjects() {
         // If single only 2-room flat, if married both 2-room & 3-room flat
+        
     }
 
     protected void applyForProject(Project project) {

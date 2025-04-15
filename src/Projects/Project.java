@@ -163,4 +163,12 @@ public class Project {
         return readableProjects;
     }
 
+    // Takes in the list of readable prjects and filters them based on the flat type
+    public static List<Project> filterProjects(List<Project> all_projects, String flatType) {
+        List<Project> filteredProjects = all_projects.stream()
+                .filter(project -> project.getFlatsInfo().containsKey(flatType))
+                .toList();
+
+        return filteredProjects;
+    }
 }   
