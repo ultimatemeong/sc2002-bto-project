@@ -166,7 +166,7 @@ public class Project {
     // Takes in the list of readable prjects and filters them based on the flat type
     public static List<Project> filterProjects(List<Project> all_projects, String flatType) {
         List<Project> filteredProjects = all_projects.stream()
-                .filter(project -> project.getFlatsInfo().containsKey(flatType))
+                .filter(project -> project.getFlatsInfo().containsKey(flatType) && project.getFlatsInfo().get(flatType).get(0) > 0)
                 .toList();
 
         return filteredProjects;
