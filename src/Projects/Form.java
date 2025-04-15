@@ -8,7 +8,7 @@ public class Form{
     protected Project project;
     protected User user;
     protected Date date;
-    protected String formStatus; // e.g. "Pending", "Approved", "Rejected"
+    protected String formStatus; // "Pending", "Approved", "Rejected"
     private String withdrawalStatus; // Null, Pending, Approved, Rejected
 
     public Form(Integer id, Project project, User user, Date date, String formStatus, String withdrawalStatus) {
@@ -16,8 +16,8 @@ public class Form{
         this.project = project;
         this.user = user;
         this.date = date;
-        this.formStatus = formStatus;
-        this.withdrawalStatus = withdrawalStatus; // Pending, Approved, Rejected
+        this.formStatus = formStatus; 
+        this.withdrawalStatus = withdrawalStatus;
     }
 
     public Integer getId() {
