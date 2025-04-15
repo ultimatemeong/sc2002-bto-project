@@ -15,10 +15,10 @@ public class User {
         this.password = password;
     }
 
-    protected void setAge(int age) {
+    public void setAge(int age) {
         this.age = age;
-    }
-    protected void setMaritalStatus(String maritalStatus) {
+    }   
+    public void setMaritalStatus(String maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
     public void setPassword(String password) {

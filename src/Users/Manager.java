@@ -17,7 +17,6 @@ public class Manager extends User{
         return "Manager: " + super.toString();
     }
 
-    //Project specific methods
     public void viewAllProjects() {
         // Logic for viewing all projects
         // View all projects regardless of visibility
@@ -28,6 +27,13 @@ public class Manager extends User{
 
         AccessControl<Project> accessControl = new AccessControl<>();
         accessControl.add(project, this, "RW");
+    }
+
+    public void toggleVisibility(Project project) {
+        /* toggles project's visibility between true and false 
+         * i.e. if current visibility is true, it will be set as false. */
+        boolean currentVis = project.isVisible();
+        project.setVisibility(!currentVis);
     }
 
     public void editProject(Project project, Project tempProject) {
@@ -45,21 +51,60 @@ public class Manager extends User{
         accessControl.delete(project, this);
     }
 
-    public void reviewRegistration() {
-        // Logic for reviewing registrations
+    public void reviewRegistration(Registration registration, boolean accepted) {
+        /* approve or reject officer's registration for a project */ 
+        Project project = registration.getProject();
+
+        // only can approve registration if he is the manager in charge of the project 
+        if (accepted && project.getManager().equals(this)) {
+            Officer officer = (Officer) registration.getUser();
+            Integer officerSlots = project.getOfficerSlots();
+            project.getOfficerList().add(officer); // add officer to project's officer list
+            project.setOfficerSlots(officerSlots-1); // update remaining officer slots
+            registration.setFormStatus("Approved");
+
+            // allow officer to view project
+            AccessControl<Project> accessControl = new AccessControl<>();
+            accessControl.add(project, officer, "R");
+        } else {
+            registration.setFormStatus("Rejected");
+        }
     }
     
     //Applicants specific methods
-    public void viewAllApplicants() {
-        // Logic for viewing all applicants
+    public List<Applicant> viewAllApplicants(List<Project> projects) {
+        // returns list of all applicants of all projects
+        List<Applicant> applicants = new ArrayList<>();
+        List<Application> applicationList = new ArrayList<>();
+        
+        for (Project project : projects) {
+            for (Application application : project.getApplicationList()) {
+                applicationList.add(application);
+            };
+        }
+
+        for (Application application : applicationList) {
+            applicants.add((Applicant) application.getUser());
+        }
+        return applicants;
     }
 
-    public void reviewApplication() {
-        // Logic for approving/denying application
+    public void reviewApplication(Application application, boolean accepted) {
+        /* approve or reject applicant's application for a project */ 
+        if (accepted) {
+            application.setFormStatus("Approved");
+        } else {
+            application.setFormStatus("Rejected");
+        }
     }
 
-    public void reviewWithdrawal() {
-        // Logic for approving/denying withdrawal
+    public void reviewWithdrawal(Application application, boolean accepted) {
+        /* approve or reject applicant's withdrawal for a project */ 
+        if (accepted) {
+            application.setWithdrawalStatus("Approved");
+        } else {
+            application.setWithdrawalStatus("Rejected");
+        }
     }
 
     public void generateReport() {

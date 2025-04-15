@@ -1,10 +1,9 @@
 package Projects;
 
+import Users.*;
 import java.util.Date;
 
-import Users.*;
-
-public class Form {
+public class Form{
     protected Integer id;
     protected Project project;
     protected User user;
@@ -43,6 +42,10 @@ public class Form {
 
     public String getWithdrawalStatus() {
         return withdrawalStatus;
+    }
+
+    public void setFormStatus(String formStatus) {
+        this.formStatus = formStatus;
     }
 
     public void setWithdrawalStatus(String withdrawalStatus) {

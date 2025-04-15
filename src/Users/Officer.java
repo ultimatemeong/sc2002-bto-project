@@ -1,9 +1,21 @@
 package Users;
 
-public class Officer extends Applicant{
+import Projects.Registration;
 
-    public Officer(String name, String nric, int age, String maritalStatus, String password) {
+public class Officer extends Applicant{
+    private Registration registration;
+
+    public Officer(String name, String nric, int age, String maritalStatus, String password, Registration registration) {
         super(name, nric, age, maritalStatus, password);
+        this.registration = registration;
+    }
+
+    public Registration getRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(Registration registration) {
+        this.registration = registration;
     }
 
     public String toString() {
@@ -30,4 +42,6 @@ public class Officer extends Applicant{
         // Regardless of visibility, but only for project he applied for
         
     }
+
+    
 }
