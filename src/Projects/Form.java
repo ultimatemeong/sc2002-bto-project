@@ -3,21 +3,29 @@ package Projects;
 import Users.*;
 import java.util.Date;
 
+enum Status {
+    NULL,
+    PENDING,
+    APPROVED,
+    REJECTED,
+    BOOKED
+}
+
 public class Form{
     protected Integer id;
     protected Project project;
     protected User user;
     protected Date date;
-    protected String formStatus; // "Pending", "Approved", "Rejected"
-    private String withdrawalStatus; // Null, Pending, Approved, Rejected
+    protected Status formStatus; // Pending, Approved, Rejected
+    protected Status withdrawalStatus; // Null, Pending, Approved, Rejected
 
     public Form(Integer id, Project project, User user, Date date, String formStatus, String withdrawalStatus) {
         this.id = id;
         this.project = project;
         this.user = user;
         this.date = date;
-        this.formStatus = formStatus; 
-        this.withdrawalStatus = withdrawalStatus;
+        this.formStatus = Status.valueOf(formStatus.toUpperCase()); 
+        this.withdrawalStatus = Status.valueOf(withdrawalStatus.toUpperCase());
     }
 
     public Integer getId() {
@@ -37,18 +45,18 @@ public class Form{
     }
 
     public String getStatus() {
-        return formStatus;
+        return formStatus.toString();
     }
 
     public String getWithdrawalStatus() {
-        return withdrawalStatus;
+        return withdrawalStatus.toString();
     }
 
     public void setFormStatus(String formStatus) {
-        this.formStatus = formStatus;
+        this.formStatus = Status.valueOf(formStatus);
     }
 
     public void setWithdrawalStatus(String withdrawalStatus) {
-        this.withdrawalStatus = withdrawalStatus;
+        this.withdrawalStatus = Status.valueOf(withdrawalStatus);
     }
 }
