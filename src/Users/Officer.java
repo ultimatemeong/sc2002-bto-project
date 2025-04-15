@@ -1,12 +1,12 @@
 package Users;
 
-import Projects.Registration;
+import Projects.*;
 
 public class Officer extends Applicant{
     private Registration registration;
 
-    public Officer(String name, String nric, int age, String maritalStatus, String password, Registration registration) {
-        super(name, nric, age, maritalStatus, password);
+    public Officer(String name, String nric, int age, String maritalStatus, String password, Application application, Registration registration) {
+        super(name, nric, age, maritalStatus, password, application);
         this.registration = registration;
     }
 
@@ -34,12 +34,6 @@ public class Officer extends Applicant{
 
     public void flatSelectionReceipt() {
         // Logic for flat selection receipt
-        
-    }
-
-    public void viewAllProjects() {
-        // Logic for viewing all projects (overridden from Applicant)
-        // Regardless of visibility, but only for project he applied for
         
     }
 
