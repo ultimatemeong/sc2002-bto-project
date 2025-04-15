@@ -7,12 +7,6 @@ public class Reply {
     private Date dateTime;
     private String replyString;
 
-    public Reply(Enquiry enquiry, Date dateTime) {
-        this.enquiry = enquiry;
-        this.dateTime = dateTime;
-        this.replyString = null; // Initially, there is no reply string
-    }
-
     public Reply(Enquiry enquiry, Date dateTime, String replyString) {
         this.enquiry = enquiry;
         this.dateTime = dateTime;
@@ -33,7 +27,7 @@ public class Reply {
 
     public void writeReply(String replyString) {
         this.replyString = replyString;
-        this.enquiry.setReply(this); // Set the reply in the enquiry
+        this.enquiry.addToReply(this); // Set the reply in the enquiry
     }
 
     public void editReply(String replyString) {
@@ -41,7 +35,13 @@ public class Reply {
     }
 
     public void deleteReply() {
-        enquiry.setReply(null);
+        this.enquiry.getReplies().remove(this); // Remove the reply from the enquiry
         this.enquiry = null; // Clear the reference to the enquiry
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(enquiry.getId()).append(",").append(dateTime).append(",").append(replyString).append(",");
+        return sb.toString();
     }
 }

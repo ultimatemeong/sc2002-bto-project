@@ -11,7 +11,7 @@ enum Status {
     BOOKED
 }
 
-public class Form{
+public abstract class Form{
     protected Integer id;
     protected Project project;
     protected User user;
@@ -59,4 +59,6 @@ public class Form{
     public void setWithdrawalStatus(String withdrawalStatus) {
         this.withdrawalStatus = Status.valueOf(withdrawalStatus);
     }
+
+    public abstract String toString();
 }

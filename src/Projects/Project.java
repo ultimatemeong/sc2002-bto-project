@@ -1,8 +1,6 @@
 package Projects;
 
 import Misc.AccessControl;
-import Misc.ApplicationAccess;
-import Misc.EnquiryAccess;
 import Misc.ProjectAccess;
 import Enquiries.*;
 import Users.*;
@@ -138,6 +136,20 @@ public class Project {
         return visibility;
     }
 
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(name).append(",").append(neighbourhood).append(",");
+        for (Map.Entry<String, List<Integer>> entry : flatsInfo.entrySet()) {
+            sb.append(entry.getKey()).append(":").append(entry.getValue().get(0)).append(":").append(entry.getValue().get(1)).append(",");
+        }
+        sb.append(applicationOpenDate).append(",").append(applicationCloseDate).append(",").append(manager.getName()).append(",");
+        sb.append(officerSlots).append(",");
+        for (Officer officer : officerList) {
+            sb.append(officer.getName()).append(";");
+        }
+        return sb.toString();
+    }
+
     public List<Project> viewProjects(List<Project> all_projects, User user) {
         AccessControl<Project> accessControl = new ProjectAccess();
 
@@ -150,23 +162,5 @@ public class Project {
         }
         return readableProjects;
     }
-    
-    public List<Application> viewApplications(User user) {;
-        AccessControl<Application> accessControl = new ApplicationAccess();
 
-        List<Application> readableApplications = applicationList.stream()
-                .filter(application -> accessControl.check(application, user).contains("R"))
-                .toList();
-
-        return readableApplications;
-    }
-
-    public List<Enquiry> viewEnquiries(User user) {
-        AccessControl<Enquiry> accessControl = new EnquiryAccess();
-        List<Enquiry> readibleEnquiries = enquiryList.stream()
-                .filter(enquiry -> accessControl.check(enquiry, user).contains("R"))
-                .toList();
-
-        return readibleEnquiries;
-    }
 }   

@@ -45,12 +45,8 @@ public class User {
     public String getPassword() {
         return password;
     }
-
-    public String toString() {
-        return "Name: " + name + "\nNRIC: " + nric + "\nAge: " + age + "\nMarital Status: " + maritalStatus;
-    }
     
-    public String toCSV() {
+    public String toString() {
         return name + "," + nric + "," + age + "," + maritalStatus + "," + password;
     }
 }

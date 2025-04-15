@@ -18,17 +18,23 @@ public class Registration extends Form{
         return registrationCounter;
     }
 
-    public List<Registration> viewRegistrations(User user) {
-        Project project = this.getProject();
-        List<Registration> registrations = project.getRegistrationList();
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(id).append(",").append(user.getName()).append(",").append(date).append(",");
+        sb.append(formStatus.toString()).append(",").append(withdrawalStatus.toString()).append(",");
+        sb.append(project.getName()).append(",");
+        return sb.toString();
+    }
+
+    public List<Registration> viewRegistrations(List<Registration> registrationList,User user) {
 
         if ((user.getClass().getSimpleName()).equals("Manager")) {
-            return registrations;
+            return registrationList;
         }
 
         List<Registration> readableRegistrations = new ArrayList<>();
 
-        for (Registration registration : registrations) {
+        for (Registration registration : registrationList) {
             if (registration.getUser().equals(user)) {
                 readableRegistrations.add(registration);
             }

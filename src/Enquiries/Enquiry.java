@@ -1,6 +1,13 @@
 package Enquiries;
 
 import Users.Applicant;
+import Users.User;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import Misc.AccessControl;
+import Misc.EnquiryAccess;
 import Projects.*;
 
 public class Enquiry {
@@ -8,7 +15,7 @@ public class Enquiry {
     private Integer id;
     private Applicant applicant;
     private String enquiryString;
-    private Reply reply;
+    private List<Reply> reply = new ArrayList<>(); // List of replies to this enquiry
     
     private Project project; // The project related to this enquiry
 
@@ -38,7 +45,7 @@ public class Enquiry {
         return enquiryString;
     }
 
-    public Reply getReply() {
+    public List<Reply> getReplies() {
         return reply;
     }
 
@@ -46,8 +53,23 @@ public class Enquiry {
         return project;
     }
 
-    public void setReply(Reply reply) {
-        this.reply = reply;
+    public void addToReply(Reply reply) {
+        this.reply.add(reply);
     }
 
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(id).append(",").append(applicant.getName()).append(",").append(enquiryString).append(",");
+        sb.append(project.getName()).append(",");
+        return sb.toString();
+    }
+
+    public List<Enquiry> viewEnquiries(List<Enquiry> enquiryList, User user) {
+        AccessControl<Enquiry> accessControl = new EnquiryAccess();
+        List<Enquiry> readibleEnquiries = enquiryList.stream()
+                .filter(enquiry -> accessControl.check(enquiry, user).contains("R"))
+                .toList();
+
+        return readibleEnquiries;
+    }
 }
