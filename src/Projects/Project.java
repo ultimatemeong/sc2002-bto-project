@@ -1,6 +1,9 @@
 package Projects;
 
 import Misc.AccessControl;
+import Misc.ApplicationAccess;
+import Misc.EnquiryAccess;
+import Misc.ProjectAccess;
 import Enquiries.*;
 import Users.*;
 import java.time.LocalDate;
@@ -136,11 +139,11 @@ public class Project {
     }
 
     public List<Project> viewProjects(List<Project> all_projects, User user) {
-        AccessControl<Project> accessControl = new AccessControl<>();
+        AccessControl<Project> accessControl = new ProjectAccess();
 
         List<Project> readableProjects = new ArrayList<>();
         for (Project project : all_projects) {
-            String access = accessControl.checkAccess(project, user);
+            String access = accessControl.check(project, user);
             if (access.contains("R")){
                 readableProjects.add(project);
             }
@@ -148,5 +151,22 @@ public class Project {
         return readableProjects;
     }
     
+    public List<Application> viewApplications(User user) {;
+        AccessControl<Application> accessControl = new ApplicationAccess();
 
+        List<Application> readableApplications = applicationList.stream()
+                .filter(application -> accessControl.check(application, user).contains("R"))
+                .toList();
+
+        return readableApplications;
+    }
+
+    public List<Enquiry> viewEnquiries(User user) {
+        AccessControl<Enquiry> accessControl = new EnquiryAccess();
+        List<Enquiry> readibleEnquiries = enquiryList.stream()
+                .filter(enquiry -> accessControl.check(enquiry, user).contains("R"))
+                .toList();
+
+        return readibleEnquiries;
+    }
 }   

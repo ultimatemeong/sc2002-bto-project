@@ -1,15 +1,10 @@
 package Enquiries;
 
 import Users.Applicant;
-
-import java.util.List;
-
-import Misc.AccessControl;
 import Projects.*;
-import Users.*;
 
 public class Enquiry {
-    private static int enquiryCounter = 0; // Static counter to generate unique IDs for enquiries
+    private static int enquiryCounter = 1; // Static counter to generate unique IDs for enquiries
     private Integer id;
     private Applicant applicant;
     private String enquiryString;
@@ -24,6 +19,7 @@ public class Enquiry {
         this.reply = null; // Initially, there is no reply
         this.project = project; // Set the project related to this enquiry
         enquiryCounter = id + 1; // Increment the counter for the next enquiry
+        
     }
 
     public Integer getEnquiryCounter() {
@@ -52,17 +48,6 @@ public class Enquiry {
 
     public void setReply(Reply reply) {
         this.reply = reply;
-    }
-
-    public List<Enquiry> viewEnquiries(User user) {
-        List<Enquiry> all_enquiries = project.getEnquiryList();
-        
-        AccessControl<Enquiry> accessControl = new AccessControl<>();
-        List<Enquiry> readibleEnquiries = all_enquiries.stream()
-                .filter(enquiry -> accessControl.checkAccess(enquiry, user).contains("R"))
-                .toList();
-
-        return readibleEnquiries;
     }
 
 }

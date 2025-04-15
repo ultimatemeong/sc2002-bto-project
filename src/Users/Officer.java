@@ -1,12 +1,15 @@
 package Users;
 
+import java.util.List;
+
+import Enquiries.Enquiry;
 import Projects.*;
 
 public class Officer extends Applicant{
     private Registration registration;
 
-    public Officer(String name, String nric, int age, String maritalStatus, String password, Application application, Registration registration) {
-        super(name, nric, age, maritalStatus, password, application);
+    public Officer(String name, String nric, int age, String maritalStatus, String password, Application application, List<Enquiry> enquiryList, Registration registration) {
+        super(name, nric, age, maritalStatus, password, application, enquiryList);
         this.registration = registration;
     }
 

@@ -2,13 +2,19 @@ package Users;
 
 import Projects.Application;
 import Projects.Project;
+import Enquiries.Enquiry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Applicant extends User{
     private Application application; 
+    private List<Enquiry> enquiryList = new ArrayList<>(); // List of enquiries made by the applicant
 
-    public Applicant(String name, String nric, int age, String maritalStatus, String password, Application application) {
+    public Applicant(String name, String nric, int age, String maritalStatus, String password, Application application, List<Enquiry> enquiryList) {
         super(name, nric, age, maritalStatus, password);
         this.application = application;
+        this.enquiryList = enquiryList;
     }
 
     public Application getApplication() {
@@ -43,8 +49,8 @@ public class Applicant extends User{
     }
 
     //Enquiries specific methods
-    protected void viewEnquiries() {
-        // Logic for viewing enquiries
+    protected List<Enquiry> viewEnquiries() {
+        return enquiryList;
     }
 
     protected void createEnquiry() {
