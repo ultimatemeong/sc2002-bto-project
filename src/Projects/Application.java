@@ -1,17 +1,15 @@
 package Projects;
 
+import Misc.AccessControl;
+import Misc.ApplicationAccess;
 import Users.*;
 import java.util.Date;
 import java.util.List;
-
-import Misc.AccessControl;
-import Misc.ApplicationAccess;
 
 public class Application extends Form {
     private static Integer applicationCounter = 1;
     private String flatType;
 
-    // Used when loading from CSV
     public Application(Integer id, Project project, String flatType, Applicant applicant, Date applicationDate, String formStatus, String withdrawalStatus) {
         super(id, project, applicant, applicationDate, formStatus);
         this.flatType = flatType;

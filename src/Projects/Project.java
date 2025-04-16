@@ -1,8 +1,8 @@
 package Projects;
 
+import Enquiries.*;
 import Misc.AccessControl;
 import Misc.ProjectAccess;
-import Enquiries.*;
 import Users.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class Project {
         List<Integer> type1Info = Arrays.asList(numUnitsType1, priceType1);
         List<Integer> type2Info = Arrays.asList(numUnitsType2, priceType2);
 
-        HashMap<String, List<Integer>> flatsInfo = new HashMap<String, List<Integer>>();
+        Map<String, List<Integer>> flatsInfo = new HashMap<>();
         flatsInfo.put(unitType1, type1Info);
         flatsInfo.put(unitType2, type2Info);
 
