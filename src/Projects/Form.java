@@ -43,12 +43,16 @@ public abstract class Form{
         return date;
     }
 
-    public String getStatus() {
+    public String getFormStatus() {
         return formStatus.toString();
     }
 
     public void setFormStatus(String formStatus) {
         this.formStatus = Status.valueOf(formStatus);
+    }
+
+    public void setWithdrawalStatus(String withdrawalStatus) {
+        this.withdrawalStatus = Status.valueOf(withdrawalStatus);
     }
 
     public abstract String toString();

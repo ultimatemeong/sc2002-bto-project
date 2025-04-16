@@ -1,14 +1,12 @@
 package Enquiries;
 
-import Users.Applicant;
-import Users.User;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import Misc.AccessControl;
 import Misc.EnquiryAccess;
 import Projects.*;
+import Users.Applicant;
+import Users.User;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Enquiry {
     private static int enquiryCounter = 1; // Static counter to generate unique IDs for enquiries
@@ -51,6 +49,10 @@ public class Enquiry {
 
     public Project getProject() {
         return project;
+    }
+
+    public void setEnquiryString(String enquiryString) {
+        this.enquiryString = enquiryString;
     }
 
     public void addToReply(Reply reply) {

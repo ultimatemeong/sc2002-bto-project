@@ -2,8 +2,8 @@ package Projects;
 
 import Users.Officer;
 import Users.User;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Registration extends Form{
