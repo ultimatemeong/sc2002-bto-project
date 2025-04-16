@@ -27,7 +27,7 @@ public class Reply {
 
     public void writeReply(String replyString) {
         this.replyString = replyString;
-        this.enquiry.addToReply(this); // Set the reply in the enquiry
+        this.enquiry.setReply(this); // Set the reply in the enquiry
     }
 
     public void editReply(String replyString) {
@@ -35,7 +35,7 @@ public class Reply {
     }
 
     public void deleteReply() {
-        this.enquiry.getReplies().remove(this); // Remove the reply from the enquiry
+        this.enquiry.setReply(null); // Remove the reply from the enquiry
         this.enquiry = null; // Clear the reference to the enquiry
     }
 

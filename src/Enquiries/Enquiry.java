@@ -3,7 +3,6 @@ package Enquiries;
 import Users.Applicant;
 import Users.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Misc.AccessControl;
@@ -15,7 +14,7 @@ public class Enquiry {
     private Integer id;
     private Applicant applicant;
     private String enquiryString;
-    private List<Reply> reply = new ArrayList<>(); // List of replies to this enquiry
+    private Reply reply; // List of replies to this enquiry
     
     private Project project; // The project related to this enquiry
 
@@ -45,7 +44,7 @@ public class Enquiry {
         return enquiryString;
     }
 
-    public List<Reply> getReplies() {
+    public Reply getReply() {
         return reply;
     }
 
@@ -53,8 +52,8 @@ public class Enquiry {
         return project;
     }
 
-    public void addToReply(Reply reply) {
-        this.reply.add(reply);
+    public void setReply(Reply reply) {
+        this.reply = reply;
     }
 
     public String toString(){
