@@ -1,10 +1,9 @@
 package Misc;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import Projects.Project;
 import Users.User;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProjectAccess implements AccessControl<Project> {
     private static Map<String, Map<String, String>> projectAccessMap = new HashMap<>();
