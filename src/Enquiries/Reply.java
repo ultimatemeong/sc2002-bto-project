@@ -1,13 +1,13 @@
 package Enquiries;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class Reply {
     private Enquiry enquiry;
-    private Date dateTime;
+    private LocalDateTime dateTime;
     private String replyString;
 
-    public Reply(Enquiry enquiry, Date dateTime, String replyString) {
+    public Reply(Enquiry enquiry, LocalDateTime dateTime, String replyString) {
         this.enquiry = enquiry;
         this.dateTime = dateTime;
         this.replyString = replyString;
@@ -17,7 +17,7 @@ public class Reply {
         return enquiry;
     }
 
-    public Date getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 

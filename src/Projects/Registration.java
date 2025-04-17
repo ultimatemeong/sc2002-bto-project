@@ -21,7 +21,7 @@ public class Registration extends Form{
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(id).append(",").append(user.getName()).append(",").append(date).append(",");
-        sb.append(formStatus.toString()).append(",").append(withdrawalStatus.toString()).append(",");
+        sb.append(formStatus.toString()).append(",");
         sb.append(project.getName()).append(",");
         return sb.toString();
     }
