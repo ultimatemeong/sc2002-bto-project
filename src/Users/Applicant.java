@@ -4,6 +4,8 @@ import Enquiries.Enquiry;
 import Misc.*;
 import Projects.Application;
 import Projects.Project;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,10 +34,6 @@ public class Applicant extends User{
 
     public void setApplication(Application application) {
         this.application = application;
-    }
-
-    public String toString() {
-        return "Applicant: " + super.toString();
     }
 
     protected boolean applyForProject(Project project, String flatType) {
@@ -88,7 +86,8 @@ public class Applicant extends User{
     //Enquiries specific methods
     protected void createEnquiry(Project project, String enquiryString) {
         // Logic for creating enquiry
-        Enquiry enquiry = new Enquiry(Enquiry.getEnquiryCounter(), this, enquiryString, project);
+        LocalDateTime dateTime = LocalDateTime.now(); // Get the current date and time
+        Enquiry enquiry = new Enquiry(Enquiry.getEnquiryCounter(), this, enquiryString, dateTime, project);
         enquiryList.add(enquiry);
     }
 

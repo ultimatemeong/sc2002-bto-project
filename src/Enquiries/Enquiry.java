@@ -5,22 +5,27 @@ import Misc.EnquiryAccess;
 import Projects.*;
 import Users.Applicant;
 import Users.User;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
+// ADD DATETIME
 public class Enquiry {
     private static int enquiryCounter = 1; // Static counter to generate unique IDs for enquiries
     private Integer id;
     private Applicant applicant;
     private String enquiryString;
     private Reply reply; // List of replies to this enquiry
+    private LocalDateTime dateTime; // Date and time of the enquiry
     
     private Project project; // The project related to this enquiry
 
-    public Enquiry(Integer id, Applicant applicant, String enquiryString, Project project) {
+    public Enquiry(Integer id, Applicant applicant, String enquiryString, LocalDateTime dateTime, Project project) {
         this.id = id;
         this.applicant = applicant;
         this.enquiryString = enquiryString;
         this.reply = null; // Initially, there is no reply
+        this.dateTime = dateTime; // Set the date and time of the enquiry
         this.project = project; // Set the project related to this enquiry
         enquiryCounter = id + 1; // Increment the counter for the next enquiry
         
@@ -46,6 +51,10 @@ public class Enquiry {
         return reply;
     }
 
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
     public Project getProject() {
         return project;
     }
@@ -60,8 +69,8 @@ public class Enquiry {
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(id).append(",").append(applicant.getName()).append(",").append(enquiryString).append(",");
-        sb.append(project.getName()).append(",");
+        sb.append(id).append(",").append(applicant.getNric()).append(",").append(enquiryString).append(",");
+        sb.append(dateTime).append(project.getName()).append(",");
         return sb.toString();
     }
 
