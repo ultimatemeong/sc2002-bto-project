@@ -13,10 +13,6 @@ public class Manager extends User{
         super(name, nric, age, maritalStatus, password);
     }
 
-    public String toString() {
-        return "Manager: " + super.toString();
-    }
-
     private boolean noActiveProjects(List<Project> projects) {
         for (Project project : projects) {
             if (project.getManager().equals(this) && project.isVisible()) {
