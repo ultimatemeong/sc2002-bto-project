@@ -9,6 +9,7 @@ import java.util.List;
 public class Application extends Form {
     private static Integer applicationCounter = 1;
     private String flatType;
+    protected Status withdrawalStatus; // Null, Pending, Approved, Rejected
 
     public Application(Integer id, Project project, String flatType, Applicant applicant, Date applicationDate, String formStatus, String withdrawalStatus) {
         super(id, project, applicant, applicationDate, formStatus);
@@ -35,7 +36,7 @@ public class Application extends Form {
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(id).append(",").append(flatType).append(",").append(user.getName()).append(",").append(date).append(",");
+        sb.append(id).append(",").append(flatType).append(",").append(user.getNric()).append(",").append(date).append(",");
         sb.append(formStatus.toString()).append(",").append(withdrawalStatus.toString()).append(",");
         sb.append(project.getName()).append(",");
         return sb.toString();
