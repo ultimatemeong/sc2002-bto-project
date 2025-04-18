@@ -1,3 +1,4 @@
+package App;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import Users.*;
 import Projects.*;
 import Misc.*;
 
-public class App {
+public class MainApp {
     private static List<Project> all_projects = new ArrayList<>();
     private static List<Applicant> all_applicants = new ArrayList<>();
     private static List<Officer> all_officers = new ArrayList<>();
@@ -155,5 +156,60 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         init();
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to the HDB Application System!");
+        System.out.println("Please Login to continue.");
+        System.out.println("NRIC: ");
+        String nric = scanner.next();
+        System.out.println("Password: ");
+        String password = scanner.next();
+        String role = "";
+
+        for (Manager manager : all_managers) {
+            if (manager.getNric().equals(nric) && manager.validatePassword(password)) {
+                System.out.println("Login successful! Welcome, " + manager.getName() + ".");
+                role = "Manager";
+                return;
+            }
+        }
+
+        if (role.equals("")) {
+            for (Officer officer : all_officers) {
+                if (officer.getNric().equals(nric) && officer.validatePassword(password)) {
+                    System.out.println("Login successful! Welcome, " + officer.getName() + ".");
+                    role = "Officer";
+                    return;
+                }
+            }
+        }
+
+        if (role.equals("")) {
+            for (Applicant applicant : all_applicants) {
+                if (applicant.getNric().equals(nric) && applicant.validatePassword(password)) {
+                    System.out.println("Login successful! Welcome, " + applicant.getName() + ".");
+                    role = "Applicant";
+                    return;
+                }
+            }
+        }
+
+        switch (role) {
+            case "Manager":
+                ManagerApp.managerInterface();
+                break;
+
+            case "Officer":
+                OfficerApp.officerInterface();
+                break;
+
+            case "Applicant":
+                ApplicantApp.applicantInterface();
+                break;    
+
+            default:
+                System.out.println("Invalid login credentials. Please try again.");
+                break;
+        }
     }
 }
