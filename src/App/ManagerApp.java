@@ -1,8 +1,16 @@
 package App;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+import Enquiries.*;
+import Users.*;
+import Projects.*;
+import Misc.*;
+
 public class ManagerApp extends MainApp {
+    
     public static void managerInterface() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Manager Interface");
@@ -16,7 +24,7 @@ public class ManagerApp extends MainApp {
                 projectInterface();
                 break;
             case 2:
-                accountInterface();
+                MainApp.accountInterface();
                 break;
             case 3:
                 System.out.println("Logging out...");
@@ -41,7 +49,26 @@ public class ManagerApp extends MainApp {
             System.out.println("Please select an option:");
             switch (choice) {
                 case 1:
-                    break;
+                    List<Project> readableProjects = Project.viewProjects(all_projects, current_user);
+                    System.out.println("1. View All Projects");
+                    System.out.println("2. View Your Projects");
+                    int viewby = scanner.nextInt();
+                    switch (viewby) {
+                        case 1:
+                            for (Project project : readableProjects) {
+                                System.out.println(project.toString());
+                            }
+                            break;
+                        case 2:
+                            for (Project project : readableProjects) {
+                                if(project.getManager().equals(current_user.getName())) {
+                                    System.out.println(project.toString());
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 case 2:
                     break;
                 case 3:
@@ -57,29 +84,5 @@ public class ManagerApp extends MainApp {
                     break;
             }
         } while (choice != 5);
-    }
-
-    private static void accountInterface() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Account Management Interface");
-        System.out.println("1. Change Password");
-        System.out.println("2. Back to Main Menu");
-
-        int choice = scanner.nextInt();
-        do {
-            System.out.println("Please select an option:");
-            switch (choice) {
-                case 1:
-                    break;
-
-                case 2:
-                    System.out.println("Back to Main Menu...");
-                    managerInterface();
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-                    break;
-            }
-        } while (choice != 2);
     }
 }

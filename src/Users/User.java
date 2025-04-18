@@ -43,7 +43,6 @@ public class User {
         return maritalStatus.toString();
     }
     public boolean validatePassword(String password) {
-        System.out.println(this.password);
         return this.password.equals(password);
     }
     

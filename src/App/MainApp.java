@@ -16,7 +16,106 @@ public class MainApp {
     protected static List<Officer> all_officers = new ArrayList<>();
     protected static List<Manager> all_managers = new ArrayList<>();
     protected static List<Enquiry> all_enquiries = new ArrayList<>();
-    
+    protected static User current_user;
+
+    public static void main(String[] args) throws Exception {
+        init();
+
+        @SuppressWarnings("resource")
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to the HDB Application System!");
+        String role = "";
+        do {
+            System.out.println("Please Login to continue.");
+            System.out.println("NRIC: ");
+            String nric = scanner.next();
+            System.out.println("Password: ");
+            String password = scanner.next();
+
+            for (Manager manager : all_managers) {
+                if (manager.getNric().equals(nric) && manager.validatePassword(password)) {
+                    System.out.println("Login successful! Welcome, " + manager.getName() + ".");
+                    current_user = manager;
+                    role = "Manager";
+                }
+            }
+
+            if (role.equals("")) {
+                for (Officer officer : all_officers) {
+                    if (officer.getNric().equals(nric) && officer.validatePassword(password)) {
+                        System.out.println("Login successful! Welcome, " + officer.getName() + ".");
+                        current_user = officer;
+                        role = "Officer";
+                    }
+                }
+            }
+
+            if (role.equals("")) {
+                for (Applicant applicant : all_applicants) {
+                    if (applicant.getNric().equals(nric) && applicant.validatePassword(password)) {
+                        System.out.println("Login successful! Welcome, " + applicant.getName() + ".");
+                        current_user = applicant;
+                        role = "Applicant";
+                    }
+                }
+            }
+
+            switch (role) {
+                case "Manager":
+                    ManagerApp.managerInterface();
+                    break;
+
+                case "Officer":
+                    OfficerApp.officerInterface();
+                    break;
+
+                case "Applicant":
+                    ApplicantApp.applicantInterface();
+                    break;    
+
+                default:
+                    System.out.println("Invalid login credentials. Please try again.");
+                    break;
+            }
+        } while (role == "");
+    }
+
+    public static void accountInterface() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Account Management Interface");
+        System.out.println("1. Change Password");
+        System.out.println("2. Back to Main Menu");
+
+        int choice = scanner.nextInt();
+        do {
+            System.out.println("Please select an option:");
+            switch (choice) {
+                case 1:
+                    break;
+
+                case 2:
+                    System.out.println("Back to Main Menu...");
+                    switch (current_user.getClass().getSimpleName()) {
+                        case "Manager":
+                            ManagerApp.managerInterface();
+                            break;
+                        case "Officer":
+                            break;
+                        case "Applicant":
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                    
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        } while (choice != 2);
+    }
+
     private static void init() throws Exception {
         // Load Applicants
         List<List<String>> applicantRecords = FileOps.readFile("ApplicantList");
@@ -151,65 +250,6 @@ public class MainApp {
                 Reply reply = new Reply(enquiry, replyDate, replyString);
                 enquiry.setReply(reply); // Set the reply in the enquiry
             }
-        }
-    }
-
-    public static void main(String[] args) throws Exception {
-        init();
-
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to the HDB Application System!");
-        System.out.println("Please Login to continue.");
-        System.out.println("NRIC: ");
-        String nric = scanner.next();
-        System.out.println("Password: ");
-        String password = scanner.next();
-        String role = "";
-
-        for (Manager manager : all_managers) {
-            if (manager.getNric().equals(nric) && manager.validatePassword(password)) {
-                System.out.println("Login successful! Welcome, " + manager.getName() + ".");
-                role = "Manager";
-                return;
-            }
-        }
-
-        if (role.equals("")) {
-            for (Officer officer : all_officers) {
-                if (officer.getNric().equals(nric) && officer.validatePassword(password)) {
-                    System.out.println("Login successful! Welcome, " + officer.getName() + ".");
-                    role = "Officer";
-                    return;
-                }
-            }
-        }
-
-        if (role.equals("")) {
-            for (Applicant applicant : all_applicants) {
-                if (applicant.getNric().equals(nric) && applicant.validatePassword(password)) {
-                    System.out.println("Login successful! Welcome, " + applicant.getName() + ".");
-                    role = "Applicant";
-                    return;
-                }
-            }
-        }
-
-        switch (role) {
-            case "Manager":
-                ManagerApp.managerInterface();
-                break;
-
-            case "Officer":
-                OfficerApp.officerInterface();
-                break;
-
-            case "Applicant":
-                ApplicantApp.applicantInterface();
-                break;    
-
-            default:
-                System.out.println("Invalid login credentials. Please try again.");
-                break;
         }
     }
 }
