@@ -41,7 +41,7 @@ public class ManagerApp extends MainApp {
 
     private static void projectInterface() {
         List<Project> readableProjects = Project.viewProjects(all_projects, current_user).stream()
-            .sorted().toList();
+            .sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).toList();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Project Management Interface");
         System.out.println("1. View Projects");
@@ -50,9 +50,10 @@ public class ManagerApp extends MainApp {
         System.out.println("4. Delete Project");
         System.out.println("5. Back to Main Menu");
 
-        int choice = scanner.nextInt();
+        int choice;
         do {
             System.out.println("Please select an option:");
+            choice = scanner.nextInt();
             switch (choice) {
                 case 1:
                     System.out.println("1. View All Projects");
@@ -61,13 +62,13 @@ public class ManagerApp extends MainApp {
                     switch (viewby) {
                         case 1:
                             for (Project project : readableProjects) {
-                                System.out.println(project.getName());
+                                System.out.println(project.getName()+ ", " + project.getNeighbourhood());
                             }
                             break;
                         case 2:
                             for (Project project : readableProjects) {
                                 if(project.getManager().getName().equals(current_user.getName())) {
-                                    System.out.println(project.toString());
+                                    System.out.println(project.getName()+ ", " + project.getNeighbourhood());
                                 }
                             }
                             break;
@@ -78,6 +79,7 @@ public class ManagerApp extends MainApp {
                 case 2:
                     System.out.println("Adding Project:");
                     System.out.println("Project Name:");
+                    scanner.nextLine();
                     String proj_name = scanner.nextLine();
                     System.out.println("Project Neighbourhood:");
                     String neighbourhood = scanner.nextLine();
@@ -102,12 +104,14 @@ public class ManagerApp extends MainApp {
                     
                     ((Manager) current_user).createProject(all_projects, proj_name, neighbourhood, unitType1, numUnitsType1, priceType1, unitType2, 
                     numUnitsType2, priceType2, appOpenDate, appCloseDate, true, officerSlots, new ArrayList<Officer>());
+                    
                     break;
                     
                 case 3:
                     projectEditInterface(readableProjects);
                     break;
                 case 4:
+                    
                     break;
                 case 5:
                     System.out.println("Back to Main Menu...");
@@ -133,17 +137,17 @@ public class ManagerApp extends MainApp {
             for(Project proj : editableProjects) {
                 System.out.println(String.valueOf(i) + ". " + proj.getName());
             }
-            System.out.println(String.valueOf(i+1) + " Exit to Project Management Interface");
+            System.out.println(String.valueOf(i+1) + ". Exit to Project Management Interface");
             System.out.print("Choose the project to edit:");
             Integer proj_choice = scanner.nextInt();
             if (proj_choice < (i+1)) {
                 Project proj = editableProjects.get(proj_choice-1);
 
                 boolean proj_visibility = proj.isVisible();
-                Integer roomType1Num = proj.getFlatsInfo().get("2-room").get(0);
-                Integer roomType1price = proj.getFlatsInfo().get("2-room").get(1);
-                Integer roomType2Num = proj.getFlatsInfo().get("3-room").get(0);
-                Integer roomType2price = proj.getFlatsInfo().get("3-room").get(1);
+                Integer roomType1Num = proj.getFlatsInfo().get("2-Room").get(0);
+                Integer roomType1price = proj.getFlatsInfo().get("2-Room").get(1);
+                Integer roomType2Num = proj.getFlatsInfo().get("3-Room").get(0);
+                Integer roomType2price = proj.getFlatsInfo().get("3-Room").get(1);
                 Integer proj_officerSlots = proj.getOfficerSlots();
                 int edit_choice;
                 do {
@@ -178,7 +182,8 @@ public class ManagerApp extends MainApp {
                                     default:
                                         break;
                                 }
-                            } while(!toggle.equals("Y") || !toggle.equals("N"));
+                            } while ( !toggle.equals("Y") && !toggle.equals("N"));
+                            
                             break;
                             
                         case 2:
@@ -190,6 +195,7 @@ public class ManagerApp extends MainApp {
                             roomType1Num = scanner.nextInt();
                             System.out.print("New Price of Flats: ");
                             roomType1price = scanner.nextInt();
+
                             break;
 
                         case 3:
@@ -201,6 +207,7 @@ public class ManagerApp extends MainApp {
                             roomType2Num = scanner.nextInt();
                             System.out.print("New Price of Flats: ");
                             roomType2price = scanner.nextInt();
+
                             break;
 
                         case 4:
@@ -208,6 +215,7 @@ public class ManagerApp extends MainApp {
 
                             System.out.print("New number of Officer Slots: ");
                             proj_officerSlots = scanner.nextInt();
+
                             break;
                         
                         case 5:
@@ -218,8 +226,8 @@ public class ManagerApp extends MainApp {
                     }
                 } while (edit_choice != 5);
 
-                Project tempProject = new Project(proj.getName(), proj.getNeighbourhood(), "2-room", 
-                roomType1Num, roomType1price, "3-room", roomType2Num, roomType2price, 
+                Project tempProject = new Project(proj.getName(), proj.getNeighbourhood(), "2-Room", 
+                roomType1Num, roomType1price, "3-Room", roomType2Num, roomType2price, 
                 proj.getApplicationOpenDate(), proj.getApplicationCloseDate(), proj_visibility, proj.getManager(), 
                 proj_officerSlots, proj.getOfficerList(), proj.getApplicationList(), 
                 proj.getRegistrationList(), proj.getEnquiryList());

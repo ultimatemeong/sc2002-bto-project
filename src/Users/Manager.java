@@ -40,6 +40,8 @@ public class Manager extends User{
             AccessControl<Project> accessControl = new ProjectAccess();
             accessControl.add(project, this, "RW");
             System.out.println("Project successfully created!");
+
+            allProjects.add(project);
             return true;
         } else {
             System.out.println("Failed to create project. You are already managing an active project.");

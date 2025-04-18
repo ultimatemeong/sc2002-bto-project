@@ -86,9 +86,11 @@ public class MainApp {
         System.out.println("1. Change Password");
         System.out.println("2. Back to Main Menu");
 
-        int choice = scanner.nextInt();
+        int choice;
         do {
             System.out.println("Please select an option:");
+            choice = scanner.nextInt();
+
             switch (choice) {
                 case 1:
                     break;
