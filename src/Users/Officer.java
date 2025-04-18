@@ -11,12 +11,12 @@ public class Officer extends Applicant{
     private Registration registration;
 
     // Constructor for officer with no existing application and registration
-    public Officer(String name, String nric, int age, String maritalStatus, String password, List<Enquiry> enquiryList) {
+    public Officer(String name, String nric, Integer age, String maritalStatus, String password, List<Enquiry> enquiryList) {
         super(name, nric, age, maritalStatus, password, enquiryList);
     }
 
     // Constructor for officer with existing application and registration
-    public Officer(String name, String nric, int age, String maritalStatus, String password, Application application, List<Enquiry> enquiryList, Registration registration) {
+    public Officer(String name, String nric, Integer age, String maritalStatus, String password, Application application, List<Enquiry> enquiryList, Registration registration) {
         super(name, nric, age, maritalStatus, password, application, enquiryList);
         this.registration = registration;
     }

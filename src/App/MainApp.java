@@ -20,6 +20,12 @@ public class MainApp {
 
     public static void main(String[] args) throws Exception {
         init();
+        System.out.println(all_applicants);
+        System.out.println(all_officers);
+        System.out.println(all_managers);
+        System.out.println(all_projects);
+        System.out.println(all_enquiries);
+
 
         @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
@@ -178,7 +184,7 @@ public class MainApp {
             try (Scanner rowScanner = new Scanner(officers)) {
                 rowScanner.useDelimiter(";");
                 while (rowScanner.hasNext()) {
-                    officerList.add(Officer.getOfficerByNric(all_officers, rowScanner.next()));
+                    officerList.add(Officer.getOfficerByNric(all_officers,rowScanner.next()));
                 }
             }
 

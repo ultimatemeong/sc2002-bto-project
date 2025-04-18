@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Manager extends User{
 
-    public Manager(String name, String nric, int age, String maritalStatus, String password) {
+    public Manager(String name, String nric, Integer age, String maritalStatus, String password) {
         super(name, nric, age, maritalStatus, password);
     }
 
@@ -33,7 +33,9 @@ public class Manager extends User{
 
     public boolean createProject(List<Project> allProjects, String proj_name, String neighbourhood, String unitType1, Integer numUnitsType1, Integer priceType1, String unitType2, Integer numUnitsType2, Integer priceType2, LocalDate appOpenDate, LocalDate appCloseDate, boolean visibility, Integer officerSlots, List<Officer> officerList) {    
         if (noActiveProjects(allProjects)) {
-            Project project = new Project(proj_name, neighbourhood, unitType1, numUnitsType1, priceType1, unitType2, numUnitsType2, priceType2, appOpenDate, appCloseDate, visibility, this, officerSlots, officerList, new ArrayList<Application>(), new ArrayList<Registration>(), new ArrayList<Enquiry>());
+            Project project = new Project(proj_name, neighbourhood, unitType1, numUnitsType1, priceType1, unitType2, 
+            numUnitsType2, priceType2, appOpenDate, appCloseDate, visibility, this, officerSlots, officerList, 
+            new ArrayList<Application>(), new ArrayList<Registration>(), new ArrayList<Enquiry>());
     
             AccessControl<Project> accessControl = new ProjectAccess();
             accessControl.add(project, this, "RW");

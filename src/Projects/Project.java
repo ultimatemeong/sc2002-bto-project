@@ -141,10 +141,6 @@ public class Project {
         this.enquiryList.add(enquiry);
     }
 
-    public boolean isVisibility() {
-        return visibility;
-    }
-
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(name).append(",").append(neighbourhood).append(",");

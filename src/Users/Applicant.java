@@ -15,13 +15,13 @@ public class Applicant extends User{
     private List<Enquiry> enquiryList = new ArrayList<>(); // List of enquiries made by the applicant
 
     // Constructor for applicant with no existing applications
-    public Applicant(String name, String nric, int age, String maritalStatus, String password, List<Enquiry> enquiryList) {
+    public Applicant(String name, String nric, Integer age, String maritalStatus, String password, List<Enquiry> enquiryList) {
         super(name, nric, age, maritalStatus, password);
         this.enquiryList = enquiryList;
     }
 
     // Constructor for applicant with existing application
-    public Applicant(String name, String nric, int age, String maritalStatus, String password, Application application, List<Enquiry> enquiryList) {
+    public Applicant(String name, String nric, Integer age, String maritalStatus, String password, Application application, List<Enquiry> enquiryList) {
         super(name, nric, age, maritalStatus, password);
         this.application = application;
         this.enquiryList = enquiryList;

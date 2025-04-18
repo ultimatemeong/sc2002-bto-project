@@ -12,7 +12,7 @@ public class User {
     private MaritalStatus maritalStatus;
     private String password;
 
-    protected User(String name, String nric, int age, String maritalStatus, String password) {
+    protected User(String name, String nric, Integer age, String maritalStatus, String password) {
         this.name = name;
         this.nric = nric;
         this.age = age;
@@ -20,7 +20,7 @@ public class User {
         this.password = password;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }   
     public void setMaritalStatus(String maritalStatus) {
@@ -36,7 +36,7 @@ public class User {
     public String getNric() {
         return nric;
     }
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
     public String getMaritalStatus() {
