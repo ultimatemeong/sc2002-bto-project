@@ -41,7 +41,7 @@ public class ManagerApp extends MainApp {
 
     private static void projectInterface() {
         List<Project> readableProjects = Project.viewProjects(all_projects, current_user).stream()
-            .sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).toList();
+            .sorted().toList();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Project Management Interface");
         System.out.println("1. View Projects");

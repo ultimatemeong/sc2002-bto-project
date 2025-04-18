@@ -15,10 +15,6 @@ public class ProjectAccess implements AccessControl<Project> {
         try {
             return projectAccessMap.get(userNRIC).get(id);
         } catch (Exception e) {
-            if (!projectAccessMap.containsKey(userNRIC)) {
-                return "NULL";
-            }
-
             if (!projectAccessMap.get(userNRIC).containsKey(id)) {
                 if (user.getClass().getSimpleName().equals("Manager")) {
                     return "R"; // Manager has read access to all projects

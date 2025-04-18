@@ -16,10 +16,6 @@ public class ApplicationAccess implements AccessControl<Application> {
         try {
             return applicationAccessMap.get(userNRIC).get(id);
         } catch (Exception e) {
-            if (!applicationAccessMap.containsKey(userNRIC)) {
-                return "NULL";
-            }
-    
             if (!applicationAccessMap.get(userNRIC).containsKey(id)) {
                 if (user.getClass().getSimpleName().equals("Manager")) {
                     return "R"; // Manager has read access to all applications

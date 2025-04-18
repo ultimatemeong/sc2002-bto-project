@@ -70,7 +70,7 @@ public class Enquiry {
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(id).append(",").append(applicant.getNric()).append(",").append(enquiryString).append(",");
-        sb.append(dateTime).append(project.getName()).append(",");
+        sb.append(dateTime).append(",").append(project.getName());
         return sb.toString();
     }
 

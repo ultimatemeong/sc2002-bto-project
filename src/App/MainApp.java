@@ -20,12 +20,6 @@ public class MainApp {
 
     public static void main(String[] args) throws Exception {
         init();
-        System.out.println(all_applicants);
-        System.out.println(all_officers);
-        System.out.println(all_managers);
-        System.out.println(all_projects);
-        System.out.println(all_enquiries);
-
 
         @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
@@ -158,6 +152,7 @@ public class MainApp {
 
         // Load projects
         List<List<String>> projectRecords = FileOps.readFile("ProjectList");
+        AccessControl<Project> projAccessControl = new ProjectAccess();
         for (List<String> record : projectRecords) {
             String name = record.get(0);
             String neighbourhood = record.get(1);
@@ -190,10 +185,15 @@ public class MainApp {
 
             Project project = new Project(name, neighbourhood, unitType1, numUnitsType1, priceType1, unitType2, numUnitsType2, priceType2, appOpenDate, appCloseDate, visibility, manager, officerSlots, officerList, new ArrayList<Application>(), new ArrayList<Registration>(), new ArrayList<Enquiry>());
             all_projects.add(project);
+            projAccessControl.add(project, manager, "RW");
+            for (Officer officer : officerList) {
+                projAccessControl.add(project, officer, "R");
+            }
         }
 
         // Load applications
         List<List<String>> applicationRecords = FileOps.readFile("ApplicationList");
+        AccessControl<Application> applicationAccessControl = new ApplicationAccess(); 
         for (List<String> record : applicationRecords) {
             Integer applicationId = Integer.parseInt(record.get(0));
             String flatType = record.get(1);
@@ -209,6 +209,7 @@ public class MainApp {
             Application application = new Application(applicationId, project, flatType, applicant, applicationDate, formStatus, withdrawalStatus);
             project.addToApplicationList(application);
             applicant.setApplication(application);
+            applicationAccessControl.add(application, applicant, "RW");
         }
 
         // Load registrations
@@ -230,6 +231,7 @@ public class MainApp {
         
         // Load enquiries
         List<List<String>> enquiryRecords = FileOps.readFile("EnquiryList");
+        AccessControl<Enquiry> enquiryAccessControl = new EnquiryAccess();
         for (List<String> record : enquiryRecords) {
             Integer enquiryId = Integer.parseInt(record.get(0));
             String applicantNric = record.get(1);
@@ -242,6 +244,7 @@ public class MainApp {
             Enquiry enquiry = new Enquiry(enquiryId, applicant, enquiryString, enquiryDate, project);
             project.addToEnquiryList(enquiry);
             all_enquiries.add(enquiry);
+            enquiryAccessControl.add(enquiry, applicant, "RW");
         }
 
         // Load replies
