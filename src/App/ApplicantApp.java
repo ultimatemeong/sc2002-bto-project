@@ -1,6 +1,6 @@
 package App;
 
-public class ApplicantApp {
+public class ApplicantApp extends MainApp {
     public static void applicantInterface() {
 
     }

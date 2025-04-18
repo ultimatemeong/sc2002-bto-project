@@ -2,7 +2,7 @@ package App;
 
 import java.util.Scanner;
 
-public class ManagerApp {
+public class ManagerApp extends MainApp {
     public static void managerInterface() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Manager Interface");
@@ -37,23 +37,26 @@ public class ManagerApp {
         System.out.println("5. Back to Main Menu");
 
         int choice = scanner.nextInt();
-        switch (choice) {
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                System.out.println("Back to Main Menu...");
-                managerInterface();
-                break;
-            default:
-                System.out.println("Invalid choice. Please try again.");
-                break;
-        }
+        do {
+            System.out.println("Please select an option:");
+            switch (choice) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    System.out.println("Back to Main Menu...");
+                    managerInterface();
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        } while (choice != 5);
     }
 
     private static void accountInterface() {
@@ -63,17 +66,20 @@ public class ManagerApp {
         System.out.println("2. Back to Main Menu");
 
         int choice = scanner.nextInt();
-        switch (choice) {
-            case 1:
-                break;
+        do {
+            System.out.println("Please select an option:");
+            switch (choice) {
+                case 1:
+                    break;
 
-            case 2:
-                System.out.println("Back to Main Menu...");
-                managerInterface();
-                break;
-            default:
-                System.out.println("Invalid choice. Please try again.");
-                break;
-        }
+                case 2:
+                    System.out.println("Back to Main Menu...");
+                    managerInterface();
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        } while (choice != 2);
     }
 }

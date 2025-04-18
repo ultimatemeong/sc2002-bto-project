@@ -11,11 +11,11 @@ import Projects.*;
 import Misc.*;
 
 public class MainApp {
-    private static List<Project> all_projects = new ArrayList<>();
-    private static List<Applicant> all_applicants = new ArrayList<>();
-    private static List<Officer> all_officers = new ArrayList<>();
-    private static List<Manager> all_managers = new ArrayList<>();
-    private static List<Enquiry> all_enquiries = new ArrayList<>();
+    protected static List<Project> all_projects = new ArrayList<>();
+    protected static List<Applicant> all_applicants = new ArrayList<>();
+    protected static List<Officer> all_officers = new ArrayList<>();
+    protected static List<Manager> all_managers = new ArrayList<>();
+    protected static List<Enquiry> all_enquiries = new ArrayList<>();
     
     private static void init() throws Exception {
         // Load Applicants
