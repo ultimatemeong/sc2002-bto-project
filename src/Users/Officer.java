@@ -2,7 +2,8 @@ package Users;
 
 import Enquiries.Enquiry;
 import Projects.*;
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,15 @@ public class Officer extends Applicant{
 
     public Registration getRegistration() {
         return registration;
+    }
+
+    public static Officer getOfficerByNric(List<Officer> officerList, String nric) {
+        for (Officer officer : officerList) {
+            if (officer.getNric().equals(nric)) {
+                return officer;
+            }
+        }
+        return null; 
     }
 
     public void setRegistration(Registration registration) {
@@ -62,7 +72,7 @@ public class Officer extends Applicant{
     public boolean registerForProject(Project project) {
         // Logic for registering for projects
         if ((this.registration == null) && notApplicant(project)) {
-            Registration registration = new Registration(Registration.getRegistrationCounter(), project, this, new Date(), "PENDING");
+            Registration registration = new Registration(Registration.getRegistrationCounter(), project, this, LocalDate.now(), "PENDING");
             project.addToRegistrationList(registration);
             System.out.println("Registration submitted! Pending approval.");
             return true;

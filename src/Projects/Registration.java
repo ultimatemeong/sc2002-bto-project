@@ -2,14 +2,15 @@ package Projects;
 
 import Users.Officer;
 import Users.User;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Registration extends Form{
     private static Integer registrationCounter = 1;
 
-    public Registration(Integer id, Project project, Officer officer, Date registrationDate, String formStatus) {
+    public Registration(Integer id, Project project, Officer officer, LocalDate registrationDate, String formStatus) {
         super(id, project, officer, registrationDate, formStatus);
         registrationCounter = id + 1;
     }

@@ -104,6 +104,15 @@ public class Project {
         return enquiryList;
     }
 
+    public static Project getProjectByName(List<Project> projectList, String name) {
+        for (Project project : projectList) {
+            if (project.getName().equals(name)) {
+                return project;
+            }
+        }
+        return null; 
+    }
+
     public void setFlatsInfo(Map<String, List<Integer>> flatsInfo) {
         this.flatsInfo = flatsInfo;
     }
@@ -142,10 +151,10 @@ public class Project {
         for (Map.Entry<String, List<Integer>> entry : flatsInfo.entrySet()) {
             sb.append(entry.getKey()).append(":").append(entry.getValue().get(0)).append(":").append(entry.getValue().get(1)).append(",");
         }
-        sb.append(applicationOpenDate).append(",").append(applicationCloseDate).append(",").append(manager.getName()).append(",");
+        sb.append(applicationOpenDate).append(",").append(applicationCloseDate).append(",").append(manager.getNric()).append(",");
         sb.append(officerSlots).append(",");
         for (Officer officer : officerList) {
-            sb.append(officer.getName()).append(";");
+            sb.append(officer.getNric()).append(";");
         }
         return sb.toString();
     }

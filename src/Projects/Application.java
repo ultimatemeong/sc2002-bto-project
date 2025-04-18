@@ -3,7 +3,8 @@ package Projects;
 import Misc.AccessControl;
 import Misc.ApplicationAccess;
 import Users.*;
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public class Application extends Form {
@@ -11,7 +12,7 @@ public class Application extends Form {
     private String flatType;
     protected Status withdrawalStatus; // Null, Pending, Approved, Rejected
 
-    public Application(Integer id, Project project, String flatType, Applicant applicant, Date applicationDate, String formStatus, String withdrawalStatus) {
+    public Application(Integer id, Project project, String flatType, Applicant applicant, LocalDate applicationDate, String formStatus, String withdrawalStatus) {
         super(id, project, applicant, applicationDate, formStatus);
         this.flatType = flatType;
         this.withdrawalStatus = Status.valueOf(withdrawalStatus.toUpperCase());

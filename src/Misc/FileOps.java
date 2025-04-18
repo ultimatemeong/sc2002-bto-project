@@ -53,6 +53,7 @@ public class FileOps {
         String filePath = getFilePath(filename);
         List<List<String>> records = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(filePath))) {
+            scanner.nextLine(); // Skip the header line
             while (scanner.hasNextLine()) {
                 records.add(getRecordFromLine(scanner.nextLine()));
             }
@@ -65,7 +66,7 @@ public class FileOps {
         try (Scanner rowScanner = new Scanner(line)) {
             rowScanner.useDelimiter(",");
             while (rowScanner.hasNext()) {
-                values.add(rowScanner.next());
+                values.add(rowScanner.next().strip());
             }
         }
         return values;

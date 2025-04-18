@@ -82,4 +82,13 @@ public class Enquiry {
 
         return readibleEnquiries;
     }
+
+    public static Enquiry getEnquiryById(List<Enquiry> enquiryList, Integer id) {
+        for (Enquiry enquiry : enquiryList) {
+            if (enquiry.getId().equals(id)) {
+                return enquiry;
+            }
+        }
+        return null; // Return null if no matching enquiry is found
+    }
 }

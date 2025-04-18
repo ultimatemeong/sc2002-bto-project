@@ -13,6 +13,15 @@ public class Manager extends User{
         super(name, nric, age, maritalStatus, password);
     }
 
+    public static Manager getManagerByNric(List<Manager> managerList, String nric) {
+        for (Manager manager : managerList) {
+            if (manager.getNric().equals(nric)) {
+                return manager;
+            }
+        }
+        return null; 
+    }
+
     private boolean noActiveProjects(List<Project> projects) {
         for (Project project : projects) {
             if (project.getManager().equals(this) && project.isVisible()) {

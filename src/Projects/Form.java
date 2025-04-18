@@ -1,7 +1,8 @@
 package Projects;
 
 import Users.*;
-import java.util.Date;
+
+import java.time.LocalDate;
 
 enum Status {
     NULL,
@@ -15,10 +16,10 @@ public abstract class Form{
     protected Integer id;
     protected Project project;
     protected User user;
-    protected Date date;
+    protected LocalDate date;
     protected Status formStatus; // Pending, Approved, Rejected
 
-    public Form(Integer id, Project project, User user, Date date, String formStatus) {
+    public Form(Integer id, Project project, User user, LocalDate date, String formStatus) {
         this.id = id;
         this.project = project;
         this.user = user;
@@ -38,7 +39,7 @@ public abstract class Form{
         return user;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 

@@ -5,9 +5,9 @@ import Misc.*;
 import Projects.Application;
 import Projects.Project;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Applicant extends User{
@@ -32,6 +32,15 @@ public class Applicant extends User{
         return application;
     }
 
+    public static Applicant getApplicantByNric(List<Applicant> applicantList, String nric) {
+        for (Applicant applicant : applicantList) {
+            if (applicant.getNric().equals(nric)) {
+                return applicant;
+            }
+        }
+        return null; 
+    }
+
     public void setApplication(Application application) {
         this.application = application;
     }
@@ -39,7 +48,7 @@ public class Applicant extends User{
     protected boolean applyForProject(Project project, String flatType) {
         /* applicant applies for a project */
         if (this.getApplication() == null) {
-            Application application = new Application(Application.getApplicationCounter(), project, flatType, this, new Date(), "Pending", "Null");
+            Application application = new Application(Application.getApplicationCounter(), project, flatType, this, LocalDate.now(), "Pending", "Null");
             this.setApplication(application);
 
             // allow user to read project
