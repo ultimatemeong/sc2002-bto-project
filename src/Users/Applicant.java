@@ -44,9 +44,20 @@ public class Applicant extends User{
         this.application = application;
     }
 
+    private boolean isProjectOfficer(Project project) {
+        List<Officer> officerList = project.getOfficerList();
+        for (Officer officer : officerList) {
+            if (officer.getNric().equals(this.getNric())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean applyForProject(Project project, String flatType) {
         /* applicant applies for a project */
-        if (this.getApplication() == null) {
+        // user has no active application and is not an officer for this project
+        if ((this.getApplication() == null) && !(isProjectOfficer(project))) {
             Application application = new Application(Application.getApplicationCounter(), project, flatType, this, LocalDate.now(), "Pending", "Null");
             this.setApplication(application);
 
@@ -54,10 +65,10 @@ public class Applicant extends User{
             AccessControl<Project> accessControl = new ProjectAccess();
             accessControl.add(project, this, "R");
 
-            System.out.println("Application submitted! Pending approval.");
+            System.out.println("Application submitted! Pending approval.\n");
             return true;
         } else {
-            System.out.println("Application failed. You already have an active application.");
+            System.out.println("Application failed. You already have an active application.\n");
             return false;
         }
     }
@@ -69,9 +80,12 @@ public class Applicant extends User{
 
         // user has an active application
         if (!(application == null)) {
-            System.out.println(application.getFormStatus());
+            System.out.println("Project: " + application.getProject().getName());
+            System.out.println("Neighbourhood: " + application.getProject().getNeighbourhood());
+            System.out.println("Flat Type Applied: " + application.getFlatType());
+            System.out.println("Application Status: " + application.getFormStatus() + "\n");
         } else {
-            System.out.println("No active application to view!");
+            System.out.println("No active application to view!\n");
         }
 
     }
@@ -83,10 +97,10 @@ public class Applicant extends User{
         // user has an active application
         if (!(application == null)) {
             application.setWithdrawalStatus("PENDING");
-            System.out.println("Withdrawal submitted! Pending approval.");
+            System.out.println("Withdrawal submitted! Pending approval.\n");
             return true;
         } else {
-            System.out.println("Withdrawal failed. You do not have an active application to withdraw from.");
+            System.out.println("Withdrawal failed. You do not have an active application to withdraw from.\n");
             return false;
         }
     }
@@ -104,11 +118,11 @@ public class Applicant extends User{
         for (Enquiry enquiry : enquiryList) {
             if (enquiry.getId().equals(id)) {
                 enquiry.setEnquiryString(newEnquiryString);
-                System.out.println("Enquiry successfully updated!");
+                System.out.println("Enquiry successfully updated!\n");
                 return true;
             }
         } 
-        System.out.println("Failed to edit. Enquiry not found.");
+        System.out.println("Failed to edit. Enquiry not found.\n");
         return false;
     }
 
@@ -117,11 +131,11 @@ public class Applicant extends User{
         for (Enquiry enquiry : enquiryList) {
             if (enquiry.getId().equals(id)) {
                 enquiryList.remove(enquiry);
-                System.out.println("Enquiry successfully deleted!");
+                System.out.println("Enquiry successfully deleted!\n");
                 return true;
             }
         } 
-        System.out.println("Failed to delete. Enquiry not found.");
+        System.out.println("Failed to delete. Enquiry not found.\n");
         return false;
     }
     }
