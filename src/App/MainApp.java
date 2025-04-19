@@ -27,9 +27,9 @@ public class MainApp {
         String role = "";
         do {
             System.out.println("Please Login to continue.");
-            System.out.println("NRIC: ");
+            System.out.print("NRIC: ");
             String nric = scanner.next();
-            System.out.println("Password: ");
+            System.out.print("Password: ");
             String password = scanner.next();
 
             for (Manager manager : all_managers) {
@@ -74,7 +74,7 @@ public class MainApp {
                     break;    
 
                 default:
-                    System.out.println("Invalid login credentials. Please try again.");
+                    System.out.println("Invalid login credentials. Please try again.\n");
                     break;
             }
         } while (role == "");

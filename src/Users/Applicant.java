@@ -44,7 +44,7 @@ public class Applicant extends User{
         this.application = application;
     }
 
-    protected boolean applyForProject(Project project, String flatType) {
+    public boolean applyForProject(Project project, String flatType) {
         /* applicant applies for a project */
         if (this.getApplication() == null) {
             Application application = new Application(Application.getApplicationCounter(), project, flatType, this, LocalDate.now(), "Pending", "Null");
