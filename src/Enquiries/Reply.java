@@ -2,13 +2,17 @@ package Enquiries;
 
 import java.time.LocalDateTime;
 
+import Users.User;
+
 public class Reply {
     private Enquiry enquiry;
+    private User user;
     private LocalDateTime dateTime;
     private String replyString;
 
-    public Reply(Enquiry enquiry, LocalDateTime dateTime, String replyString) {
+    public Reply(Enquiry enquiry, User user,LocalDateTime dateTime, String replyString) {
         this.enquiry = enquiry;
+        this.user = user;
         this.dateTime = dateTime;
         this.replyString = replyString;
     }
@@ -17,17 +21,16 @@ public class Reply {
         return enquiry;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public LocalDateTime getDateTime() {
         return dateTime;
     }
 
     public String getReplyString() {
         return replyString;
-    }
-
-    public void writeReply(String replyString) {
-        this.replyString = replyString;
-        this.enquiry.setReply(this); // Set the reply in the enquiry
     }
 
     public void editReply(String replyString) {
@@ -41,7 +44,7 @@ public class Reply {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(enquiry.getId()).append(",").append(dateTime).append(",").append(replyString).append(",");
+        sb.append(enquiry.getId()).append(",").append(user.getNric()).append(",").append(dateTime).append(",").append(replyString).append(",");
         return sb.toString();
     }
 }

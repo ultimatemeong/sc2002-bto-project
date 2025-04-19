@@ -240,12 +240,19 @@ public class MainApp {
         List<List<String>> replyRecords = FileOps.readFile("ReplyList");
         for (List<String> record : replyRecords) {
             Integer enquiryId = Integer.parseInt(record.get(0));
-            LocalDateTime replyDate = LocalDateTime.parse(record.get(1));
-            String replyString = record.get(2);
+            String userNric = record.get(1);
+            LocalDateTime replyDate = LocalDateTime.parse(record.get(2));
+            String replyString = record.get(3);
 
+            User user = null;
+            if (Manager.getManagerByNric(all_managers, userNric) != null) {
+                user = Manager.getManagerByNric(all_managers, userNric);
+            } else if (Officer.getOfficerByNric(all_officers, userNric) != null) {
+                user = Officer.getOfficerByNric(all_officers, userNric);
+            }
             Enquiry enquiry = Enquiry.getEnquiryById(all_enquiries, enquiryId);
             if (enquiry != null) {
-                Reply reply = new Reply(enquiry, replyDate, replyString);
+                Reply reply = new Reply(enquiry, user, replyDate, replyString);
                 enquiry.setReply(reply); // Set the reply in the enquiry
             }
         }

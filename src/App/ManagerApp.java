@@ -1,6 +1,7 @@
 package App;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -786,5 +787,166 @@ public class ManagerApp extends MainApp {
                     break;
             }
         } while (choice != 3);
+    }
+
+    public static void projectEnquiryInterface(List<Project> editableProjects) {
+        Scanner scanner = new Scanner(System.in);
+        List<Enquiry> enquiries = new ArrayList<>();
+        int choice;
+        int enqCount;
+        do {
+            System.out.println("Project Enquiry Interface");
+            System.out.println("1. View Enquiries");
+            System.out.println("2. Back to Project Work Interface");
+            System.out.println("Please select an option:");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("Viewing Enquiries...");
+                    System.out.println("1. View All Enquiries");
+                    System.out.println("2. View Enquiries For A Specific Project");
+                    int viewby = scanner.nextInt();
+                    switch (viewby) {
+                        case 1:
+                            enqCount = 1;
+                            for (Project project : editableProjects) {
+                                System.out.println(project.getName()+ ", " + project.getNeighbourhood() + ": ");
+                                System.out.println("Enquries: ");
+                                for (Enquiry enq : project.getEnquiryList()) {
+                                    System.out.println(String.valueOf(enqCount) + ". Name: " + enq.getApplicant().getName());
+                                    System.out.println("Enquiry: " + enq.getEnquiryString());
+                                    enquiries.add(enq);
+                                    enqCount++;
+                                }
+                            }
+                            System.out.println("Would you like to reply to an Enquiry? (Y/N): ");
+                            String work = scanner.next().toUpperCase();
+                            switch (work) {
+                                case "Y":
+                                    System.out.println("Choose an Enquiry to reply:");
+                                    int enqChoice;
+                                    do {
+                                        enqChoice = scanner.nextInt();
+                                        if (enqChoice < (enqCount)) {
+                                            Enquiry enq = enquiries.get(enqChoice-1);
+                                            replyToEnquiry(enq);
+                                            enqChoice = enqCount;
+                                        } else if (enqChoice == (enqCount)) {
+                                            System.out.println("Exiting to Project Work Interface...");
+                                            break;
+                                        } else {
+                                            System.out.println("Invalid choice. Please try again.");
+                                        }
+                                    } while (enqChoice != (enqCount));
+                                    break;
+                                case "N":
+                                    choice = 2;
+                                    break;
+                                default:
+                                    choice = 2;
+                                    break;
+                                
+                            }
+                            break;
+                        case 2:
+                            int i = 1;
+                            for (Project project : editableProjects) {
+                                if(project.getManager().getName().equals(current_user.getName())) {
+                                    System.out.println(String.valueOf(i) + ". " + project.getName() + ", " + project.getNeighbourhood());
+                                    i++;
+                                }
+                            }
+                            System.out.println(String.valueOf(i) + ". Exit to Project Work Interface");
+                            System.out.print("Choose a project:");
+                            int proj_choice;
+                            do {
+                                proj_choice = scanner.nextInt();
+                                if (proj_choice < (i)) {
+                                    Project proj = editableProjects.get(proj_choice-1);
+                                    enqCount = 1;
+                                    for (Enquiry enq : proj.getEnquiryList()) {
+                                        System.out.println(String.valueOf(enqCount) + ". Name: " + enq.getApplicant().getName());
+                                        System.out.println("Enquiry: " + enq.getEnquiryString());
+                                        enquiries.add(enq);
+                                        enqCount++;
+                                    }
+                                    
+                                    System.out.println("Would you like to reply to an Enquiry? (Y/N): ");
+                                    String workByProj = scanner.next().toUpperCase();
+                                    switch (workByProj) {
+                                        case "Y":
+                                            System.out.println("Choose an Enquiry to work on:");
+                                            int enqChoice;
+                                            do {
+                                                enqChoice = scanner.nextInt();
+                                                if (enqChoice < (enqCount)) {
+                                                    Enquiry enq = enquiries.get(enqChoice-1);
+                                                    replyToEnquiry(enq);
+                                                    proj_choice = i;
+                                                    break;
+                                                } else if (enqChoice == (enqCount)) {
+                                                    proj_choice = i;
+                                                    break;
+                                                } else {
+                                                    System.out.println("Invalid choice. Please try again.");
+                                                }
+                                            } while (enqChoice != (enqCount));
+                                            break;
+                                        case "N":
+                                            proj_choice = i;
+                                            break;
+                                        default:
+                                            proj_choice = i;
+                                            break;
+                                    }
+
+                                } else {
+                                    System.out.println("Invalid choice. Please try again.");
+                                    break;
+                                }
+
+                            } while (proj_choice != (i));
+                            break;
+                        default:
+                            break;
+                    }
+
+                    break;
+                case 2:
+                    System.out.println("Back to Project Management Interface...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        } while (choice != 2);
+    }       
+
+
+    private static void replyToEnquiry(Enquiry enq) {
+        Scanner scanner = new Scanner(System.in);
+
+        int choice;
+        do {
+            System.out.println("Working on Enquiry: " + enq.getApplicant().getName() + ", Enquiry: " + enq.getEnquiryString());
+            System.out.println("1. Reply to Enquiry");
+            System.out.println("2. Back to Project Work Interface");
+            System.out.println("Please select an option:");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("Reply to Enquiry: ");
+                    String replyString = scanner.nextLine();
+                    Reply reply = new Reply(enq, current_user,LocalDateTime.now(), replyString);
+                    enq.setReply(reply);
+                    break;
+                case 2:
+                    System.out.println("Back to Project Work Interface...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        } while (choice != 2);
     }
 }
