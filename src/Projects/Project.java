@@ -169,9 +169,33 @@ public class Project {
     }
 
     // Takes in the list of readable projects and filters them based on the flat type
-    public static List<Project> filterProjects(List<Project> allProjects, String flatType) {
+    public static List<Project> filterProjectsByFlatType(List<Project> allProjects, String flatType) {
         List<Project> filteredProjects = allProjects.stream()
-                .filter(project -> project.getFlatsInfo().containsKey(flatType) && project.getFlatsInfo().get(flatType).get(0) > 0)
+                .filter(project -> project.getFlatsInfo().containsKey(flatType))
+                .toList();
+
+        return filteredProjects;
+    }
+
+    public static List<Project> filterProjectsByNeighbourhood(List<Project> allProjects, String neighbourhood) {
+        List<Project> filteredProjects = allProjects.stream()
+                .filter(project -> project.getNeighbourhood().equals(neighbourhood))
+                .toList();
+
+        return filteredProjects;
+    }
+
+    public static List<Project> filterProjectsByPrice(List<Project> allProjects, Integer minPrice, Integer maxPrice) {
+        List<Project> filteredProjects = allProjects.stream()
+                .filter(project -> {
+                    for (List<Integer> priceInfo : project.getFlatsInfo().values()) {
+                        Integer price = priceInfo.get(1); // Get the selling price
+                        if (price >= minPrice && price <= maxPrice) {
+                            return true; // At least one flat type matches the price range
+                        }
+                    }
+                    return false; // No flat type matches the price range
+                })
                 .toList();
 
         return filteredProjects;

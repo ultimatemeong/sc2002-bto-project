@@ -1,4 +1,5 @@
 package App;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,6 +11,22 @@ import Users.*;
 import Projects.*;
 import Misc.*;
 
+enum ProjectFilter {
+    NULL,
+    MY_PROJECTS,
+    NEIGHBOURHOOD,
+    FLAT_TYPE,
+    PRICE,    
+}
+
+enum ReportFilter {
+    NULL,
+    APPLICATION_ID,
+    FLAT_TYPE,
+    MARITAL_STATUS,
+    PROJECT_NAME
+}
+
 public class MainApp {
     protected static List<Project> all_projects = new ArrayList<>();
     protected static List<Applicant> all_applicants = new ArrayList<>();
@@ -17,6 +34,7 @@ public class MainApp {
     protected static List<Manager> all_managers = new ArrayList<>();
     protected static List<Enquiry> all_enquiries = new ArrayList<>();
     protected static User current_user;
+    protected static ProjectFilter current_filter = ProjectFilter.NULL;
 
     public static void main(String[] args) throws Exception {
         init();
@@ -103,6 +121,78 @@ public class MainApp {
                     break;
             }
         } while (choice != 2);
+    }
+
+    public static void logout() throws Exception {
+        System.out.println("Logging out...");
+        current_user = null;
+        current_filter = ProjectFilter.NULL;
+
+        // Save Applicants
+        List<List<String>> string_applicants = new ArrayList<>();
+        for (Applicant applicant : all_applicants) {
+            string_applicants.add(List.of(applicant.toString()));
+        }
+        FileOps.writeFile("ApplicantList", string_applicants);
+
+        // Save Officers
+        List<List<String>> string_officers = new ArrayList<>();
+        for (Officer officer : all_officers) {
+            string_officers.add(List.of(officer.toString()));
+        }
+        FileOps.writeFile("OfficerList", string_officers);
+
+        // Save Managers
+        List<List<String>> string_managers = new ArrayList<>();
+        for (Manager manager : all_managers) {
+            string_managers.add(List.of(manager.toString()));
+        }
+        FileOps.writeFile("ManagerList", string_managers);
+
+        // Save Projects
+        List<List<String>> string_projects = new ArrayList<>();
+        for (Project project : all_projects) {
+            string_projects.add(List.of(project.toString()));
+        }
+        FileOps.writeFile("ProjectList", string_projects);
+
+        // Save Applications
+        List<List<String>> string_applications = new ArrayList<>();
+        for (Project project : all_projects) {
+            for (Application application : project.getApplicationList()) {
+                string_applications.add(List.of(application.toString()));
+            }
+        }
+        FileOps.writeFile("ApplicationList", string_applications);
+
+        // Save registrations
+        List<List<String>> string_registrations = new ArrayList<>();
+        for (Project project : all_projects) {
+            for (Registration registration : project.getRegistrationList()) {
+                string_registrations.add(List.of(registration.toString()));
+            }
+        }
+        FileOps.writeFile("RegistrationList", string_registrations);
+
+        // Save Enquiries
+        List<List<String>> string_enquiries = new ArrayList<>();
+        for (Project project : all_projects) {
+            for (Enquiry enquiry : project.getEnquiryList()) {
+                string_enquiries.add(List.of(enquiry.toString()));
+            }
+        }
+        FileOps.writeFile("EnquiryList", string_enquiries);
+
+        // Save Replies
+        List<List<String>> string_replies = new ArrayList<>();
+        for (Enquiry enquiry : all_enquiries) {
+            if (enquiry.getReply() != null) {
+                string_replies.add(List.of(enquiry.getReply().toString()));
+            }
+        }
+        FileOps.writeFile("ReplyList", string_replies);
+
+        System.out.println("Logged out successfully.");
     }
 
     private static void init() throws Exception {
@@ -199,6 +289,7 @@ public class MainApp {
             project.addToApplicationList(application);
             applicant.setApplication(application);
             applicationAccessControl.add(application, applicant, "RW");
+            projAccessControl.add(project, applicant, "R");
         }
 
         // Load registrations
@@ -216,6 +307,7 @@ public class MainApp {
             Registration registration = new Registration(registrationId, project, officer, registrationDate, status);
             project.addToRegistrationList(registration);
             officer.setRegistration(registration);
+            projAccessControl.add(project, officer, "RW");
         }
         
         // Load enquiries
