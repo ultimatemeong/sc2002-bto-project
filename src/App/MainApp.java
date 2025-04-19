@@ -97,19 +97,6 @@ public class MainApp {
 
                 case 2:
                     System.out.println("Back to Main Menu...");
-                    switch (current_user.getClass().getSimpleName()) {
-                        case "Manager":
-                            ManagerApp.managerInterface();
-                            break;
-                        case "Officer":
-                            break;
-                        case "Applicant":
-                            break;
-                            
-                        default:
-                            break;
-                    }
-                    
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");

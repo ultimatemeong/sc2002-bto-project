@@ -13,9 +13,9 @@ import Misc.*;
 public class ManagerApp extends MainApp {
     
     public static void managerInterface() {
+        Scanner scanner = new Scanner(System.in);
         int choice;
         do {
-            Scanner scanner = new Scanner(System.in);
             System.out.println("Manager Interface");
             System.out.println("1. Project Management");
             System.out.println("2. Account Management");
@@ -43,15 +43,16 @@ public class ManagerApp extends MainApp {
         List<Project> readableProjects = Project.viewProjects(all_projects, current_user).stream()
             .sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).toList();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Project Management Interface");
-        System.out.println("1. View Projects");
-        System.out.println("2. Add Project");
-        System.out.println("3. Edit Project");
-        System.out.println("4. Delete Project");
-        System.out.println("5. Back to Main Menu");
+        
 
         int choice;
         do {
+            System.out.println("Project Management Interface");
+            System.out.println("1. View Projects");
+            System.out.println("2. Add Project");
+            System.out.println("3. Work On Project");
+            System.out.println("4. Delete Project");
+            System.out.println("5. Back to Main Menu");
             System.out.println("Please select an option:");
             choice = scanner.nextInt();
             switch (choice) {
@@ -108,14 +109,55 @@ public class ManagerApp extends MainApp {
                     break;
                     
                 case 3:
-                    projectEditInterface(readableProjects);
+                    AccessControl<Project> accessControl = new ProjectAccess();
+                    List<Project> editableProjects = readableProjects.stream()
+                        .filter(project -> accessControl.check(project, current_user).contains("RW"))
+                        .toList();
+        
+                    int work_choice;
+
+                    do {
+                        System.out.println("Project Work Interface:");
+                        System.out.println("1. Edit Project Details");
+                        System.out.println("2. Applications");
+                        System.out.println("3. Withdrawals");
+                        System.out.println("4. Registrations");
+                        System.out.println("5. Enquiries");
+                        System.out.println("6. Back to Project Management Interface");
+                        System.out.println("Please select an option:");
+                        work_choice = scanner.nextInt();
+                        switch (work_choice) {
+                            case 1:
+                                projectDetailsEditInterface(editableProjects);
+                                break;
+                            case 2:
+                                // System.out.println("Viewing Applications...");
+                                projectApplicationInterface(editableProjects);
+                                break;
+                            case 3:
+                                // System.out.println("Viewing Withdrawals...");
+                                projectWithdrawalInterface(editableProjects);
+                                break;
+                            case 4:
+                                System.out.println("Viewing Registrations...");
+                                break;
+                            case 5:
+                                System.out.println("Viewing Enquiries...");
+                                break;
+                            case 6:
+                                System.out.println("Back to Project Management Interface...");
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please try again.");
+                                break;
+                        }
+                    } while (work_choice != 6);
                     break;
                 case 4:
                     
                     break;
                 case 5:
                     System.out.println("Back to Main Menu...");
-                    managerInterface();
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -124,23 +166,19 @@ public class ManagerApp extends MainApp {
         } while (choice != 5);
     }
 
-    private static void projectEditInterface(List<Project> readableProjects) {
+    private static void projectDetailsEditInterface(List<Project> editableProjects) {
         Scanner scanner = new Scanner(System.in);
-        AccessControl<Project> accessControl = new ProjectAccess();
-        List<Project> editableProjects = readableProjects.stream()
-            .filter(project -> accessControl.check(project, current_user).contains("RW"))
-            .toList();
-
         if (editableProjects.size() > 0) {
             int i = 1;
             System.out.println("Editable Projects:");
             for(Project proj : editableProjects) {
                 System.out.println(String.valueOf(i) + ". " + proj.getName());
+                i++;
             }
-            System.out.println(String.valueOf(i+1) + ". Exit to Project Management Interface");
+            System.out.println(String.valueOf(i) + ". Exit to Project Management Interface");
             System.out.print("Choose the project to edit:");
             Integer proj_choice = scanner.nextInt();
-            if (proj_choice < (i+1)) {
+            if (proj_choice < (i)) {
                 Project proj = editableProjects.get(proj_choice-1);
 
                 boolean proj_visibility = proj.isVisible();
@@ -242,5 +280,340 @@ public class ManagerApp extends MainApp {
             System.out.println("Back to Project Management Interface...");
             projectInterface();
         }
+    }
+
+    private static void projectApplicationInterface(List<Project> editableProjects) {
+
+        if (editableProjects.size() < 1) {
+            System.out.println("You have no projects to work on.");
+            System.out.println("Back to Project Management Interface...");
+            return;
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        int appCount;
+        int choice;
+        do {
+            System.out.println("Project Application Interface");
+            System.out.println("1. View Applications");
+            System.out.println("2. Back to Project Work Interface");
+            System.out.println("Please select an option:");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("Viewing Applications...");
+                    System.out.println("1. View All Applications");
+                    System.out.println("2. View Applications For A Specific Project");
+                    int viewby = scanner.nextInt();
+                    switch (viewby) {
+                        case 1:
+                            appCount = 1;
+                            for (Project project : editableProjects) {
+                                System.out.println(project.getName()+ ", " + project.getNeighbourhood() + ": ");
+                                for (Application app : project.getApplicationList()) {
+                                    System.out.println(String.valueOf(appCount) + ". Name: " + app.getUser().getName() + ", Room Type: " + app.getFlatType());
+                                    appCount++;
+                                }
+                            }
+
+                            System.out.println("Would you like to work on an application? (Y/N): ");
+                            String work = scanner.next().toUpperCase();
+                            switch (work) {
+                                case "Y":
+                                    System.out.println("Choose an application to work on:");
+                                    int appChoice;
+                                    do {
+                                        appChoice = scanner.nextInt();
+                                        if (appChoice < (appCount)) {
+                                            Application app = null;
+                                            for (Project project : editableProjects) {
+                                                if (appChoice <= project.getApplicationList().size()) {
+                                                    app = project.getApplicationList().get(appChoice-1);
+                                                    break;
+                                                } else {
+                                                    appChoice -= project.getApplicationList().size();
+                                                }
+                                            }
+                                            workOnApplication(app);
+                                            appChoice = appCount;
+                                        } else if (appChoice == (appCount)) {
+                                            appChoice = appCount;
+                                            break;
+                                        } else {
+                                            System.out.println("Invalid choice. Please try again.");
+                                        }
+                                    } while (appChoice != (appCount));
+                                    break;
+                                case "N":
+                                    choice = 2;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case 2:
+                            int i = 1;
+                            for (Project project : editableProjects) {
+                                if(project.getManager().getName().equals(current_user.getName())) {
+                                    System.out.println(String.valueOf(i) + ". " + project.getName() + ", " + project.getNeighbourhood());
+                                    i++;
+                                }
+                            }
+                            System.out.println(String.valueOf(i) + ". Exit to Project Work Interface");
+                            System.out.print("Choose a project:");
+                            int proj_choice;
+                            do {
+                                proj_choice = scanner.nextInt();
+                                if (proj_choice < (i)) {
+                                    Project proj = editableProjects.get(proj_choice-1);
+                                    appCount = 1;
+                                    for (Application app : proj.getApplicationList()) {
+                                        System.out.println(String.valueOf(appCount) + ". Name: " + app.getUser().getName() + ", Room Type: " + app.getFlatType());
+                                        appCount++;
+                                    }
+                                    System.out.println("Would you like to work on an application? (Y/N): ");
+                                    String workByProj = scanner.next().toUpperCase();
+                                    switch (workByProj) {
+                                        case "Y":
+                                            System.out.println("Choose an application to work on:");
+                                            int appChoice;
+                                            do {
+                                                appChoice = scanner.nextInt();
+                                                if (appChoice < (appCount)) {
+                                                    Application app = proj.getApplicationList().get(appChoice-1);
+                                                    workOnApplication(app);
+                                                    proj_choice = i;
+                                                } else if (appChoice == (appCount)) {
+                                                    proj_choice = i;
+                                                    break;
+                                                } else {
+                                                    System.out.println("Invalid choice. Please try again.");
+                                                }
+                                            } while (appChoice != (appCount));
+                                            break;
+                                        case "N":
+                                            proj_choice = i;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+
+                                } else if (proj_choice == (i)) {
+                                    choice = 2;
+                                    break;
+                                } else {
+                                    System.out.println("Invalid choice. Please try again.");
+                                }
+
+                            } while (proj_choice != (i));
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 2:
+                    System.out.println("Back to Project Work Interface...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        } while (choice != 2);
+    }
+
+    private static void workOnApplication(Application app) {
+        Scanner scanner = new Scanner(System.in);
+
+        int choice;
+        do {
+            System.out.println("Working on Application: " + app.getUser().getName() + ", Room Type: " + app.getFlatType());
+            System.out.println("1. Approve Application");
+            System.out.println("2. Reject Application");
+            System.out.println("3. Back to Project Work Interface");
+            System.out.println("Please select an option:");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("Application Approved");
+                    app.setFormStatus("APPROVED");
+                    break;
+                case 2:
+                    System.out.println("Application Rejected");
+                    app.setFormStatus("REJECTED");
+                    break;
+                case 3:
+                    System.out.println("Back to Project Work Interface...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        } while (choice != 3);
+    }
+
+    private static void projectWithdrawalInterface(List<Project> editableProjects) {
+        Scanner scanner = new Scanner(System.in);
+        
+        int choice;
+        int withdrawalCount;
+        do {
+            System.out.println("Project Withdrawal Interface");
+            System.out.println("1. View Withdrawals");
+            System.out.println("2. Back to Project Work Interface");
+            System.out.println("Please select an option:");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("Viewing Withdrawals...");
+                    System.out.println("1. View All Withdrawals");
+                    System.out.println("2. View Withdrawals For A Specific Project");
+                    int viewby = scanner.nextInt();
+                    switch (viewby) {
+                        case 1:
+                            withdrawalCount = 1;
+                            for (Project project : editableProjects) {
+                                System.out.println(project.getName()+ ", " + project.getNeighbourhood() + ": ");
+                                System.out.println("Pending Withdrawals: ");
+                                for (Application app : project.getApplicationList()) {
+                                    System.out.println("Name: " + app.getUser().getName() + ", Withdrawal Status: " + app.getWithdrawalStatus());
+                                    withdrawalCount++;
+                                }
+
+                                
+                                System.out.println(String.valueOf(withdrawalCount) + ". Exit to Project Work Interface");
+                                System.out.println("Would you like to work on an Withdrawal? (Y/N): ");
+                                String work = scanner.next().toUpperCase();
+                                switch (work) {
+                                    case "Y":
+                                        System.out.println("Choose an Withdrawal to work on:");
+                                        int appChoice;
+                                        do {
+                                            appChoice = scanner.nextInt();
+                                            if (appChoice < (withdrawalCount)) {
+                                                Application app = null;
+                                                for (Project proj : editableProjects) {
+                                                    if (appChoice <= project.getApplicationList().size()) {
+                                                        app = project.getApplicationList().get(appChoice-1);
+                                                        break;
+                                                    } else {
+                                                        appChoice -= project.getApplicationList().size();
+                                                    }
+                                                }
+                                                workOnWithdrawal(app);
+                                            } else if (appChoice == (withdrawalCount)) {
+                                                System.out.println("Exiting to Project Work Interface...");
+                                                break;
+                                            } else {
+                                                System.out.println("Invalid choice. Please try again.");
+                                            }
+                                        } while (appChoice != (withdrawalCount));
+                                        break;
+                                    case "N":
+                                        choice = 2;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        case 2:
+                            int i = 1;
+                            for (Project project : editableProjects) {
+                                if(project.getManager().getName().equals(current_user.getName())) {
+                                    System.out.println(String.valueOf(i) + ". " + project.getName() + ", " + project.getNeighbourhood());
+                                    i++;
+                                }
+                            }
+                            System.out.println(String.valueOf(i) + ". Exit to Project Work Interface");
+                            System.out.print("Choose a project:");
+                            int proj_choice;
+                            do {
+                                proj_choice = scanner.nextInt();
+                                if (proj_choice < (i)) {
+                                    Project proj = editableProjects.get(proj_choice-1);
+                                    withdrawalCount = 1;
+                                    for (Application app : proj.getApplicationList()) {
+                                        System.out.println("Name: " + app.getUser().getName() + ", Withdrawal Status: " + app.getWithdrawalStatus());
+                                        withdrawalCount++;
+                                    }
+                                    System.out.println(String.valueOf(withdrawalCount) + ". Exit to Project Work Interface");
+                                    System.out.println("Would you like to work on an Withdrawal? (Y/N): ");
+                                    String workByProj = scanner.next().toUpperCase();
+                                    switch (workByProj) {
+                                        case "Y":
+                                            System.out.println("Choose an Withdrawal to work on:");
+                                            int appChoice;
+                                            do {
+                                                appChoice = scanner.nextInt();
+                                                if (appChoice < (withdrawalCount)) {
+                                                    Application app = proj.getApplicationList().get(appChoice-1);
+                                                    workOnWithdrawal(app);
+                                                } else if (appChoice == (withdrawalCount)) {
+                                                    proj_choice = i;
+                                                    break;
+                                                } else {
+                                                    System.out.println("Invalid choice. Please try again.");
+                                                }
+                                            } while (appChoice != (withdrawalCount));
+                                            break;
+                                        case "N":
+                                            choice = 2;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+
+                                } else if (proj_choice == (i)) {
+                                    choice = 2;
+                                    break;
+                                } else {
+                                    System.out.println("Invalid choice. Please try again.");
+                                }
+
+                            } while (proj_choice != (i));
+                            break;
+                        default:
+                            break;
+                    }
+
+                    break;
+                case 2:
+                    System.out.println("Back to Project Management Interface...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        } while (choice != 2);
+    }
+
+    private static void workOnWithdrawal(Application app) {
+        Scanner scanner = new Scanner(System.in);
+
+        int choice;
+        do {
+            System.out.println("Working on Withdrawal: " + app.getUser().getName() + ", Room Type: " + app.getFlatType());
+            System.out.println("1. Approve Withdrawal");
+            System.out.println("2. Reject Withdrawal");
+            System.out.println("3. Back to Project Work Interface");
+            System.out.println("Please select an option:");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("Withdrawal Approved");
+                    app.setWithdrawalStatus("APPROVED");
+                    break;
+                case 2:
+                    System.out.println("Withdrawal Rejected");
+                    app.setWithdrawalStatus("REJECTED");
+                    break;
+                case 3:
+                    System.out.println("Back to Project Work Interface...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        } while (choice != 3);
     }
 }
