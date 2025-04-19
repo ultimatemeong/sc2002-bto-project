@@ -4,7 +4,6 @@ import Enquiries.Enquiry;
 import Misc.*;
 import Projects.Application;
 import Projects.Project;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class Applicant extends User{
         this.application = application;
     }
 
-    protected boolean applyForProject(Project project, String flatType) {
+    public boolean applyForProject(Project project, String flatType) {
         /* applicant applies for a project */
         if (this.getApplication() == null) {
             Application application = new Application(Application.getApplicationCounter(), project, flatType, this, LocalDate.now(), "Pending", "Null");
@@ -93,14 +92,14 @@ public class Applicant extends User{
     }
 
     //Enquiries specific methods
-    protected void createEnquiry(Project project, String enquiryString) {
+    public void createEnquiry(Project project, String enquiryString) {
         // Logic for creating enquiry
         LocalDateTime dateTime = LocalDateTime.now(); // Get the current date and time
         Enquiry enquiry = new Enquiry(Enquiry.getEnquiryCounter(), this, enquiryString, dateTime, project);
         enquiryList.add(enquiry);
     }
 
-    protected boolean editEnquiry(Integer id, String newEnquiryString) {
+    public boolean editEnquiry(Integer id, String newEnquiryString) {
         // Logic for editing enquiry
         for (Enquiry enquiry : enquiryList) {
             if (enquiry.getId().equals(id)) {
@@ -113,7 +112,7 @@ public class Applicant extends User{
         return false;
     }
 
-    protected boolean deleteEnquiry(Integer id) {
+    public boolean deleteEnquiry(Integer id) {
         // Logic for deleting enquiry
         for (Enquiry enquiry : enquiryList) {
             if (enquiry.getId().equals(id)) {
