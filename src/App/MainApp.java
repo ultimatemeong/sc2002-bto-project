@@ -35,7 +35,7 @@ public class MainApp {
             for (Manager manager : all_managers) {
                 if (manager.getNric().equals(nric) && manager.validatePassword(password)) {
                     System.out.println("Login successful! Welcome, " + manager.getName() + ".");
-                    current_user = manager;
+                    current_user = (Manager) manager;
                     role = "Manager";
                 }
             }
@@ -44,7 +44,7 @@ public class MainApp {
                 for (Officer officer : all_officers) {
                     if (officer.getNric().equals(nric) && officer.validatePassword(password)) {
                         System.out.println("Login successful! Welcome, " + officer.getName() + ".");
-                        current_user = officer;
+                        current_user = (Officer) officer;
                         role = "Officer";
                     }
                 }
@@ -54,7 +54,7 @@ public class MainApp {
                 for (Applicant applicant : all_applicants) {
                     if (applicant.getNric().equals(nric) && applicant.validatePassword(password)) {
                         System.out.println("Login successful! Welcome, " + applicant.getName() + ".");
-                        current_user = applicant;
+                        current_user = (Applicant) applicant;
                         role = "Applicant";
                     }
                 }

@@ -155,11 +155,11 @@ public class Project {
         return sb.toString();
     }
 
-    public static List<Project> viewProjects(List<Project> all_projects, User user) {
+    public static List<Project> viewProjects(List<Project> allProjects, User user) {
         AccessControl<Project> accessControl = new ProjectAccess();
 
         List<Project> readableProjects = new ArrayList<>();
-        for (Project project : all_projects) {
+        for (Project project : allProjects) {
             String access = accessControl.check(project, user);
             if (access.contains("R")){
                 readableProjects.add(project);
@@ -168,9 +168,9 @@ public class Project {
         return readableProjects;
     }
 
-    // Takes in the list of readable prjects and filters them based on the flat type
-    public static List<Project> filterProjects(List<Project> all_projects, String flatType) {
-        List<Project> filteredProjects = all_projects.stream()
+    // Takes in the list of readable projects and filters them based on the flat type
+    public static List<Project> filterProjects(List<Project> allProjects, String flatType) {
+        List<Project> filteredProjects = allProjects.stream()
                 .filter(project -> project.getFlatsInfo().containsKey(flatType) && project.getFlatsInfo().get(flatType).get(0) > 0)
                 .toList();
 
