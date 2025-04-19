@@ -16,6 +16,9 @@ public class EnquiryAccess implements AccessControl<Enquiry> {
             return enquiryAccessMap.get(userNRIC).get(id);
         } catch (Exception e) {
             if (!enquiryAccessMap.get(userNRIC).containsKey(id)) {
+                if (!enquiryAccessMap.containsKey(userNRIC)) {
+                    enquiryAccessMap.put(userNRIC, new HashMap<>());
+                }
                 if (user.getClass().getSimpleName().equals("Manager")) {
                     return "R"; // Manager has read access to all enquiries
                 } else if (user.getClass().getSimpleName().equals("Officer") && enquiry.getProject().getOfficerList().contains(user)) {
