@@ -3,6 +3,7 @@ package App;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,7 +14,7 @@ import Misc.*;
 
 public class ManagerApp extends MainApp {
     
-    public static void managerInterface() {
+    public static void managerInterface() throws Exception {
         Scanner scanner = new Scanner(System.in);
         int choice;
         do {
@@ -33,6 +34,8 @@ public class ManagerApp extends MainApp {
                     break;
                 case 3:
                     System.out.println("Logging out...");
+                    System.out.println("Goodbye " + current_user.getName() + "!");
+                    MainApp.logout();
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -44,9 +47,8 @@ public class ManagerApp extends MainApp {
     private static void projectInterface() {
         List<Project> readableProjects = Project.viewProjects(all_projects, current_user).stream()
             .sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).toList();
-        Scanner scanner = new Scanner(System.in);
-        
 
+        Scanner scanner = new Scanner(System.in);
         int choice;
         do {
             System.out.println("Project Management Interface");
@@ -60,19 +62,81 @@ public class ManagerApp extends MainApp {
             switch (choice) {
                 case 1:
                     System.out.println("1. View All Projects");
-                    System.out.println("2. View Your Projects");
+                    System.out.println("2. Filter Projects");
+                    System.out.println("Please select an option:");
                     int viewby = scanner.nextInt();
                     switch (viewby) {
                         case 1:
                             for (Project project : readableProjects) {
                                 System.out.println(project.getName()+ ", " + project.getNeighbourhood());
                             }
+                            current_filter = ProjectFilter.NULL;
                             break;
                         case 2:
-                            for (Project project : readableProjects) {
-                                if(project.getManager().getName().equals(current_user.getName())) {
-                                    System.out.println(project.getName()+ ", " + project.getNeighbourhood());
-                                }
+                            System.out.println("1. Filter by Flat Type");
+                            System.out.println("2. Filter by Neighbourhood");
+                            System.out.println("3. Filter by Price Range");
+                            System.out.println("4. View My Projects");
+                            System.out.println("5. Back to Project Management Interface");
+                            List<Project> filteredProjects = new ArrayList<>();
+                            int filter_choice;
+                            do {
+                                System.out.print("Please select an option:");
+                                filter_choice = scanner.nextInt();
+                                switch (filter_choice) {
+                                    case 1:
+                                        System.out.print("Enter Flat Type: (2-room or 3-room) ");
+                                        String flatType = scanner.next();
+                                        current_filter = ProjectFilter.FLAT_TYPE;
+                                        filteredProjects = Project.filterProjectsByFlatType(readableProjects, flatType);
+                                        for (Project project : filteredProjects) {
+                                            System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                                        }
+                                        break;
+                                    case 2:
+                                        System.out.print("Enter Neighbourhood: ");
+                                        String neighbourhood = scanner.next();
+                                        current_filter = ProjectFilter.NEIGHBOURHOOD;
+                                        filteredProjects = Project.filterProjectsByNeighbourhood(readableProjects, neighbourhood);
+                                        for (Project project : filteredProjects) {
+                                            System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                                        }
+                                        break;
+                                    case 3:
+                                        System.out.print("Enter Price Range: (min) ");
+                                        Integer minPrice = scanner.nextInt();
+                                        System.out.print("Enter Price Range: (max) ");
+                                        Integer maxPrice = scanner.nextInt();
+                                        current_filter = ProjectFilter.PRICE;
+                                        
+                                        filteredProjects = Project.filterProjectsByPrice(readableProjects, minPrice, maxPrice);
+                                        for (Project project : filteredProjects) {
+                                            System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                                        }
+                                        
+                                        break;
+                                    case 4:
+                                        System.out.println("Viewing My Projects...");
+                                        filteredProjects = readableProjects.stream()
+                                            .filter(project -> project.getManager().getName().equals(current_user.getName()))
+                                            .toList();
+                                        
+                                        for (Project project : filteredProjects) {
+                                            System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                                        }
+                                        
+                                        break;
+                                    case 5:
+                                        System.out.println("Back to Project Management Interface...");
+                                        break;
+                                    default:
+                                        System.out.println("Invalid choice. Please try again.");
+                                        break;
+                                } 
+                            } while (filter_choice > 5);
+                            if (filter_choice < 5 && readableProjects.size() > 0) {
+                                readableProjects = filteredProjects.stream()
+                                    .sorted(Comparator.comparing(Project::getName)).toList();
                             }
                             break;
                         default:
@@ -125,7 +189,8 @@ public class ManagerApp extends MainApp {
                         System.out.println("3. Withdrawals");
                         System.out.println("4. Registrations");
                         System.out.println("5. Enquiries");
-                        System.out.println("6. Back to Project Management Interface");
+                        System.out.println("6. Generate Report");
+                        System.out.println("7. Back to Project Management Interface");
                         System.out.println("Please select an option:");
                         work_choice = scanner.nextInt();
                         switch (work_choice) {
@@ -144,19 +209,38 @@ public class ManagerApp extends MainApp {
                                 projectRegistrationInterface(editableProjects);
                                 break;
                             case 5:
-                                System.out.println("Viewing Enquiries...");
+                                projectEnquiryInterface();
                                 break;
                             case 6:
+                                generateReport();
+                            case 7:
                                 System.out.println("Back to Project Management Interface...");
                                 break;
                             default:
                                 System.out.println("Invalid choice. Please try again.");
                                 break;
                         }
-                    } while (work_choice != 6);
+                    } while (work_choice != 7);
                     break;
                 case 4:
-                    
+                    AccessControl<Project> delaccessControl = new ProjectAccess();
+                    List<Project> deletableProjects = readableProjects.stream()
+                        .filter(project -> delaccessControl.check(project, current_user).contains("RW"))
+                        .toList();
+
+                    int projCount = 1;
+                    System.out.println("Delete Project:");
+                    for (Project project : deletableProjects) {
+                        System.out.println(projCount + ": " + project.getName()+ ", " + project.getNeighbourhood());
+                    }
+                    System.out.println("Choose a project to delete:");
+                    int proj_choice = scanner.nextInt();
+                    if (proj_choice < (projCount)) {
+                        Project proj = deletableProjects.get(proj_choice-1);
+                        deleteProject(proj);
+                    } else {
+                        System.out.println("Invalid choice. Please try again.");
+                    }
                     break;
                 case 5:
                     System.out.println("Back to Main Menu...");
@@ -789,7 +873,7 @@ public class ManagerApp extends MainApp {
         } while (choice != 3);
     }
 
-    public static void projectEnquiryInterface(List<Project> editableProjects) {
+    public static void projectEnquiryInterface() {
         Scanner scanner = new Scanner(System.in);
         List<Enquiry> enquiries = new ArrayList<>();
         int choice;
@@ -809,7 +893,7 @@ public class ManagerApp extends MainApp {
                     switch (viewby) {
                         case 1:
                             enqCount = 1;
-                            for (Project project : editableProjects) {
+                            for (Project project : all_projects) {
                                 System.out.println(project.getName()+ ", " + project.getNeighbourhood() + ": ");
                                 System.out.println("Enquries: ");
                                 for (Enquiry enq : project.getEnquiryList()) {
@@ -850,7 +934,7 @@ public class ManagerApp extends MainApp {
                             break;
                         case 2:
                             int i = 1;
-                            for (Project project : editableProjects) {
+                            for (Project project : all_projects) {
                                 if(project.getManager().getName().equals(current_user.getName())) {
                                     System.out.println(String.valueOf(i) + ". " + project.getName() + ", " + project.getNeighbourhood());
                                     i++;
@@ -862,7 +946,7 @@ public class ManagerApp extends MainApp {
                             do {
                                 proj_choice = scanner.nextInt();
                                 if (proj_choice < (i)) {
-                                    Project proj = editableProjects.get(proj_choice-1);
+                                    Project proj = all_projects.get(proj_choice-1);
                                     enqCount = 1;
                                     for (Enquiry enq : proj.getEnquiryList()) {
                                         System.out.println(String.valueOf(enqCount) + ". Name: " + enq.getApplicant().getName());
@@ -922,7 +1006,6 @@ public class ManagerApp extends MainApp {
         } while (choice != 2);
     }       
 
-
     private static void replyToEnquiry(Enquiry enq) {
         Scanner scanner = new Scanner(System.in);
 
@@ -948,5 +1031,136 @@ public class ManagerApp extends MainApp {
                     break;
             }
         } while (choice != 2);
+    }
+
+    private static void generateReport() {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println("Project Report Interface");
+            System.out.println("1. Generate Report");
+            System.out.println("2. Back to Project Work Interface");
+            System.out.println("Please select an option:");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("Filter Report By:");
+                    for (ReportFilter filter : ReportFilter.values()) {
+                        System.out.println(filter.ordinal() + 1 + ". " + filter.name());
+                    }
+                    System.out.println("Please select a filter:");
+                    int filterChoice = scanner.nextInt();
+                    do {
+                        switch (filterChoice) {
+                            case 1:
+                                System.out.println("No Filter Applied: ");
+                                all_projects = all_projects.stream()
+                                        .sorted(Comparator.comparing(Project::getName))
+                                        .toList();
+                                        
+                                ((Manager) current_user).generateReport(all_projects);
+                                break;
+                            case 2:
+                                System.out.println("Filter by Application ID: ");
+                                List<Application> allApplications = ((Manager) current_user).viewAllApplications(all_projects);
+                                allApplications = allApplications.stream()
+                                        .sorted(Comparator.comparing(Application::getId))
+                                        .toList();
+                                
+                                for (Application app : allApplications) {
+                                    ((Manager) current_user).generateReport(app);
+                                }
+                                break;
+
+                            case 3:
+                                System.out.println("Filter by Flat Type");
+                                System.out.println("Please select a flat type (2-Room/3-Room): ");
+                                String flatType = scanner.next();
+                                List<Application> allApplications2 = ((Manager) current_user).viewAllApplications(all_projects);
+                                if (!flatType.equals("2-Room") && !flatType.equals("3-Room")) {
+                                    System.out.println("Invalid flat type. Please try again.");
+                                    break;
+                                }
+                                allApplications2 = allApplications2.stream()
+                                        .filter(app -> app.getFlatType().equals(flatType))
+                                        .sorted(Comparator.comparing(Application::getId))
+                                        .toList();
+
+                                for (Application app : allApplications2) {
+                                    ((Manager) current_user).generateReport(app);
+                                }
+                                break;
+
+                            case 4:
+                                System.out.println("Filter by Marital Status: ");
+                                System.out.println("Please select a marital status (Single/Married): ");
+                                String maritalStatus = scanner.next().toUpperCase();
+                                List<Application> allApplications3 = ((Manager) current_user).viewAllApplications(all_projects);
+                                if (!maritalStatus.equals("SINGLE") && !maritalStatus.equals("MARRIED")) {
+                                    System.out.println("Invalid marital status. Please try again.");
+                                    break;
+                                }
+                                allApplications3 = allApplications3.stream()
+                                        .filter(app -> app.getUser().getMaritalStatus().equals(maritalStatus))
+                                        .sorted(Comparator.comparing(Application::getId))
+                                        .toList();
+                                
+                                System.out.println(allApplications3);
+                                for (Application app : allApplications3) {
+                                    ((Manager) current_user).generateReport(app);
+                                }
+                                break;
+
+                            case 5:
+                                System.out.println("Filter by Project Name: ");
+                                System.out.println("Please select a project name: ");
+                                scanner.nextLine(); // Consume the newline character
+                                String projectName = scanner.nextLine();
+                                List<Application> allApplications4 = ((Manager) current_user).viewAllApplications(all_projects);
+                                allApplications4 = allApplications4.stream()
+                                        .filter(app -> app.getProject().getName().equals(projectName))
+                                        .sorted(Comparator.comparing(Application::getId))
+                                        .toList();
+
+                                for (Application app : allApplications4) {
+                                    ((Manager) current_user).generateReport(app);
+                                }
+                                break;
+
+                            default:
+                                System.out.println("Invalid choice. Please try again.");
+                                break;
+                        }
+                    } while (filterChoice < 1 || filterChoice > ReportFilter.values().length);
+                    break;
+                case 2:
+                    System.out.println("Back to Project Work Interface...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        } while (choice != 2);
+    }
+
+    private static void deleteProject(Project project) {
+        Scanner scanner = new Scanner(System.in);
+        String confirm;
+        do {
+            System.out.println("Are you sure you want to delete the project " + project.getName() + "? (Y/N): ");
+            confirm = scanner.next().toUpperCase();
+            switch (confirm) {
+                case "Y":
+                    all_projects.remove(project);
+                    System.out.println("Project deleted successfully.");
+                    break;
+                case "N":
+                    System.out.println("Project deletion cancelled.");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        } while (!confirm.equals("Y") && !confirm.equals("N"));
     }
 }
