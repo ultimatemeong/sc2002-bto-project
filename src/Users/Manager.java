@@ -118,7 +118,7 @@ public class Manager extends User{
     }
     
     //Applicants specific methods
-    public List<Application> viewAllApplicantions(List<Project> projects) {
+    public List<Application> viewAllApplications(List<Project> projects) {
         // returns list of all applications of all projects
         List<Application> applications = new ArrayList<>();
         
@@ -150,8 +150,7 @@ public class Manager extends User{
     }
 
     public void generateReport(List<Project> allProjects) {
-        // Logic for generating reports
-        List<Application> applications = viewAllApplicantions(allProjects);
+        List<Application> applications = viewAllApplications(allProjects);
 
         for (Application application : applications) {
             System.out.println("Flat type: " + application.getFlatType());
@@ -159,5 +158,13 @@ public class Manager extends User{
             System.out.println("Applicant name: " + application.getUser().getName());
             System.out.println("Applicant marital status: " + application.getUser().getMaritalStatus());
         }
+    }
+
+    public void generateReport(Application application) {
+        
+        System.out.println("Flat type: " + application.getFlatType());
+        System.out.println("Project name: " + application.getProject().getName());
+        System.out.println("Applicant name: " + application.getUser().getName());
+        System.out.println("Applicant marital status: " + application.getUser().getMaritalStatus());
     }
 }
