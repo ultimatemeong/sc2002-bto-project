@@ -23,7 +23,7 @@ public class Registration extends Form{
         StringBuilder sb = new StringBuilder();
         sb.append(id).append(",").append(user.getNric()).append(",").append(date).append(",");
         sb.append(formStatus.toString()).append(",");
-        sb.append(project.getName()).append(",");
+        sb.append(project.getName());
         return sb.toString();
     }
 

@@ -48,7 +48,7 @@ public class Reply {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(enquiry.getId()).append(",").append(user.getNric()).append(",").append(dateTime).append(",").append(replyString).append(",");
+        sb.append(enquiry.getId()).append(",").append(user.getNric()).append(",").append(dateTime).append(",").append(replyString);
         return sb.toString();
     }
 }

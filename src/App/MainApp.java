@@ -35,6 +35,7 @@ public class MainApp {
     protected static List<Enquiry> all_enquiries = new ArrayList<>();
     protected static User current_user;
     protected static ProjectFilter current_filter = ProjectFilter.NULL;
+    private static boolean isEnd = false;
 
     public static void main(String[] args) throws Exception {
         init();
@@ -94,7 +95,7 @@ public class MainApp {
                     System.out.println("Invalid login credentials. Please try again.\n");
                     break;
             }
-        } while (role == "");
+        } while (role == "" && !isEnd);
     }
 
     public static void accountInterface() {
@@ -130,9 +131,20 @@ public class MainApp {
         System.out.println("Logging out...\n");
         current_user = null;
         current_filter = ProjectFilter.NULL;
+        isEnd = true;
 
+        // Save all data to files
+        String userHeader = "Name,NRIC,Age,Marital Status,Password";
+        String projectHeader = "Project Name,Neighborhood,Type 1,Number of units for Type 1,Selling price for Type 1,Type 2,Number of units for Type 2,Selling price for Type 2,Application opening date,Application closing date,Manager,Officer Slot,Officer";
+        String applicationHeader = "ID,FlatType,NRIC,Date,Application Status,Withdrawal Status,Project";
+        String registrationHeader = "ID,NRIC,Date,Registration Status,Project";
+        String enquiryHeader = "ID,NRIC,Enquiry,DateTime,Project";
+        String replyHeader = "Enquiry ID,User,DateTime,Reply";
+        
         // Save Applicants
         List<List<String>> string_applicants = new ArrayList<>();
+        
+        string_applicants.add(List.of(userHeader.split(",")));
         for (Applicant applicant : all_applicants) {
             string_applicants.add(List.of(applicant.toString()));
         }
@@ -140,6 +152,8 @@ public class MainApp {
 
         // Save Officers
         List<List<String>> string_officers = new ArrayList<>();
+
+        string_officers.add(List.of(userHeader.split(",")));
         for (Officer officer : all_officers) {
             string_officers.add(List.of(officer.toString()));
         }
@@ -147,6 +161,8 @@ public class MainApp {
 
         // Save Managers
         List<List<String>> string_managers = new ArrayList<>();
+
+        string_managers.add(List.of(userHeader.split(",")));
         for (Manager manager : all_managers) {
             string_managers.add(List.of(manager.toString()));
         }
@@ -154,6 +170,8 @@ public class MainApp {
 
         // Save Projects
         List<List<String>> string_projects = new ArrayList<>();
+
+        string_projects.add(List.of(projectHeader.split(",")));
         for (Project project : all_projects) {
             string_projects.add(List.of(project.toString()));
         }
@@ -161,6 +179,8 @@ public class MainApp {
 
         // Save Applications
         List<List<String>> string_applications = new ArrayList<>();
+
+        string_applications.add(List.of(applicationHeader.split(",")));
         for (Project project : all_projects) {
             for (Application application : project.getApplicationList()) {
                 string_applications.add(List.of(application.toString()));
@@ -170,6 +190,8 @@ public class MainApp {
 
         // Save registrations
         List<List<String>> string_registrations = new ArrayList<>();
+
+        string_registrations.add(List.of(registrationHeader.split(",")));
         for (Project project : all_projects) {
             for (Registration registration : project.getRegistrationList()) {
                 string_registrations.add(List.of(registration.toString()));
@@ -179,6 +201,8 @@ public class MainApp {
 
         // Save Enquiries
         List<List<String>> string_enquiries = new ArrayList<>();
+
+        string_enquiries.add(List.of(enquiryHeader.split(",")));
         for (Project project : all_projects) {
             for (Enquiry enquiry : project.getEnquiryList()) {
                 string_enquiries.add(List.of(enquiry.toString()));
@@ -188,6 +212,8 @@ public class MainApp {
 
         // Save Replies
         List<List<String>> string_replies = new ArrayList<>();
+
+        string_replies.add(List.of(replyHeader.split(",")));
         for (Enquiry enquiry : all_enquiries) {
             if (enquiry.getReply() != null) {
                 string_replies.add(List.of(enquiry.getReply().toString()));

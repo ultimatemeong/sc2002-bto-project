@@ -38,6 +38,7 @@ public class OfficerApp extends ApplicantApp {
                     System.out.println("Logging out...");
                     System.out.println("Goodbye, " + current_user.getName() + "!");
                     MainApp.logout();
+                    choice = 3; // Exit the loop
                     break;
 
                 default:
@@ -183,6 +184,7 @@ public class OfficerApp extends ApplicantApp {
                 // back to main menu
                 case 2:
                     System.out.println("Back to Main Menu...\n");
+                    break;
             }
         } while (choice != 2);
     }

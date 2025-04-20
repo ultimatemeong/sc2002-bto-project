@@ -39,7 +39,7 @@ public class Application extends Form {
         StringBuilder sb = new StringBuilder();
         sb.append(id).append(",").append(flatType).append(",").append(user.getNric()).append(",").append(date).append(",");
         sb.append(formStatus.toString()).append(",").append(withdrawalStatus.toString()).append(",");
-        sb.append(project.getName()).append(",");
+        sb.append(project.getName());
         return sb.toString();
     }
 

@@ -145,7 +145,7 @@ public class Project {
         StringBuilder sb = new StringBuilder();
         sb.append(name).append(",").append(neighbourhood).append(",");
         for (Map.Entry<String, List<Integer>> entry : flatsInfo.entrySet()) {
-            sb.append(entry.getKey()).append(":").append(entry.getValue().get(0)).append(":").append(entry.getValue().get(1)).append(",");
+            sb.append(entry.getKey()).append(",").append(entry.getValue().get(0)).append(",").append(entry.getValue().get(1)).append(",");
         }
         sb.append(applicationOpenDate).append(",").append(applicationCloseDate).append(",").append(manager.getNric()).append(",");
         sb.append(officerSlots).append(",");

@@ -40,7 +40,8 @@ public class ManagerApp extends MainApp {
                 case 4:
                     System.out.println("Logging out...");
                     System.out.println("Goodbye, " + current_user.getName() + "!");
-                    MainApp.logout();
+                    logout();
+                    choice = 3;
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");

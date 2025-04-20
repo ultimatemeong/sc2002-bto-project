@@ -42,6 +42,7 @@ public class ApplicantApp extends MainApp {
                     System.out.println("Logging out...");
                     System.out.println("Goodbye, " + current_user.getName() + "!");
                     MainApp.logout();
+                    choice = 4; // Exit the loop
                     break;
                 
                 default:
