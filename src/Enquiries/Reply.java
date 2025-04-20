@@ -33,6 +33,10 @@ public class Reply {
         return replyString;
     }
 
+    public void writeReply(String replyString) {
+        this.replyString = replyString;
+    }
+
     public void editReply(String replyString) {
         this.replyString = replyString;
     }

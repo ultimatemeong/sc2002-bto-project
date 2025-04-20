@@ -897,10 +897,12 @@ public class ManagerApp extends MainApp {
                                 System.out.println(project.getName()+ ", " + project.getNeighbourhood() + ": ");
                                 System.out.println("Enquries: ");
                                 for (Enquiry enq : project.getEnquiryList()) {
-                                    System.out.println(String.valueOf(enqCount) + ". Name: " + enq.getApplicant().getName());
-                                    System.out.println("Enquiry: " + enq.getEnquiryString());
-                                    enquiries.add(enq);
-                                    enqCount++;
+                                    if (enq.getReply()== null) {
+                                        System.out.println(String.valueOf(enqCount) + ". Name: " + enq.getApplicant().getName());
+                                        System.out.println("\tEnquiry: " + enq.getEnquiryString());
+                                        enquiries.add(enq);
+                                        enqCount++;
+                                    }
                                 }
                             }
                             System.out.println("Would you like to reply to an Enquiry? (Y/N): ");
@@ -1020,7 +1022,8 @@ public class ManagerApp extends MainApp {
                 case 1:
                     System.out.println("Reply to Enquiry: ");
                     String replyString = scanner.nextLine();
-                    Reply reply = new Reply(enq, current_user,LocalDateTime.now(), replyString);
+                    Reply reply = new Reply(enq, current_user,LocalDateTime.now(), null);
+                    reply.writeReply(replyString);
                     enq.setReply(reply);
                     break;
                 case 2:
