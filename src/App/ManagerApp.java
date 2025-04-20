@@ -20,8 +20,9 @@ public class ManagerApp extends MainApp {
         do {
             System.out.println("Manager Interface");
             System.out.println("1. Project Management");
-            System.out.println("2. Account Management");
-            System.out.println("3. Logout");
+            System.out.println("2. Enqiry Management");
+            System.out.println("3. Account Management");
+            System.out.println("4. Logout");
             System.out.println("Please select an option:");
 
             choice = scanner.nextInt();
@@ -30,9 +31,12 @@ public class ManagerApp extends MainApp {
                     projectInterface();
                     break;
                 case 2:
-                    MainApp.accountInterface();
+                    projectEnquiryInterface();
                     break;
                 case 3:
+                    MainApp.accountInterface();
+                    break;
+                case 4:
                     System.out.println("Logging out...");
                     System.out.println("Goodbye " + current_user.getName() + "!");
                     MainApp.logout();
@@ -1025,6 +1029,7 @@ public class ManagerApp extends MainApp {
                     Reply reply = new Reply(enq, current_user,LocalDateTime.now(), null);
                     reply.writeReply(replyString);
                     enq.setReply(reply);
+                    choice = 2;
                     break;
                 case 2:
                     System.out.println("Back to Project Work Interface...");
