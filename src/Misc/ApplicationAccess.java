@@ -12,24 +12,26 @@ public class ApplicationAccess implements AccessControl<Application> {
     public String check(Application application, User user) {
         Integer id = application.getId();
         String userNRIC = user.getNric();
+        Map<Integer, String> userAccessMap;
 
-        try {
-            return applicationAccessMap.get(userNRIC).get(id);
-        } catch (Exception e) {
-            if (!applicationAccessMap.containsKey(userNRIC)) {
-                applicationAccessMap.put(userNRIC, new HashMap<>());
-            }
-            if (!applicationAccessMap.get(userNRIC).containsKey(id)) {
-                if (user.getClass().getSimpleName().equals("Manager")) {
-                    return "R"; // Manager has read access to all applications
-                } else if (user.getClass().getSimpleName().equals("Officer") && application.getProject().getOfficerList().contains(user)) {
-                    return "R"; // Officer has read access to all applications for projects he is involved in
-                } else {
-                    return "NULL"; // If user is applicant and not in accessmap
-                }
-            } 
+        if (!applicationAccessMap.containsKey(userNRIC)) {
+            applicationAccessMap.put(userNRIC, new HashMap<>());
+            userAccessMap = applicationAccessMap.get(userNRIC);
+        } else {
+            userAccessMap = applicationAccessMap.get(userNRIC);
         }
-        return "NULL"; // Default return value if no access is found
+
+        if (!userAccessMap.containsKey(id)) {
+            if (user.getClass().getSimpleName().equals("Manager")) {
+                return "R"; // Manager has read access to all applications
+            } else if (user.getClass().getSimpleName().equals("Officer") && application.getProject().getOfficerList().contains(user)) {
+                return "R"; // Officer has read access to all applications for projects he is involved in
+            } else {
+                return "NULL"; // If user is applicant and not in accessmap
+            }
+        } else {
+            return userAccessMap.get(id); // Return the access level if it exists
+        }
     }
 
     public void add(Application application, User user, String accessLevel){

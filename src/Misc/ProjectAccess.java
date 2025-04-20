@@ -11,26 +11,29 @@ public class ProjectAccess implements AccessControl<Project> {
     public String check(Project project, User user){
         String id = project.getName();
         String userNRIC = user.getNric();
+        Map<String, String> userAccessMap;
 
-        try {
-            return projectAccessMap.get(userNRIC).get(id);
-        } catch (Exception e) {
-            if (!projectAccessMap.containsKey(userNRIC)) {
-                projectAccessMap.put(userNRIC, new HashMap<>());
-            }
-            if (!projectAccessMap.get(userNRIC).containsKey(id)) {
-                if (user.getClass().getSimpleName().equals("Manager")) {
-                    return "R"; // Manager has read access to all projects
-                } else {
-                    if (!project.isVisible()) {
-                        return "NULL"; // If the project is not visible and the user is not a manager, return "NULL"
-                    } else {
-                        return "R"; // If the project is visible, return "R" for read access
-                    }
-                }
-            } 
+        if (!projectAccessMap.containsKey(userNRIC)) {
+            projectAccessMap.put(userNRIC, new HashMap<>());
+            userAccessMap = projectAccessMap.get(userNRIC);
+        } else {
+            userAccessMap = projectAccessMap.get(userNRIC);
         }
-        return "NULL"; // Default return value if no access is found
+
+
+        if (!userAccessMap.containsKey(id)) {
+            if (user.getClass().getSimpleName().equals("Manager")) {
+                return "R"; // Manager has read access to all projects
+            } else {
+                if (!project.isVisible()) {
+                    return "NULL"; // If the project is not visible and the user is not a manager, return "NULL"
+                } else {
+                    return "R"; // If the project is visible, return "R" for read access
+                }
+            }
+        } else {
+            return userAccessMap.get(id); // Return the access level if it exists
+        } 
     }
 
     public void add(Project project, User user, String accessLevel){
