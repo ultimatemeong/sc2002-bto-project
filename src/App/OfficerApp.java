@@ -5,6 +5,7 @@ import Enquiries.Reply;
 import Projects.*;
 import Users.Officer;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -74,7 +75,7 @@ public class OfficerApp extends ApplicantApp {
                     break;
 
                 case 2:
-                    enquiryInterface(readableProjects, null);
+                    enquiryInterface(null);
                     break;
 
                 case 3:
@@ -119,7 +120,7 @@ public class OfficerApp extends ApplicantApp {
 
                     do {
                         i = 1;
-                        System.out.println("Select Any Project:");
+                        System.out.println("Select A Project:");
                         for (Project project : readableProjects) {
                             System.out.println("\t" + i + ". " + project.getName() + ": " + project.getNeighbourhood());
                             i++;
@@ -140,7 +141,8 @@ public class OfficerApp extends ApplicantApp {
                                 System.out.println("Project Actions");
                                 System.out.println("1. Register For This Project");
                                 System.out.println("2. View and Reply to Enquiries About This Project");
-                                System.out.println("3. Select Another Project");
+                                System.out.println("3. Book Flat for Applicant");
+                                System.out.println("4. Select Another Project");
                                 System.out.print("Please select an option: ");
 
                                 projActionChoice = scanner.nextInt();
@@ -154,11 +156,15 @@ public class OfficerApp extends ApplicantApp {
 
                                     // view and reply enquiries 
                                     case 2:
-                                        enquiryInterface(readableProjects, selectedProject);
+                                        enquiryInterface(selectedProject);
                                         break;
 
-                                    // back to select project
+                                    // book flat
                                     case 3:
+                                        bookFlatInterface(selectedProject);
+
+                                    // back to select project
+                                    case 4:
                                         System.out.println("Back to Project Selection...\n");
                                         break;
 
@@ -234,7 +240,7 @@ public class OfficerApp extends ApplicantApp {
         }
     }
 
-    private static void enquiryInterface(List<Project> readableProjects, Project selectedProject) {
+    private static void enquiryInterface(Project selectedProject) {
         Project projectInCharge = ((Officer) current_user).projectInCharge();
         if (!(projectInCharge == null)) {
             if ((selectedProject == null) || (selectedProject.equals(projectInCharge))) {
@@ -259,7 +265,7 @@ public class OfficerApp extends ApplicantApp {
         
                         do { 
                             i = 1;
-                            System.out.println("Select Any Enquiry:");
+                            System.out.println("Select An Enquiry:");
                             for (Enquiry enquiry : enqList) {
                                 System.out.println(i + ". User: " + enquiry.getApplicant().getName());
                                 System.out.println("\tEnquiry: " + enquiry.getEnquiryString());
@@ -319,6 +325,77 @@ public class OfficerApp extends ApplicantApp {
             } else {
                 System.out.println("You are not in charge of this project.\n");
             }
+        }
+    }
+
+    private static void bookFlatInterface(Project selectedProject) {
+        Project projectInCharge = ((Officer) current_user).projectInCharge();
+        if (selectedProject.equals(projectInCharge)) {
+            Scanner scanner = new Scanner(System.in);
+            int applicationChoice;
+            int i;
+
+            List<Application> applicationList = projectInCharge.getApplicationList();
+            List<Application> approvedAppList = new ArrayList<>();
+
+            for (Application application : applicationList) {
+                if (application.getFormStatus().equals("APPROVED")) {
+                    approvedAppList.add(application);
+                }
+            }
+
+            do { 
+                i = 1;
+                if (approvedAppList.isEmpty()) {
+                    System.out.println("\tNo Applications to view.");
+                } else {
+                    System.out.println("Select An Application:");
+                    for (Application application : approvedAppList) {
+                        System.out.println("\t" + i + ". Applicant: " + application.getUser().getName());
+                        System.out.println("\tFlat Type: " + application.getFlatType());
+                    }
+                }
+                System.out.println(i + ". Back to Project Actions");
+                System.out.print("Please select an option: ");
+
+                applicationChoice = scanner.nextInt();
+                System.out.println();
+
+                // select application
+                if (applicationChoice < i) {
+                    Application application = approvedAppList.get(applicationChoice-1);
+                    System.out.println("Selected Application: ");
+                    System.out.println("Applicant: " + application.getUser().getName());
+                    System.out.println("Flat Type: " + application.getFlatType());
+                    System.out.println("Confirm Flat Booking? (Y/N)");
+                    String confirmBooking = scanner.next().toUpperCase();
+
+                    switch (confirmBooking) {
+                        case "Y":
+                            ((Officer) current_user).chooseFlat(projectInCharge, application.getUser().getNric());
+                            break;
+                        case "N":
+                            System.out.println("Booking cancelled.\n");
+                            break;
+
+                        default:
+                            System.out.println("Invalid choice. Please try again.");
+                            break;
+                    }
+
+
+                } else if (applicationChoice == i) {
+                    System.out.println("Back to Project Actions...\n");
+                    break;
+                } else {
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+                }
+
+            } while (applicationChoice != i);
+
+        } else {
+            System.out.println("You are not in charge of this project.\n");
         }
     }
 }

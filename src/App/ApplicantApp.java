@@ -73,7 +73,7 @@ public class ApplicantApp extends MainApp {
 
                     do {
                         i = 1;
-                        System.out.println("Select Any Project:");
+                        System.out.println("Select A Project:");
                         for (Project project : readableProjects) {
                             System.out.println("\t" + i + ". " + project.getName() + ": " + project.getNeighbourhood());
                             i++;
