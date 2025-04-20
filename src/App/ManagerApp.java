@@ -20,12 +20,13 @@ public class ManagerApp extends MainApp {
         do {
             System.out.println("Manager Interface");
             System.out.println("1. Project Management");
-            System.out.println("2. Enqiry Management");
+            System.out.println("2. Enquiry Management");
             System.out.println("3. Account Management");
             System.out.println("4. Logout");
-            System.out.println("Please select an option:");
+            System.out.print("Please select an option:");
 
             choice = scanner.nextInt();
+            System.out.println();
             switch (choice) {
                 case 1:
                     projectInterface();
@@ -38,7 +39,7 @@ public class ManagerApp extends MainApp {
                     break;
                 case 4:
                     System.out.println("Logging out...");
-                    System.out.println("Goodbye " + current_user.getName() + "!");
+                    System.out.println("Goodbye, " + current_user.getName() + "!");
                     MainApp.logout();
                     break;
                 default:
@@ -61,8 +62,9 @@ public class ManagerApp extends MainApp {
             System.out.println("3. Work On Project");
             System.out.println("4. Delete Project");
             System.out.println("5. Back to Main Menu");
-            System.out.println("Please select an option:");
+            System.out.print("Please select an option:");
             choice = scanner.nextInt();
+            System.out.println();
             switch (choice) {
                 case 1:
                     System.out.println("1. View All Projects");
@@ -886,7 +888,7 @@ public class ManagerApp extends MainApp {
             System.out.println("Project Enquiry Interface");
             System.out.println("1. View Enquiries");
             System.out.println("2. Back to Project Work Interface");
-            System.out.println("Please select an option:");
+            System.out.print("Please select an option: ");
             choice = scanner.nextInt();
             switch (choice) {
                 case 1:
@@ -1026,7 +1028,7 @@ public class ManagerApp extends MainApp {
                 case 1:
                     System.out.println("Reply to Enquiry: ");
                     String replyString = scanner.nextLine();
-                    Reply reply = new Reply(enq, current_user,LocalDateTime.now(), null);
+                    Reply reply = new Reply(enq, current_user, LocalDateTime.now(), null);
                     reply.writeReply(replyString);
                     enq.setReply(reply);
                     choice = 2;

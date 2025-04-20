@@ -2,7 +2,6 @@ package Users;
 
 import Enquiries.Enquiry;
 import Projects.*;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +78,38 @@ public class Officer extends Applicant{
         } else {
             System.out.println("Registration failed. You already have an active registration.");
             return false;
+        }
+    }
+
+    public Project projectInCharge() {
+        Registration registration = this.getRegistration();
+        // has active registration
+        if (!(registration == null)) {
+            if (registration.getFormStatus().equals("SUCCESSFUL")) {
+                System.out.println("You are current in charge of: " + registration.getProject().getName());
+                return registration.getProject();
+            } else {
+                return null;
+            }
+
+        // no active registration
+        } else {
+            System.out.println("You are currently not in charge of any projects.");
+            return null;
+        }
+    }
+
+    public void viewRegistrationStatus() {
+        // Logic for viewing registration status
+        Registration registration = this.getRegistration();
+
+        // user has an active registration
+        if (!(registration == null)) {
+            System.out.println("Project: " + registration.getProject().getName());
+            System.out.println("Neighbourhood: " + registration.getProject().getNeighbourhood());
+            System.out.println("Registration Status: " + registration.getFormStatus() + "\n");
+        } else {
+            System.out.println("No active registration to view!\n");
         }
     }
 

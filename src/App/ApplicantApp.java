@@ -8,9 +8,9 @@ import java.util.Scanner;
 
 public class ApplicantApp extends MainApp {
 
-    public static void applicantInterface() {
+    public static void applicantInterface() throws Exception {
         List<Project> readableProjects = Project.viewProjects(all_projects, current_user).stream()
-            .sorted().toList();
+            .sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).toList();
 
         Scanner scanner = new Scanner(System.in);
         int choice;
@@ -20,8 +20,11 @@ public class ApplicantApp extends MainApp {
             System.out.println("2. Application Management");
             System.out.println("3. Account Management");
             System.out.println("4. Logout");
+            System.out.print("Please select an option: ");
 
             choice = scanner.nextInt();
+            System.out.println();
+
             switch (choice) {
                 case 1:
                     projectInterface(readableProjects);
@@ -37,6 +40,8 @@ public class ApplicantApp extends MainApp {
 
                 case 4:
                     System.out.println("Logging out...");
+                    System.out.println("Goodbye, " + current_user.getName() + "!");
+                    MainApp.logout();
                     break;
                 
                 default:
@@ -47,7 +52,6 @@ public class ApplicantApp extends MainApp {
     }
 
     private static void projectInterface(List<Project> readableProjects) {
-        
         Scanner scanner = new Scanner(System.in);
         int choice;
 
@@ -55,8 +59,10 @@ public class ApplicantApp extends MainApp {
             System.out.println("Project Management Interface");
             System.out.println("1. View Projects");
             System.out.println("2. Back to Main Menu");
-            
+            System.out.print("Please select an option: ");
+
             choice = scanner.nextInt();
+            System.out.println();
 
             switch (choice) {
                 // view projects
@@ -73,7 +79,10 @@ public class ApplicantApp extends MainApp {
                         }
                         System.out.println(i + ". Back to Project Management Interface.");
 
+                        System.out.print("Please select an option: ");
+
                         projChoice = scanner.nextInt();
+                        System.out.println();
 
                         // select project
                         if (projChoice < i) {
@@ -81,12 +90,16 @@ public class ApplicantApp extends MainApp {
                             int projActionChoice;
 
                             do { 
-                                System.out.println("Please select an option:");
+                                System.out.println("Project Actions");
                                 System.out.println("1. Apply For This Project");
                                 System.out.println("2. Enquire About This Project");
                                 System.out.println("3. Select Another Project");
                                 
+                                System.out.print("Please select an option: ");
+
                                 projActionChoice = scanner.nextInt();
+                                System.out.println();
+
                                 switch (projActionChoice) {
                                     // apply for project
                                     case 1:
@@ -100,14 +113,18 @@ public class ApplicantApp extends MainApp {
 
                                     // back to select project
                                     case 3:
-                                        System.out.println("Back to Project Selection...");
+                                        System.out.println("Back to Project Selection...\n");
+                                        break;
+
+                                    default:
+                                        System.out.println("Invalid choice. Please try again.");
                                         break;
                                 }
 
                             } while (projActionChoice != 3);
 
                         } else if (projChoice == i) {
-                            System.out.println("Back to Project Management Interface...");
+                            System.out.println("Back to Project Management Interface...\n");
                             break;
                         } else {
                             System.out.println("Invalid choice. Please try again.");
@@ -119,7 +136,11 @@ public class ApplicantApp extends MainApp {
                     break;
 
                 case 2:
-                    System.out.println("Back to Main Menu...");
+                    System.out.println("Back to Main Menu...\n");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
                     break;
             }
         } while (choice != 2);
@@ -128,14 +149,21 @@ public class ApplicantApp extends MainApp {
         
     private static void applicationInterface(List<Project> readableProjects, Project selectedProject) {
         Scanner scanner = new Scanner(System.in);
-        Integer appChoice;
+        int appChoice;
 
-        System.out.println("Application Management Interface");
-        System.out.println("1. Apply for Project");
-        System.out.println("2. View My Application");
-        System.out.println("3. Withdraw Application for Project");
-        System.out.println("4. Exit Application Management Interface");
-        appChoice = scanner.nextInt();
+        if (selectedProject == null) {
+            System.out.println("Application Management Interface");
+            System.out.println("1. Apply for Project");
+            System.out.println("2. View My Application");
+            System.out.println("3. Withdraw Application for Project");
+            System.out.println("4. Exit Application Management Interface");
+            System.out.print("Please select an option: ");
+    
+            appChoice = scanner.nextInt();
+            System.out.println();
+        } else {
+            appChoice = 1;
+        }
 
         switch (appChoice) {
             // apply
@@ -154,22 +182,23 @@ public class ApplicantApp extends MainApp {
 
             // view my application
             case 2:
-                ((Applicant) current_user).getApplication().toString();
+                ((Applicant) current_user).viewApplicationStatus();
+                break;
 
             // withdraw
             case 3:
                 Application currentApplication = ((Applicant) current_user).getApplication();
                 if (currentApplication == null) {
-                    System.out.println("You do not have any active applications.");
+                    System.out.println("You do not have any active applications.\n");
                     break;
                 } else {
                     // has already applied but selected different project
                     if (!(selectedProject==null) && !(selectedProject.equals(((Applicant) current_user).getApplication().getProject()))) {
-                        System.out.println("This is not the project you applied for.");
+                        System.out.println("This is not the project you applied for.\n");
 
                     } else {
                         System.out.println("Your current application: ");
-                        System.out.println("Project: " + currentApplication.getProject().getName() + ", Neighbourhood: " + currentApplication.getProject().getNeighbourhood());
+                        ((Applicant) current_user).viewApplicationStatus();
                         System.out.print("Confirm Withdrawal? (Y/N): ");
                         String withdraw = scanner.next().toUpperCase();
     
@@ -179,7 +208,7 @@ public class ApplicantApp extends MainApp {
                                 break;
     
                             case "N":
-                                System.out.println("Withdrawal Cancelled.");
+                                System.out.println("Withdrawal Cancelled.\n");
                                 break;
     
                             default:
@@ -187,11 +216,14 @@ public class ApplicantApp extends MainApp {
                                 break;
                         }
                     }
-
                 }
 
             case 4:
-                System.out.println("Exiting Application Management Interface...");
+                System.out.println("Exiting Application Management Interface...\n");
+                break;
+
+            default:
+                System.out.println("Invalid choice. Please try again.");
                 break;
         }
         
@@ -201,12 +233,12 @@ public class ApplicantApp extends MainApp {
         Scanner scanner = new Scanner(System.in);
 
         if (selectedProject == null) {
-            System.out.println("Enter project to enquire: ");
+            System.out.print("Enter project to enquire: ");
             String projName = scanner.next();
             selectedProject = Project.getProjectByName(readableProjects, projName);
         }
 
-        System.out.println("Enter enquiry: ");
+        System.out.print("Enter enquiry: ");
         String enqString = scanner.next(); 
 
         ((Applicant) current_user).createEnquiry(selectedProject, enqString);

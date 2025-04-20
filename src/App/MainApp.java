@@ -39,7 +39,6 @@ public class MainApp {
     public static void main(String[] args) throws Exception {
         init();
 
-        @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to the HDB Application System!");
         String role = "";
@@ -84,7 +83,7 @@ public class MainApp {
                     break;
 
                 case "Officer":
-                    OfficerApp.officerInterface();
+                    OfficerApp.officerMainMenuInterface();
                     break;
 
                 case "Applicant":
@@ -106,15 +105,19 @@ public class MainApp {
 
         int choice;
         do {
-            System.out.println("Please select an option:");
+            System.out.print("Please select an option: ");
             choice = scanner.nextInt();
 
             switch (choice) {
                 case 1:
+                    System.out.print("Enter new password: ");
+                    String newpw = scanner.next();
+                    current_user.setPassword(newpw);
+                    System.out.println("Password has been changed.\n");
                     break;
 
                 case 2:
-                    System.out.println("Back to Main Menu...");
+                    System.out.println("Back to Main Menu...\n");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -124,7 +127,7 @@ public class MainApp {
     }
 
     public static void logout() throws Exception {
-        System.out.println("Logging out...");
+        System.out.println("Logging out...\n");
         current_user = null;
         current_filter = ProjectFilter.NULL;
 

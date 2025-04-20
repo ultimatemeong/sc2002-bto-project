@@ -111,6 +111,7 @@ public class Applicant extends User{
         LocalDateTime dateTime = LocalDateTime.now(); // Get the current date and time
         Enquiry enquiry = new Enquiry(Enquiry.getEnquiryCounter(), this, enquiryString, dateTime, project);
         enquiryList.add(enquiry);
+        System.out.println("Enquiry successfully submitted!\n");
     }
 
     public boolean editEnquiry(Integer id, String newEnquiryString) {
