@@ -132,8 +132,9 @@ public class ApplicantApp extends MainApp {
 
         System.out.println("Application Management Interface");
         System.out.println("1. Apply for Project");
-        System.out.println("2. Withdraw Application for Project");
-        System.out.println("3. Exit Application Management Interface");
+        System.out.println("2. View My Application");
+        System.out.println("3. Withdraw Application for Project");
+        System.out.println("4. Exit Application Management Interface");
         appChoice = scanner.nextInt();
 
         switch (appChoice) {
@@ -151,8 +152,12 @@ public class ApplicantApp extends MainApp {
                 ((Applicant) current_user).applyForProject(selectedProject, flatType);
                 break;
 
-            // withdraw
+            // view my application
             case 2:
+                ((Applicant) current_user).getApplication().toString();
+
+            // withdraw
+            case 3:
                 Application currentApplication = ((Applicant) current_user).getApplication();
                 if (currentApplication == null) {
                     System.out.println("You do not have any active applications.");
@@ -185,7 +190,7 @@ public class ApplicantApp extends MainApp {
 
                 }
 
-            case 3:
+            case 4:
                 System.out.println("Exiting Application Management Interface...");
                 break;
         }
