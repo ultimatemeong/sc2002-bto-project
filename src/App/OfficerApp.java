@@ -69,12 +69,15 @@ public class OfficerApp extends ApplicantApp {
 
             switch (choice) {
                 case 1:
+                    projectInterface(readableProjects);
                     break;
 
                 case 2:
+                    enquiryInterface(readableProjects, null);
                     break;
 
                 case 3:
+                    registrationInterface(readableProjects, null);
                     break;
 
                 case 4:
@@ -150,13 +153,7 @@ public class OfficerApp extends ApplicantApp {
 
                                     // view and reply enquiries 
                                     case 2:
-                                        Project projectInCharge = ((Officer) current_user).projectInCharge();
-                                        if (selectedProject.equals(projectInCharge)) {
-                                            enquiryInterface(readableProjects, projectInCharge);
-                                        } else {
-                                            System.out.println("You are not in charge of this project.");
-                                            break;
-                                        }
+                                        enquiryInterface(readableProjects, selectedProject);
                                         break;
 
                                     // back to select project
@@ -235,81 +232,91 @@ public class OfficerApp extends ApplicantApp {
         }
     }
 
-    private static void enquiryInterface(List<Project> readableProjects, Project projectInCharge) {
-        List<Enquiry> enqList = projectInCharge.getEnquiryList();
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Enquiry Management Interface");
-        System.out.println("Managing Enquiries for: " + projectInCharge.getName());
-        System.out.println("1. View Enquiries");
-        System.out.println("2. Back to Main Menu");
-        System.out.print("Please select an option: ");
-
-        int choice = scanner.nextInt();
-        System.out.println();
-
-
-        switch (choice) {
-            // view enq
-            case 1:
-                int enqChoice;
-                int i;
-
-                do { 
-                    i = 1;
-                    System.out.println("Select Any Enquiry:");
-                    for (Enquiry enquiry : enqList) {
-                        System.out.println(i + ". User: " + enquiry.getApplicant().getName());
-                        System.out.println("\tEnquiry: " + enquiry.getEnquiryString());
-                        i++;
-                    }
-                    System.out.println(i + ". Back to Enquiry Management Interface");
-                    System.out.print("Please select an option: ");
-                    enqChoice = scanner.nextInt();
-
-                    // select enq
-                    if (enqChoice < i) {
-                        Enquiry enquiry = enqList.get(enqChoice-1);
-                        System.out.println("Enquiry: " + enquiry.getEnquiryString());
-                        System.out.println("1. Reply to Enquiry");
-                        System.out.println("2. Select Another Enquiry");
-                        System.out.print("Please select an option: ");
-
-                        int enqActionChoice = scanner.nextInt();
-
-                        switch (enqActionChoice) {
-                            // reply enquiry
-                            case 1:
-                                System.out.println("Reply to Enquiry: ");
-                                String replyString = scanner.nextLine();
-                                Reply reply = new Reply(enquiry, current_user, LocalDateTime.now(), null);
-                                reply.writeReply(replyString);
-                                enquiry.setReply(reply);
+    private static void enquiryInterface(List<Project> readableProjects, Project selectedProject) {
+        Project projectInCharge = ((Officer) current_user).projectInCharge();
+        if (!(projectInCharge == null)) {
+            if ((selectedProject == null) || (selectedProject.equals(projectInCharge))) {
+                List<Enquiry> enqList = projectInCharge.getEnquiryList();
+                Scanner scanner = new Scanner(System.in);
+        
+                System.out.println("Enquiry Management Interface");
+                System.out.println("Managing Enquiries for: " + projectInCharge.getName());
+                System.out.println("1. View Enquiries");
+                System.out.println("2. Back to Main Menu");
+                System.out.print("Please select an option: ");
+        
+                int choice = scanner.nextInt();
+                System.out.println();
+        
+        
+                switch (choice) {
+                    // view enq
+                    case 1:
+                        int enqChoice;
+                        int i;
+        
+                        do { 
+                            i = 1;
+                            System.out.println("Select Any Enquiry:");
+                            for (Enquiry enquiry : enqList) {
+                                System.out.println(i + ". User: " + enquiry.getApplicant().getName());
+                                System.out.println("\tEnquiry: " + enquiry.getEnquiryString());
+                                i++;
+                            }
+                            System.out.println(i + ". Back to Enquiry Management Interface");
+                            System.out.print("Please select an option: ");
+                            enqChoice = scanner.nextInt();
+        
+                            // select enq
+                            if (enqChoice < i) {
+                                Enquiry enquiry = enqList.get(enqChoice-1);
+                                System.out.println("Enquiry: " + enquiry.getEnquiryString());
+                                System.out.println("1. Reply to Enquiry");
+                                System.out.println("2. Select Another Enquiry");
+                                System.out.print("Please select an option: ");
+        
+                                int enqActionChoice = scanner.nextInt();
+        
+                                switch (enqActionChoice) {
+                                    // reply enquiry
+                                    case 1:
+                                        System.out.println("Reply to Enquiry: ");
+                                        String replyString = scanner.nextLine();
+                                        Reply reply = new Reply(enquiry, current_user, LocalDateTime.now(), null);
+                                        reply.writeReply(replyString);
+                                        enquiry.setReply(reply);
+                                        break;
+                                        
+                                    // back to select enquiry
+                                    case 2:
+                                        System.out.println("Back to Enquiry Selection...\n");
+                                        break;
+                                    default:
+                                        System.out.println("Invalid choice. Please try again.");
+                                        break;
+                                }
                                 break;
-                                
-                            // back to select enquiry
-                            case 2:
-                                System.out.println("Back to Enquiry Selection...\n");
+        
+                            } else if (enqChoice == i) {
+                                System.out.println("Back to Enquiry Management Interface...\n");
                                 break;
-                            default:
+                            } else {
                                 System.out.println("Invalid choice. Please try again.");
                                 break;
-                        }
+                            }
+                        } while (enqChoice != i);
+        
+                    // back to main menu
+                    case 2:
+                        System.out.println("Back to Main Menu...\n");
                         break;
-
-                    } else if (enqChoice == i) {
-                        System.out.println("Back to Enquiry Management Interface...\n");
-                        break;
-                    } else {
+                    default:
                         System.out.println("Invalid choice. Please try again.");
                         break;
-                    }
-                } while (enqChoice != i);
-
-            // back to main menu
-            case 2:
-                System.out.println("Back to Main Menu...\n");
-                break;
+                }
+            } else {
+                System.out.println("You are not in charge of this project.\n");
+            }
         }
     }
 }

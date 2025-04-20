@@ -87,7 +87,6 @@ public class Applicant extends User{
         } else {
             System.out.println("No active application to view!\n");
         }
-
     }
 
     public boolean withdrawApplication() {

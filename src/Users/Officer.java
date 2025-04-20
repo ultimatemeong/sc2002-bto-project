@@ -85,10 +85,11 @@ public class Officer extends Applicant{
         Registration registration = this.getRegistration();
         // has active registration
         if (!(registration == null)) {
-            if (registration.getFormStatus().equals("SUCCESSFUL")) {
-                System.out.println("You are current in charge of: " + registration.getProject().getName());
+            if (registration.getFormStatus().equals("APPROVED")) {
+                System.out.println("You are currently in charge of: " + registration.getProject().getName());
                 return registration.getProject();
             } else {
+                System.out.println("Your registration for " + registration.getProject().getName() + " has not been approved yet.");
                 return null;
             }
 
