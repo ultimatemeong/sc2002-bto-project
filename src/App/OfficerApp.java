@@ -277,6 +277,7 @@ public class OfficerApp extends ApplicantApp {
                             System.out.println(i + ". Back to Enquiry Management Interface");
                             System.out.print("Please select an option: ");
                             enqChoice = scanner.nextInt();
+                            System.out.println();
         
                             // select enq
                             if (enqChoice < i) {
