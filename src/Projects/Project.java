@@ -171,7 +171,7 @@ public class Project {
     // Takes in the list of readable projects and filters them based on the flat type
     public static List<Project> filterProjectsByFlatType(List<Project> allProjects, String flatType) {
         List<Project> filteredProjects = allProjects.stream()
-                .filter(project -> project.getFlatsInfo().containsKey(flatType))
+                .filter(project -> project.getFlatsInfo().containsKey(flatType) && project.getFlatsInfo().get(flatType).get(0) > 0) // Check if the flat type exists and has available units
                 .toList();
 
         return filteredProjects;
