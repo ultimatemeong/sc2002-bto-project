@@ -6,7 +6,6 @@ import Projects.*;
 import Users.Officer;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -194,83 +193,7 @@ public class OfficerApp extends ApplicantApp {
 
                 // filter
                 case 2:
-                    System.out.println("1. Filter by Flat Type");
-                    System.out.println("2. Filter by Neighbourhood");
-                    System.out.println("3. Filter by Price Range");
-                    System.out.println("4. View My Projects");
-                    System.out.println("5. Back to Project Management Interface");
-                    List<Project> filteredProjects = new ArrayList<>();
-                    int filter_choice;
-                    do {
-                        System.out.print("Please select an option:");
-                        filter_choice = scanner.nextInt();
-                        switch (filter_choice) {
-                            case 1:
-                                System.out.print("Enter Flat Type: (2-room or 3-room) ");
-                                String flatType = scanner.next();
-                                current_filter = ProjectFilter.FLAT_TYPE;
-                                filteredProjects = Project.filterProjectsByFlatType(readableProjects, flatType);
-                                if (filteredProjects.isEmpty()) {
-                                    System.out.println("No Projects to View.");
-                                } else {
-                                    for (Project project : filteredProjects) {
-                                        System.out.println(project.getName()+ ", " + project.getNeighbourhood());
-                                    }
-                                }
-                                break;
-                            case 2:
-                                System.out.print("Enter Neighbourhood: ");
-                                String neighbourhood = scanner.next();
-                                current_filter = ProjectFilter.NEIGHBOURHOOD;
-                                filteredProjects = Project.filterProjectsByNeighbourhood(readableProjects, neighbourhood);
-                                if (filteredProjects.isEmpty()) {
-                                    System.out.println("No Projects to View.");
-                                } else {
-                                    for (Project project : filteredProjects) {
-                                        System.out.println(project.getName()+ ", " + project.getNeighbourhood());
-                                    }
-                                }
-                                break;
-                            case 3:
-                                System.out.print("Enter Price Range: (min) ");
-                                Integer minPrice = scanner.nextInt();
-                                System.out.print("Enter Price Range: (max) ");
-                                Integer maxPrice = scanner.nextInt();
-                                current_filter = ProjectFilter.PRICE;
-                                
-                                if (filteredProjects.isEmpty()) {
-                                    System.out.println("No Projects to View.");
-                                } else {
-                                    for (Project project : filteredProjects) {
-                                        System.out.println(project.getName()+ ", " + project.getNeighbourhood());
-                                    }
-                                }
-                                break;
-                            case 4:
-                                System.out.println("Viewing My Projects...");
-                                filteredProjects = readableProjects.stream()
-                                    .filter(project -> project.getManager().getName().equals(current_user.getName()))
-                                    .toList();
-                                if (filteredProjects.isEmpty()) {
-                                    System.out.println("No Projects to View.");
-                                } else {
-                                    for (Project project : filteredProjects) {
-                                        System.out.println(project.getName()+ ", " + project.getNeighbourhood());
-                                    }
-                                }
-                                break;
-                            case 5:
-                                System.out.println("Back to Project Management Interface...");
-                                break;
-                            default:
-                                System.out.println("Invalid choice. Please try again.");
-                                break;
-                        } 
-                    } while (filter_choice > 5);
-                    if (filter_choice < 5 && readableProjects.size() > 0) {
-                        readableProjects = filteredProjects.stream()
-                            .sorted(Comparator.comparing(Project::getName)).toList();
-                    }
+                    filterProjects(readableProjects);
                     break;
 
                 // back to main menu
