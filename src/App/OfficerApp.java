@@ -293,6 +293,7 @@ public class OfficerApp extends ApplicantApp {
                                     // reply enquiry
                                     case 1:
                                         System.out.println("Reply to Enquiry: ");
+                                        scanner.nextLine(); // Catch the previous newline character
                                         String replyString = scanner.nextLine();
                                         Reply reply = new Reply(enquiry, current_user, LocalDateTime.now(), null);
                                         reply.writeReply(replyString);
