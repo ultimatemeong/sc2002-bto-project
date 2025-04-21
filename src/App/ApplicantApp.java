@@ -39,7 +39,6 @@ public class ApplicantApp extends MainApp {
                     break;
 
                 case 4:
-                    System.out.println("Logging out...");
                     System.out.println("Goodbye, " + current_user.getName() + "!");
                     MainApp.logout();
                     choice = 4; // Exit the loop
@@ -73,13 +72,16 @@ public class ApplicantApp extends MainApp {
 
                     do {
                         i = 1;
-                        System.out.println("Select A Project:");
-                        for (Project project : readableProjects) {
-                            System.out.println("\t" + i + ". " + project.getName() + ": " + project.getNeighbourhood());
-                            i++;
+                        if (readableProjects.isEmpty()) {
+                            System.out.println("\tNo Projects to view.");
+                        } else {
+                            System.out.println("Select A Project:");
+                            for (Project project : readableProjects) {
+                                System.out.println("\t" + i + ". " + project.getName() + ": " + project.getNeighbourhood());
+                                i++;
+                            }
                         }
                         System.out.println(i + ". Back to Project Management Interface.");
-
                         System.out.print("Please select an option: ");
 
                         projChoice = scanner.nextInt();

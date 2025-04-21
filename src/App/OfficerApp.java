@@ -36,7 +36,6 @@ public class OfficerApp extends ApplicantApp {
                     break;
 
                 case 3:
-                    System.out.println("Logging out...");
                     System.out.println("Goodbye, " + current_user.getName() + "!");
                     MainApp.logout();
                     choice = 3; // Exit the loop
@@ -120,10 +119,14 @@ public class OfficerApp extends ApplicantApp {
 
                     do {
                         i = 1;
-                        System.out.println("Select A Project:");
-                        for (Project project : readableProjects) {
-                            System.out.println("\t" + i + ". " + project.getName() + ": " + project.getNeighbourhood());
-                            i++;
+                        if (readableProjects.isEmpty()) {
+                            System.out.println("\tNo Projects to view.");
+                        } else {
+                            System.out.println("Select A Project:");
+                            for (Project project : readableProjects) {
+                                System.out.println("\t" + i + ". " + project.getName() + ": " + project.getNeighbourhood());
+                                i++;
+                            }
                         }
                         System.out.println(i + ". Back to Project Management Interface.");
 
@@ -173,7 +176,7 @@ public class OfficerApp extends ApplicantApp {
                                         break;
                                 }
 
-                            } while (projActionChoice != 3);
+                            } while (projActionChoice != 4);
 
                         } else if (projChoice == i) {
                             System.out.println("Back to Project Management Interface...\n");
@@ -353,6 +356,7 @@ public class OfficerApp extends ApplicantApp {
                     for (Application application : approvedAppList) {
                         System.out.println("\t" + i + ". Applicant: " + application.getUser().getName());
                         System.out.println("\tFlat Type: " + application.getFlatType());
+                        i++;
                     }
                 }
                 System.out.println(i + ". Back to Project Actions");
