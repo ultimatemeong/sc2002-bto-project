@@ -1,16 +1,15 @@
 package App;
 
+import Enquiries.*;
+import Misc.*;
+import Projects.*;
+import Users.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
-
-import Enquiries.*;
-import Users.*;
-import Projects.*;
-import Misc.*;
 
 public class ManagerApp extends MainApp {
     
@@ -96,8 +95,12 @@ public class ManagerApp extends MainApp {
                                         String flatType = scanner.next();
                                         current_filter = ProjectFilter.FLAT_TYPE;
                                         filteredProjects = Project.filterProjectsByFlatType(readableProjects, flatType);
-                                        for (Project project : filteredProjects) {
-                                            System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                                        if (filteredProjects.isEmpty()) {
+                                            System.out.println("No Projects to View.");
+                                        } else {
+                                            for (Project project : filteredProjects) {
+                                                System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                                            }
                                         }
                                         break;
                                     case 2:
@@ -105,8 +108,12 @@ public class ManagerApp extends MainApp {
                                         String neighbourhood = scanner.next();
                                         current_filter = ProjectFilter.NEIGHBOURHOOD;
                                         filteredProjects = Project.filterProjectsByNeighbourhood(readableProjects, neighbourhood);
-                                        for (Project project : filteredProjects) {
-                                            System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                                        if (filteredProjects.isEmpty()) {
+                                            System.out.println("No Projects to View.");
+                                        } else {
+                                            for (Project project : filteredProjects) {
+                                                System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                                            }
                                         }
                                         break;
                                     case 3:
@@ -117,8 +124,12 @@ public class ManagerApp extends MainApp {
                                         current_filter = ProjectFilter.PRICE;
                                         
                                         filteredProjects = Project.filterProjectsByPrice(readableProjects, minPrice, maxPrice);
-                                        for (Project project : filteredProjects) {
-                                            System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                                        if (filteredProjects.isEmpty()) {
+                                            System.out.println("No Projects to View.");
+                                        } else {
+                                            for (Project project : filteredProjects) {
+                                                System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                                            }
                                         }
                                         
                                         break;
@@ -128,8 +139,12 @@ public class ManagerApp extends MainApp {
                                             .filter(project -> project.getManager().getName().equals(current_user.getName()))
                                             .toList();
                                         
-                                        for (Project project : filteredProjects) {
-                                            System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                                        if (filteredProjects.isEmpty()) {
+                                            System.out.println("No Projects to View.");
+                                        } else {
+                                            for (Project project : filteredProjects) {
+                                                System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                                            }
                                         }
                                         
                                         break;
