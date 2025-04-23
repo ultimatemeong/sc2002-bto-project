@@ -6,7 +6,6 @@ import Users.User;
  * AccessControl is an interface that defines methods for managing access control to various objects.
  * It provides a generic way to check, add, and delete access levels for users on specific objects.
  * @param <T> The type of object for which access control is being managed.
- * 
  * @author Ang Qi Xuan Evan
  * @version 1.0
  * @since 2025-04-23

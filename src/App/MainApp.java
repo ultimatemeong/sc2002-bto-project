@@ -36,7 +36,6 @@ public class MainApp {
     protected static List<Enquiry> all_enquiries = new ArrayList<>();
     protected static User current_user;
     protected static ProjectFilter current_filter = ProjectFilter.NULL;
-    private static boolean isEnd = false;
 
     public static void main(String[] args) throws Exception {
         init();
@@ -48,8 +47,28 @@ public class MainApp {
             System.out.println("Please Login to continue.");
             System.out.print("NRIC: ");
             String nric = scanner.next();
+
+            if (nric.length() != 9) {
+                System.out.println("Invalid NRIC. Please try again.\n");
+                System.out.println("NRIC must be 9 characters long.");
+                continue;
+            } else if (!(nric.charAt(0) == 'T' || nric.charAt(0) == 'S')) {
+                System.out.println("Invalid NRIC. Please try again.\n");
+                System.out.println("NRIC must start with T or S.");
+                continue;
+            } else if (nric.substring(1,7).matches("[0-9]+") == false) {
+                System.out.println("Invalid NRIC. Please try again.\n");
+                System.out.println("NRIC must contain 7 digits after the first character.");
+                continue;
+            } else if (!(nric.charAt(8) >= 'A' && nric.charAt(8) <= 'Z')) {
+                System.out.println("Invalid NRIC. Please try again.\n");
+                System.out.println("NRIC must end with an alphabetic character.");
+                continue;
+            }
+
             System.out.print("Password: ");
             String password = scanner.next();
+
 
             for (Manager manager : all_managers) {
                 if (manager.getNric().equals(nric) && manager.validatePassword(password)) {
@@ -93,10 +112,10 @@ public class MainApp {
                     break;    
 
                 default:
-                    System.out.println("Invalid login credentials. Please try again.\n");
+                    System.out.println("Invalid password. Please try again.\n");
                     break;
             }
-        } while (role == "" && !isEnd);
+        } while (role == "");
     }
 
     public static void accountInterface() {
@@ -237,7 +256,6 @@ public class MainApp {
         System.out.println("Logging out...\n");
         current_user = null;
         current_filter = ProjectFilter.NULL;
-        isEnd = true;
 
         // Save all data to files
         String userHeader = "Name,NRIC,Age,Marital Status,Password";
