@@ -187,10 +187,28 @@ public class MainApp {
                     break;
                 case 4:
                     System.out.println("Viewing My Projects...");
-                    filteredProjects = readableProjects.stream()
-                        .filter(project -> project.getManager().getName().equals(current_user.getName()))
-                        .toList();
-                    
+                    switch (current_user.getClass().getSimpleName()) {
+                        case "Manager":
+                            filteredProjects = readableProjects.stream()
+                                .filter(project -> project.getManager().getNric().equals(current_user.getNric()))
+                                .toList();
+                            break;
+                        case "Officer":
+                            filteredProjects = readableProjects.stream()
+                                .filter(project -> project.getOfficerList().contains(current_user))
+                                .toList();
+                            break;
+                        case "Applicant":
+                            filteredProjects = readableProjects.stream()
+                                .filter(project -> project.getApplicationList().stream()
+                                    .anyMatch(application -> application.getUser().getNric().equals(current_user.getNric())))
+                                .toList();
+                            break;
+                        default:
+                            System.out.println("Invalid user type.");
+                            break;
+                    }
+
                     if (filteredProjects.isEmpty()) {
                         System.out.println("No Projects to View.");
                     } else {

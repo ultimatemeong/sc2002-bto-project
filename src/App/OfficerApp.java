@@ -50,7 +50,6 @@ public class OfficerApp extends ApplicantApp {
 
     public static void officerInterface() throws Exception {
         List<Project> readableProjects = Project.viewProjects(all_projects, current_user).stream()
-            .filter(project -> project.getOfficerList().contains(current_user))
             .sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).toList();
 
         Scanner scanner = new Scanner(System.in);
@@ -71,6 +70,9 @@ public class OfficerApp extends ApplicantApp {
 
             switch (choice) {
                 case 1:
+                    readableProjects = readableProjects.stream()
+                        .filter(project -> project.getOfficerList().contains(current_user))
+                        .toList();
                     projectInterface(readableProjects);
                     break;
 
@@ -79,6 +81,9 @@ public class OfficerApp extends ApplicantApp {
                     break;
 
                 case 3:
+                    readableProjects = readableProjects.stream()
+                        .filter(project -> !project.getOfficerList().contains(current_user))
+                        .toList();
                     registrationInterface(readableProjects, null);
                     break;
 
