@@ -46,16 +46,10 @@ public class ProjectAccess implements AccessControl<Project> {
             if (user.getClass().getSimpleName().equals("Manager")) {
                 return "R"; // Manager has read access to all projects
             } else {
-                if (user.getClass().getSimpleName().equals("Applicant") && project.isVisible()) {
+                if (project.isVisible()) {
                     return checkMartitalStatus(user, project);
-                } else if (user.getClass().getSimpleName().equals("Officer") && project.isVisible()) {
-                    if (project.getOfficerList().contains(user)) {
-                        return "R"; // Officer has read access to the project
-                    } else {
-                        return checkMartitalStatus(user, project);
-                    }
                 } else {
-                    return "NULL"; // If the user is not a manager or applicant, return "NULL"
+                    return "NULL"; // If the project is not visible, return "NULL"\
                 }
             }
         } else {
