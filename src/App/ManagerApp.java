@@ -58,7 +58,7 @@ public class ManagerApp extends MainApp {
         do {
             System.out.println("Project Management Interface");
             System.out.println("1. View Projects");
-            System.out.println("2. Add Project");
+            System.out.println("2. Create new Project");
             System.out.println("3. Work On Project");
             System.out.println("4. Delete Project");
             System.out.println("5. Back to Main Menu");
@@ -86,19 +86,19 @@ public class ManagerApp extends MainApp {
                     }
                     break;
                 case 2:
-                    System.out.println("Adding Project:");
+                    System.out.println("Creating new Project:");
                     System.out.println("Project Name:");
                     scanner.nextLine();
                     String proj_name = scanner.nextLine();
                     System.out.println("Project Neighbourhood:");
                     String neighbourhood = scanner.nextLine();
-                    System.out.println("Project Unit Type 1: (2-room)");
+                    System.out.println("Project Unit Type 1: (2-Room)");
                     String unitType1 = scanner.next();
                     System.out.println("Project Number of Units for Type 1:");
                     Integer numUnitsType1 = scanner.nextInt();
                     System.out.println("Project Unit Price for Type 1:");
                     Integer priceType1 = scanner.nextInt();
-                    System.out.println("Project Unit Type 2: (3-room)");
+                    System.out.println("Project Unit Type 2: (3-Room)");
                     String unitType2 = scanner.next();
                     System.out.println("Project Number of Units for Type 2:");
                     Integer numUnitsType2 = scanner.nextInt();
@@ -108,7 +108,7 @@ public class ManagerApp extends MainApp {
                     LocalDate appOpenDate = LocalDate.parse(scanner.next());
                     System.out.println("Project Closing Date:");
                     LocalDate appCloseDate = LocalDate.parse(scanner.next());
-                    System.out.println("Project Officer Slots:");
+                    System.out.println("Project Officer Slots: (Max 10)");
                     Integer officerSlots = scanner.nextInt();
                     
                     ((Manager) current_user).createProject(all_projects, proj_name, neighbourhood, unitType1, numUnitsType1, priceType1, unitType2, 
@@ -140,11 +140,9 @@ public class ManagerApp extends MainApp {
                                 projectDetailsEditInterface(editableProjects);
                                 break;
                             case 2:
-                                // System.out.println("Viewing Applications...");
                                 projectApplicationInterface(editableProjects);
                                 break;
                             case 3:
-                                // System.out.println("Viewing Withdrawals...");
                                 projectWithdrawalInterface(editableProjects);
                                 break;
                             case 4:
@@ -218,8 +216,8 @@ public class ManagerApp extends MainApp {
                 int edit_choice;
                 do {
                     System.out.println("1. Edit Project's Visibility");
-                    System.out.println("2. Edit Project's 2-room Information");
-                    System.out.println("3. Edit Project's 3-room Information");
+                    System.out.println("2. Edit Project's 2-Room Information");
+                    System.out.println("3. Edit Project's 3-Room Information");
                     System.out.println("4. Edit Project's Number of Officer Slots");
                     System.out.println("5. Exit");
                     System.out.print("Choose an option: ");

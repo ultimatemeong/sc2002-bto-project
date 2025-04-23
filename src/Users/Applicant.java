@@ -9,17 +9,41 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Applicant class represents an applicant in the system.
+ * It extends the User class and includes attributes such as application and enquiry list.
+ * @author Ang QiLe Dora
+ * @version 1.0
+ * @since 2025-04-23
+ */
 public class Applicant extends User{
     private Application application; 
     private List<Enquiry> enquiryList = new ArrayList<>(); // List of enquiries made by the applicant
 
-    // Constructor for applicant with no existing applications
+    /**
+     * Constructor for Applicant class with no existing application
+     * @param name
+     * @param nric
+     * @param age
+     * @param maritalStatus
+     * @param password
+     * @param enquiryList
+     */
     public Applicant(String name, String nric, Integer age, String maritalStatus, String password, List<Enquiry> enquiryList) {
         super(name, nric, age, maritalStatus, password);
         this.enquiryList = enquiryList;
     }
 
-    // Constructor for applicant with existing application
+    /**
+     * Constructor for Applicant class with existing application and enquiry list
+     * @param name
+     * @param nric
+     * @param age
+     * @param maritalStatus
+     * @param password
+     * @param application
+     * @param enquiryList
+     */
     public Applicant(String name, String nric, Integer age, String maritalStatus, String password, Application application, List<Enquiry> enquiryList) {
         super(name, nric, age, maritalStatus, password);
         this.application = application;
@@ -27,10 +51,20 @@ public class Applicant extends User{
 
     }
 
+    /**
+     * Get the application for the applicant
+     * @return application
+     */
     public Application getApplication() {
         return application;
     }
 
+    /**
+     * Finds the applicant by NRIC in the list of applicants
+     * @param applicantList
+     * @param nric
+     * @return applicant
+     */
     public static Applicant getApplicantByNric(List<Applicant> applicantList, String nric) {
         for (Applicant applicant : applicantList) {
             if (applicant.getNric().equals(nric)) {
@@ -40,10 +74,19 @@ public class Applicant extends User{
         return null; 
     }
 
+    /**
+     * Set the application for the applicant
+     * @param application
+     */
     public void setApplication(Application application) {
         this.application = application;
     }
 
+    /** 
+     * Checks if the applicant is an officer for the project
+     * @param project
+     * @return true if the applicant is an officer for the project, false otherwise
+     */
     private boolean isProjectOfficer(Project project) {
         List<Officer> officerList = project.getOfficerList();
         for (Officer officer : officerList) {
@@ -54,6 +97,15 @@ public class Applicant extends User{
         return false;
     }
 
+    /**
+     * Applicant applies for a project
+     * Checks if the applicant has an active application and if they are an officer for the project.
+     * If not, creates a new application and adds it to the applicant's application list.
+     * Also adds user to the project's access control list with read permission.
+     * @param project
+     * @param flatType
+     * @return True if application is successful, false otherwise
+     */
     public boolean applyForProject(Project project, String flatType) {
         /* applicant applies for a project */
         // user has no active application and is not an officer for this project
@@ -73,7 +125,11 @@ public class Applicant extends User{
         }
     }
 
-    //Application specific methods
+    /**
+     * Applicant views their application status
+     * If the applicant has an active application, it displays the project name, neighbourhood, flat type applied, and application status.
+     * If not, it informs the user that there is no active application to view.
+     */
     public void viewApplicationStatus() {
         // Logic for viewing application status
         Application application = this.getApplication();
@@ -89,6 +145,12 @@ public class Applicant extends User{
         }
     }
 
+    /**
+     * Withdraws the application for the applicant
+     * Checks if the applicant has an active application. If so, sets the withdrawal status to pending.
+     * If not, informs the user that there is no active application to withdraw from.
+     * @return
+     */
     public boolean withdrawApplication() {
         // Logic for withdrawing application
         Application application = this.getApplication();
@@ -104,7 +166,13 @@ public class Applicant extends User{
         }
     }
 
-    //Enquiries specific methods
+    /**
+     * Creates an enquiry for the applicant
+     * * Checks if the applicant has an active application. If so, creates a new enquiry and adds it to the enquiry list.
+     * * If not, informs the user that there is no active application to create an enquiry for.
+     * @param project
+     * @param enquiryString
+     */
     public void createEnquiry(Project project, String enquiryString) {
         // Logic for creating enquiry
         LocalDateTime dateTime = LocalDateTime.now(); // Get the current date and time
@@ -113,6 +181,12 @@ public class Applicant extends User{
         System.out.println("Enquiry successfully submitted!\n");
     }
 
+    /**
+     * Edits an existing enquiry for the applicant
+     * @param id
+     * @param newEnquiryString
+     * @return true if the enquiry is successfully edited, false otherwise
+     */
     public boolean editEnquiry(Integer id, String newEnquiryString) {
         // Logic for editing enquiry
         for (Enquiry enquiry : enquiryList) {
@@ -126,6 +200,11 @@ public class Applicant extends User{
         return false;
     }
 
+    /**
+     * Deletes an existing enquiry for the applicant
+     * @param id
+     * @return true if the enquiry is successfully deleted, false otherwise
+     */
     public boolean deleteEnquiry(Integer id) {
         // Logic for deleting enquiry
         for (Enquiry enquiry : enquiryList) {

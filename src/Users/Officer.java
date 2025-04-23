@@ -6,24 +6,59 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Officer class represents an officer in the system.
+ * It extends the User class and includes attributes such as application and enquiry list.
+ * @author Ang QiLe Dora
+ * @version 1.0
+ * @since 2025-04-23
+ */
 public class Officer extends Applicant{
     private Registration registration;
 
-    // Constructor for officer with no existing application and registration
+    /**
+     * Constructor for Officer class with no existing application and registration
+     * @param name
+     * @param nric
+     * @param age
+     * @param maritalStatus
+     * @param password
+     * @param enquiryList
+     */
     public Officer(String name, String nric, Integer age, String maritalStatus, String password, List<Enquiry> enquiryList) {
         super(name, nric, age, maritalStatus, password, enquiryList);
     }
 
-    // Constructor for officer with existing application and registration
+    /**
+     * Constructor for Officer class with existing application and registration
+     * @param name
+     * @param nric
+     * @param age
+     * @param maritalStatus
+     * @param password
+     * @param application
+     * @param enquiryList
+     * @param registration
+     */
     public Officer(String name, String nric, Integer age, String maritalStatus, String password, Application application, List<Enquiry> enquiryList, Registration registration) {
         super(name, nric, age, maritalStatus, password, application, enquiryList);
         this.registration = registration;
     }
 
+    /**
+     * Get Registration for Officer class
+     * @return registration
+     */
     public Registration getRegistration() {
         return registration;
     }
 
+    /**
+     * Search for officer by NRIC in the list of officers
+     * @param officerList
+     * @param nric
+     * @return
+     */
     public static Officer getOfficerByNric(List<Officer> officerList, String nric) {
         for (Officer officer : officerList) {
             if (officer.getNric().equals(nric)) {
@@ -33,10 +68,19 @@ public class Officer extends Applicant{
         return null; 
     }
 
+    /**
+     * Set Registration for Officer class
+     * @param registration
+     */
     public void setRegistration(Registration registration) {
         this.registration = registration;
     }
 
+    /**
+     * Check if the officer is in charge of the project
+     * @param project
+     * @return true if the officer is in charge of the project, false otherwise
+     */
     private Application retrieveApplication(Project project, String applicantNric) {
         for (Application application : project.getApplicationList()) {
             if (application.getUser().getNric().equals(applicantNric)) {
@@ -47,6 +91,11 @@ public class Officer extends Applicant{
         return null;
     }
 
+    /**
+     * Check if the officer is not an applicant for the project
+     * @param project
+     * @return true if the officer is not an applicant for the project, false otherwise
+     */
     private boolean notApplicant(Project project) {
         for (Application application : project.getApplicationList()) {
             if (application.getUser().getNric().equals(this.getNric())) {
@@ -56,6 +105,11 @@ public class Officer extends Applicant{
         return true;
     }
 
+    /**
+     * Check if the officer is not an applicant for the project
+     * @param project
+     * @return true if the officer is not an applicant for the project, false otherwise
+     */
     private void flatSelectionReceipt(Application application) {
         // Logic for flat selection receipt
         Applicant applicant = (Applicant) application.getUser();
@@ -68,6 +122,11 @@ public class Officer extends Applicant{
         project.toString();
     }
 
+    /**
+     * Create a new registration for the officer for a project
+     * @param project
+     * @return True if registration is successful, false otherwise
+     */
     public boolean registerForProject(Project project) {
         // Logic for registering for projects
         if ((this.registration == null) && notApplicant(project)) {
@@ -81,6 +140,10 @@ public class Officer extends Applicant{
         }
     }
 
+    /**
+     * Check if the officer is in charge of the project
+     * @return project if the officer is in charge, null otherwise
+     */
     public Project projectInCharge() {
         Registration registration = this.getRegistration();
         // has active registration
@@ -100,6 +163,10 @@ public class Officer extends Applicant{
         }
     }
 
+    /**
+     * Gets the registration status of the officer
+     * * @return registration status of the officer if the officer is in charge of a project, null otherwise
+     */
     public void viewRegistrationStatus() {
         // Logic for viewing registration status
         Registration registration = this.getRegistration();
@@ -114,6 +181,12 @@ public class Officer extends Applicant{
         }
     }
 
+    /**
+     * Books a flat for the Applicant if the application is Approved
+     * @param project
+     * @param applicantNRIC
+     * @return true if booking is successful, false otherwise
+     */
     public boolean chooseFlat(Project project, String applicantNRIC) {
         // Logic for choosing project
         Application application = retrieveApplication(project, applicantNRIC);
