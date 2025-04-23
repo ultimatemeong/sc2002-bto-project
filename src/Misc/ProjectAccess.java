@@ -8,6 +8,27 @@ import java.util.Map;
 public class ProjectAccess implements AccessControl<Project> {
     private static Map<String, Map<String, String>> projectAccessMap = new HashMap<>();
 
+    private String checkMartitalStatus(User user, Project project) {
+        switch (user.getMaritalStatus()) {
+            case "SINGLE":
+                if (project.getFlatsInfo().get("2-Room").get(0) > 0) {
+                    return "R";
+                } else {
+                    return "NULL"; // If no 2-Rooms are available, return "NULL"
+                }
+
+            case "MARRIED":
+                if (project.getFlatsInfo().get("2-Room").get(0) > 0 || project.getFlatsInfo().get("3-Room").get(0) > 0) {
+                    return "R";
+                } else {
+                    return "NULL"; // If no 2-Rooms are available, return "NULL"
+                }
+
+            default:
+                return "NULL"; // If marital status is not recognized, return "NULL"
+        }
+    }
+
     public String check(Project project, User user){
         String id = project.getName();
         String userNRIC = user.getNric();
@@ -25,10 +46,16 @@ public class ProjectAccess implements AccessControl<Project> {
             if (user.getClass().getSimpleName().equals("Manager")) {
                 return "R"; // Manager has read access to all projects
             } else {
-                if (!project.isVisible()) {
-                    return "NULL"; // If the project is not visible and the user is not a manager, return "NULL"
+                if (user.getClass().getSimpleName().equals("Applicant") && project.isVisible()) {
+                    return checkMartitalStatus(user, project);
+                } else if (user.getClass().getSimpleName().equals("Officer") && project.isVisible()) {
+                    if (project.getOfficerList().contains(user)) {
+                        return "R"; // Officer has read access to the project
+                    } else {
+                        return checkMartitalStatus(user, project);
+                    }
                 } else {
-                    return "R"; // If the project is visible, return "R" for read access
+                    return "NULL"; // If the user is not a manager or applicant, return "NULL"
                 }
             }
         } else {

@@ -310,6 +310,7 @@ public class MainApp {
         FileOps.writeFile("ReplyList", string_replies);
 
         System.out.println("Logged out successfully.");
+        System.exit(0);
     }
 
     private static void init() throws Exception {

@@ -2,7 +2,7 @@ package App;
 
 import Projects.Application;
 import Projects.Project;
-import Users.Applicant;
+import Users.*;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,7 +10,9 @@ public class ApplicantApp extends MainApp {
 
     public static void applicantInterface() throws Exception {
         List<Project> readableProjects = Project.viewProjects(all_projects, current_user).stream()
-            .sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).toList();
+            .filter(project -> !project.getOfficerList().contains(current_user) && !project.getRegistrationList().contains(((Officer)current_user).getRegistration()))
+            .sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
+            .toList();
 
         Scanner scanner = new Scanner(System.in);
         int choice;
