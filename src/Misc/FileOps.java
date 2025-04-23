@@ -6,6 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * FileOps is a utility class for reading and writing data to CSV files.
+ * It provides methods to read data from a specified file and write data to a specified file.
+ * The class uses a switch statement to determine the file path based on the filename provided.
+ * @author Ang Qi Xuan Evan
+ * @version 1.0
+ * @since 2025-04-23
+ */
 public class FileOps {
     private static final String APPLICANT_LIST_FILE = "src\\Data\\ApplicantList.csv";
     private static final String OFFICER_LIST_FILE = "src\\Data\\OfficerList.csv";
@@ -49,6 +57,13 @@ public class FileOps {
         return filepath;
     }
 
+    /**
+     * Reads data from a specified CSV file and returns it as a list of records.
+     * Each record is represented as a list of strings.
+     * @param filename The name of the file to read from (without extension).
+     * @return A list of records, where each record is a list of strings.
+     * @throws Exception If an error occurs while reading the file.
+     */
     public static List<List<String>> readFile(String filename) throws Exception {
         String filePath = getFilePath(filename);
         List<List<String>> records = new ArrayList<>();
@@ -72,6 +87,13 @@ public class FileOps {
         return values;
     }
 
+    /**
+     * Writes data to a specified CSV file.
+     * Each record is represented as a list of strings.
+     * @param filename The name of the file to write to (without extension).
+     * @param data A list of records, where each record is a list of strings.
+     * @throws Exception If an error occurs while writing to the file.
+     */
     public static void writeFile(String filename, List<List<String>> data) throws Exception{
         String filePath = getFilePath(filename);
         try (PrintWriter writer = new PrintWriter(filePath)) {

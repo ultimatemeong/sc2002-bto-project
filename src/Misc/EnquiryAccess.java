@@ -6,6 +6,13 @@ import java.util.Map;
 import Enquiries.Enquiry;
 import Users.User;
 
+/**
+ * EnquiryAccess is a class that implements the AccessControl interface for managing access to enquiries.
+ * It provides methods to check, add, and delete access levels for users on specific enquiries.
+ * @author Ang Qi Xuan Evan
+ * @version 1.0
+ * @since 2025-04-23
+ */
 public class EnquiryAccess implements AccessControl<Enquiry> {
     private static Map<String, Map<Integer, String>> enquiryAccessMap = new HashMap<>();
 

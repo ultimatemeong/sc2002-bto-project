@@ -5,6 +5,13 @@ import Users.User;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * ProjectAccess is a class that implements the AccessControl interface for managing access to projects.
+ * It provides methods to check, add, and delete access levels for users on specific projects.
+ * @author Ang Qi Xuan Evan
+ * @version 1.0
+ * @since 2025-04-23
+ */
 public class ProjectAccess implements AccessControl<Project> {
     private static Map<String, Map<String, String>> projectAccessMap = new HashMap<>();
 

@@ -6,6 +6,13 @@ import java.util.Map;
 import Projects.Application;
 import Users.User;
 
+/**
+ * ApplicationAccess is a class that implements the AccessControl interface for managing access to applications.
+ * It provides methods to check, add, and delete access levels for users on specific applications.
+ * @author Ang Qi Xuan Evan
+ * @version 1.0
+ * @since 2025-04-23
+ */
 public class ApplicationAccess implements AccessControl<Application> {
     private static Map<String, Map<Integer, String>> applicationAccessMap = new HashMap<>();
 
