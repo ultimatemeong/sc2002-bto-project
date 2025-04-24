@@ -48,7 +48,6 @@ public class Applicant extends User{
         super(name, nric, age, maritalStatus, password);
         this.application = application;
         this.enquiryList = enquiryList;
-
     }
 
     /**
@@ -72,6 +71,10 @@ public class Applicant extends User{
             }
         }
         return null; 
+    }
+
+    public List<Enquiry> getEnquiryList() {
+        return this.enquiryList;
     }
 
     /**
@@ -213,5 +216,5 @@ public class Applicant extends User{
         System.out.println("Failed to delete. Enquiry not found.\n");
         return false;
     }
-    }
+}
 

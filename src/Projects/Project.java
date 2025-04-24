@@ -15,7 +15,7 @@ import java.util.Map;
  * The Project class represents a housing project with various attributes and methods.
  * It includes information about the project's name, neighbourhood, flats, application dates, visibility, and associated officers.
  * The class also provides methods for filtering projects based on different criteria.
- * @author Ang QiLe Dora
+ * @author Ang Qile Dora
  * @version 1.0
  * @since 2025-04-23
  */

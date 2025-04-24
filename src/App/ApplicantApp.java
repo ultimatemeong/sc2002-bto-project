@@ -1,5 +1,6 @@
 package App;
 
+import Enquiries.Enquiry;
 import Projects.Application;
 import Projects.Project;
 import Users.*;
@@ -20,6 +21,7 @@ public class ApplicantApp extends MainApp {
             System.out.println("Applicant Interface");
             System.out.println("1. Project Management");
             System.out.println("2. Application Management");
+            System.out.println("3. Enquiry Management");
             System.out.println("3. Account Management");
             System.out.println("4. Logout");
             System.out.print("Please select an option: ");
@@ -37,10 +39,14 @@ public class ApplicantApp extends MainApp {
                     break;
 
                 case 3:
-                    accountInterface();
+                    enquiryInterface(readableProjects, null);
                     break;
 
                 case 4:
+                    accountInterface();
+                    break;
+
+                case 5:
                     System.out.println("Goodbye, " + current_user.getName() + "!");
                     MainApp.logout();
                     choice = 4; // Exit the loop
@@ -50,7 +56,7 @@ public class ApplicantApp extends MainApp {
                     System.out.println("Invalid choice. Please try again.");
                     break;
             }
-        } while (choice != 4);
+        } while (choice != 5);
     }
 
     private static void projectInterface(List<Project> readableProjects) {
@@ -84,7 +90,7 @@ public class ApplicantApp extends MainApp {
                                 i++;
                             }
                         }
-                        System.out.println(i + ". Back to Project Management Interface.");
+                        System.out.println(i + ". Back to Project Management Interface");
                         System.out.print("Please select an option: ");
 
                         projChoice = scanner.nextInt();
@@ -178,13 +184,14 @@ public class ApplicantApp extends MainApp {
         switch (appChoice) {
             // apply
             case 1:
+                scanner.nextLine();
                 do { 
-                    System.out.println("Enter Project Name: ");
-                    String projName = scanner.next();
+                    System.out.println("Enter Project To Apply For: ");
+                    String projName = scanner.nextLine();
                     selectedProject = Project.getProjectByName(readableProjects, projName);
 
                     if (selectedProject == null) {
-                        System.out.print("This project does not exist. Enter project again: ");
+                        System.out.println("This project does not exist.\n");
                     }
                     
                 } while (selectedProject == null);
@@ -242,21 +249,162 @@ public class ApplicantApp extends MainApp {
                 System.out.println("Invalid choice. Please try again.");
                 break;
         }
-        
     }
 
     private static void enquiryInterface(List<Project> readableProjects, Project selectedProject) {
         Scanner scanner = new Scanner(System.in);
+        int choice;
 
         if (selectedProject == null) {
-            System.out.print("Enter project to enquire: ");
-            String projName = scanner.next();
-            selectedProject = Project.getProjectByName(readableProjects, projName);
+            System.out.println("Enquiry Management Interface");
+            System.out.println("1. Enquire About A Project");
+            System.out.println("2. View My Enquiries");
+            System.out.println("3. Exit Enquiry Management Interface");
+            System.out.print("Please select an option: ");
+    
+            choice = scanner.nextInt();
+            System.out.println();
+        } else {
+            choice = 1;
         }
 
-        System.out.print("Enter enquiry: ");
-        String enqString = scanner.next(); 
+        switch (choice) {
+            // enquire
+            case 1:
+                scanner.nextLine();
+                do { 
+                    System.out.println("Enter Project To Enquire About: ");
+                    String projName = scanner.nextLine();
+                    selectedProject = Project.getProjectByName(readableProjects, projName);
 
-        ((Applicant) current_user).createEnquiry(selectedProject, enqString);
+                    if (selectedProject == null) {
+                        System.out.println("This project does not exist.\n");
+                    }
+                    
+                } while (selectedProject == null);
+
+                System.out.println("Enter Enquiry");
+                String enquiryString = scanner.nextLine();
+
+                ((Applicant) current_user).createEnquiry(selectedProject, enquiryString);
+                break;
+
+            // view my enquiries
+            case 2:
+                List<Enquiry> enqList = ((Applicant) current_user).getEnquiryList();
+
+                int enqChoice;
+                int i;
+
+                do {
+                    i = 1;
+                    if (enqList.isEmpty()) {
+                        System.out.println("\tNo Enquiries to view.");
+                    } else {
+                        System.out.println("Select An Enquiry:");
+                        for (Enquiry enquiry : enqList) {
+                            System.out.println("\t" + i + ". " + enquiry.getEnquiryString());
+                            i++;
+                        }
+                    }
+                    System.out.println(i + "Back to Enquiry Management Interface");
+                    System.out.print("Please select an option: ");
+
+                    enqChoice = scanner.nextInt();
+                    System.out.println();
+
+                    // select enquiry
+                    if (enqChoice < i) {
+                        int selectedEnquiryID = enqList.get(enqChoice-1).getId();
+                        int enqActionChoice;
+
+                        do { 
+                            System.out.println("Enquiry Actions");
+                            System.out.println("1. Edit Enquiry");
+                            System.out.println("2. Delete Enquiry");
+                            System.out.println("3. Select Another Enquiry");
+                            System.out.print("Please select an option: ");
+
+                            enqActionChoice = scanner.nextInt();
+                            System.out.println();
+
+                            switch (enqActionChoice) {
+                                // edit
+                                case 1:
+                                    System.out.println("Selected Enquiry: " + Enquiry.getEnquiryById(enqList, selectedEnquiryID).getEnquiryString());
+                                    System.out.println("Enter updated enquiry string:");
+                                    //////////////////////////////////////////////////////////
+                                    String newEnquiryString = scanner.nextLine();
+                                    //////////////////////////////////////////////////////////
+                                    System.out.print("Confirm edit? (Y/N): ");
+                                    String confirmEdit = scanner.next().toUpperCase();
+
+                                    switch (confirmEdit) {
+                                        case "Y":
+                                            ((Applicant) current_user).editEnquiry(selectedEnquiryID, newEnquiryString);
+                                            break;
+
+                                        case "N":
+                                            System.out.println("Edit Cancelled.\n");
+                                            break;
+
+                                        default:
+                                            System.out.println("Invalid choice. Please try again.");
+                                            break;
+                                    }
+                                    break;
+
+                                // delete
+                                case 2:
+                                    System.out.println("Selected Enquiry: " + Enquiry.getEnquiryById(enqList, selectedEnquiryID).getEnquiryString());
+                                    System.out.print("Confirm Deletion? (Y/N): ");
+                                    String confirmDelete = scanner.next().toUpperCase();
+
+                                    switch (confirmDelete) {
+                                        case "Y":
+                                            ((Applicant) current_user).deleteEnquiry(selectedEnquiryID);
+                                            break;
+
+                                        case "N":
+                                            System.out.println("Deletion Cancelled.\n");
+                                            break;
+
+                                        default:
+                                            System.out.println("Invalid choice. Please try again.");
+                                            break;
+                                    }
+                                    break;
+
+                                // back to select enquiry
+                                case 3:
+                                    System.out.println("Back to Enquiry Selection...\n");
+                                    break;
+
+                                default:
+                                    System.out.println("Invalid choice. Please try again.");
+                                    break;
+                            }
+
+                        } while (enqActionChoice != 3);
+
+                    } else if (enqChoice == i) {
+                        System.out.println("Back to Enquiry Management Interface...\n");
+                        break;
+                    } else {
+                        System.out.println("Invalid choice. Please try again.");
+                        break;
+                    }
+                } while (enqChoice != i);
+                break;
+
+            // exit
+            case 3:
+                System.out.println("Exiting Enquiry Management Interface...\n");
+                break;
+
+            default:
+                System.out.println("Invalid choice. Please try again.");
+                break;
+        }
     }
 }

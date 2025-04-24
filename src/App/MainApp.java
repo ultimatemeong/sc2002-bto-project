@@ -72,7 +72,7 @@ public class MainApp {
 
             for (Manager manager : all_managers) {
                 if (manager.getNric().equals(nric) && manager.validatePassword(password)) {
-                    System.out.println("Login successful! Welcome, " + manager.getName() + ".");
+                    System.out.println("Login successful! Welcome, " + manager.getName() + ".\n");
                     current_user = (Manager) manager;
                     role = "Manager";
                 }
@@ -91,7 +91,7 @@ public class MainApp {
             if (role.equals("")) {
                 for (Applicant applicant : all_applicants) {
                     if (applicant.getNric().equals(nric) && applicant.validatePassword(password)) {
-                        System.out.println("Login successful! Welcome, " + applicant.getName() + ".");
+                        System.out.println("Login successful! Welcome, " + applicant.getName() + ".\n");
                         current_user = (Applicant) applicant;
                         role = "Applicant";
                     }
