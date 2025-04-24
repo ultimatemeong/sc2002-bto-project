@@ -4,6 +4,8 @@ import Enquiries.*;
 import Misc.*;
 import Projects.*;
 import Users.*;
+
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -113,10 +115,26 @@ public class ManagerApp extends MainApp {
                         priceType2 = scanner.nextInt();
                     } while (numUnitsType2 < 0 || priceType2 < 0);
 
+                    LocalDate appOpenDate = null;
                     System.out.println("Project Opening Date:");
-                    LocalDate appOpenDate = LocalDate.parse(scanner.next());
+                    do {
+                        try {
+                            appOpenDate = LocalDate.parse(scanner.next());
+                        } catch (Exception e) {
+                            System.out.println("Invalid date format. Please enter a valid date (YYYY-MM-DD).");
+                        }
+                    } while (appOpenDate == null);
+
+                    LocalDate appCloseDate = null;
                     System.out.println("Project Closing Date:");
-                    LocalDate appCloseDate = LocalDate.parse(scanner.next());
+                    do {
+                        try {
+                            appCloseDate = LocalDate.parse(scanner.next());
+                        } catch (Exception e) {
+                            System.out.println("Invalid date format. Please enter a valid date (YYYY-MM-DD).");
+                        }
+                    } while (appCloseDate == null);
+
                     Integer officerSlots;
 
                     do {

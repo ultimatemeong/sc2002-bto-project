@@ -231,11 +231,17 @@ public class OfficerApp extends ApplicantApp {
         switch (regChoice) {
             // apply
             case 1:
-                if (selectedProject == null) {
+                scanner.nextLine();
+                do { 
                     System.out.println("Enter Project Name: ");
-                    String projName = scanner.next();
+                    String projName = scanner.nextLine();
                     selectedProject = Project.getProjectByName(readableProjects, projName);
-                }
+
+                    if (selectedProject == null) {
+                        System.out.println("This project does not exist.\n");
+                    }
+                    
+                } while (selectedProject == null);
 
                 ((Officer) current_user).registerForProject(selectedProject);
                 break;
