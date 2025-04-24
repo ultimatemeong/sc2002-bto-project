@@ -169,8 +169,16 @@ public class Applicant extends User{
     }
 
     /**
+     * Add an enquiry to the enquiry list of the applicant.
+     * @param enquiry
+     */
+    public void addToEnquiryList(Enquiry enquiry) {
+        this.enquiryList.add(enquiry);
+    }
+
+    /**
      * Creates an enquiry for the applicant
-     * * Checks if the applicant has an active application. If so, creates a new enquiry and adds it to the enquiry list.
+     * * Checks if the applicant has an active application. If so, creates a new enquiry and adds it to the enquiry list for both applicant and project.
      * * If not, informs the user that there is no active application to create an enquiry for.
      * @param project
      * @param enquiryString
@@ -178,7 +186,8 @@ public class Applicant extends User{
     public void createEnquiry(Project project, String enquiryString) {
         LocalDateTime dateTime = LocalDateTime.now(); // Get the current date and time
         Enquiry enquiry = new Enquiry(Enquiry.getEnquiryCounter(), this, enquiryString, dateTime, project);
-        enquiryList.add(enquiry);
+        this.addToEnquiryList(enquiry);
+        project.addToEnquiryList(enquiry);
         System.out.println("Enquiry successfully submitted!\n");
     }
 
