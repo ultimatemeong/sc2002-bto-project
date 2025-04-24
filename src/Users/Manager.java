@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Manager class represents an manager in the system.
  * It extends the User class and includes attributes such as application and enquiry list.
- * @author Ang QiLe Dora
+ * @author Ang Qile Dora
  * @version 1.0
  * @since 2025-04-23
  */
@@ -209,7 +209,6 @@ public class Manager extends User{
      * @param accepted
      */
     public void reviewApplication(Application application, boolean accepted) {
-        /* approve or reject applicant's application for a project */ 
         if (accepted) {
             application.setFormStatus("Approved");
         } else {
@@ -225,7 +224,6 @@ public class Manager extends User{
      * @param accepted
      */
     public void reviewWithdrawal(Application application, boolean accepted) {
-        /* approve or reject applicant's withdrawal for a project */ 
         if (accepted) {
             application.setWithdrawalStatus("Approved");
         } else {

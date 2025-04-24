@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Applicant class represents an applicant in the system.
  * It extends the User class and includes attributes such as application and enquiry list.
- * @author Ang QiLe Dora
+ * @author Ang Qile Dora
  * @version 1.0
  * @since 2025-04-23
  */
@@ -112,6 +112,7 @@ public class Applicant extends User{
         if ((this.getApplication() == null) && !(isProjectOfficer(project))) {
             Application application = new Application(Application.getApplicationCounter(), project, flatType, this, LocalDate.now(), "Pending", "Null");
             this.setApplication(application);
+            project.addToApplicationList(application); 
 
             // allow user to read project
             AccessControl<Project> accessControl = new ProjectAccess();
@@ -131,7 +132,6 @@ public class Applicant extends User{
      * If not, it informs the user that there is no active application to view.
      */
     public void viewApplicationStatus() {
-        // Logic for viewing application status
         Application application = this.getApplication();
 
         // user has an active application
@@ -152,7 +152,6 @@ public class Applicant extends User{
      * @return
      */
     public boolean withdrawApplication() {
-        // Logic for withdrawing application
         Application application = this.getApplication();
 
         // user has an active application
@@ -174,7 +173,6 @@ public class Applicant extends User{
      * @param enquiryString
      */
     public void createEnquiry(Project project, String enquiryString) {
-        // Logic for creating enquiry
         LocalDateTime dateTime = LocalDateTime.now(); // Get the current date and time
         Enquiry enquiry = new Enquiry(Enquiry.getEnquiryCounter(), this, enquiryString, dateTime, project);
         enquiryList.add(enquiry);
@@ -188,7 +186,6 @@ public class Applicant extends User{
      * @return true if the enquiry is successfully edited, false otherwise
      */
     public boolean editEnquiry(Integer id, String newEnquiryString) {
-        // Logic for editing enquiry
         for (Enquiry enquiry : enquiryList) {
             if (enquiry.getId().equals(id)) {
                 enquiry.setEnquiryString(newEnquiryString);
@@ -206,7 +203,6 @@ public class Applicant extends User{
      * @return true if the enquiry is successfully deleted, false otherwise
      */
     public boolean deleteEnquiry(Integer id) {
-        // Logic for deleting enquiry
         for (Enquiry enquiry : enquiryList) {
             if (enquiry.getId().equals(id)) {
                 enquiryList.remove(enquiry);

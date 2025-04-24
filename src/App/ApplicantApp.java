@@ -178,11 +178,17 @@ public class ApplicantApp extends MainApp {
         switch (appChoice) {
             // apply
             case 1:
-                if (selectedProject == null) {
+                do { 
                     System.out.println("Enter Project Name: ");
                     String projName = scanner.next();
                     selectedProject = Project.getProjectByName(readableProjects, projName);
-                }
+
+                    if (selectedProject == null) {
+                        System.out.print("This project does not exist. Enter project again: ");
+                    }
+                    
+                } while (selectedProject == null);
+
 
                 System.out.println("Enter Flat Type to Apply");
                 String flatType = scanner.next();

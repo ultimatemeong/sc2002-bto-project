@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Officer class represents an officer in the system.
  * It extends the User class and includes attributes such as application and enquiry list.
- * @author Ang QiLe Dora
+ * @author Ang Qile Dora
  * @version 1.0
  * @since 2025-04-23
  */
@@ -111,7 +111,6 @@ public class Officer extends Applicant{
      * @return true if the officer is not an applicant for the project, false otherwise
      */
     private void flatSelectionReceipt(Application application) {
-        // Logic for flat selection receipt
         Applicant applicant = (Applicant) application.getUser();
         Project project = application.getProject();
 
@@ -128,7 +127,6 @@ public class Officer extends Applicant{
      * @return True if registration is successful, false otherwise
      */
     public boolean registerForProject(Project project) {
-        // Logic for registering for projects
         if ((this.registration == null) && notApplicant(project)) {
             Registration registration = new Registration(Registration.getRegistrationCounter(), project, this, LocalDate.now(), "PENDING");
             project.addToRegistrationList(registration);
@@ -168,7 +166,6 @@ public class Officer extends Applicant{
      * * @return registration status of the officer if the officer is in charge of a project, null otherwise
      */
     public void viewRegistrationStatus() {
-        // Logic for viewing registration status
         Registration registration = this.getRegistration();
 
         // user has an active registration
@@ -188,7 +185,6 @@ public class Officer extends Applicant{
      * @return true if booking is successful, false otherwise
      */
     public boolean chooseFlat(Project project, String applicantNRIC) {
-        // Logic for choosing project
         Application application = retrieveApplication(project, applicantNRIC);
 
         if (application.getFormStatus().equals("APPROVED")) {

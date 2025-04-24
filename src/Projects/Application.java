@@ -3,7 +3,6 @@ package Projects;
 import Misc.AccessControl;
 import Misc.ApplicationAccess;
 import Users.*;
-
 import java.time.LocalDate;
 import java.util.List;
 

@@ -12,7 +12,7 @@ enum MaritalStatus{
 /**
  * User class represents a user in the system.
  * It includes attributes such as name, NRIC, age, marital status, and password.
- * @author Ang QiLe Dora
+ * @author Ang Qile Dora
  * @version 1.0
  * @since 2025-04-23
  */
