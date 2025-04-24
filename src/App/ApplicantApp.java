@@ -361,22 +361,25 @@ public class ApplicantApp extends MainApp {
                                 // delete
                                 case 2:
                                     System.out.println("Selected Enquiry: " + Enquiry.getEnquiryById(enqList, selectedEnquiryID).getEnquiryString());
-                                    System.out.print("Confirm Deletion? (Y/N): ");
-                                    String confirmDelete = scanner.next().toUpperCase();
+                                    String confirmDelete;
+                                    do{
+                                        System.out.print("Confirm Deletion? (Y/N): ");
+                                        confirmDelete = scanner.next().toUpperCase();
 
-                                    switch (confirmDelete) {
-                                        case "Y":
-                                            ((Applicant) current_user).deleteEnquiry(selectedEnquiryID);
-                                            break;
+                                        switch (confirmDelete) {
+                                            case "Y":
+                                                ((Applicant) current_user).deleteEnquiry(selectedEnquiryID);
+                                                break;
 
-                                        case "N":
-                                            System.out.println("Deletion Cancelled.\n");
-                                            break;
+                                            case "N":
+                                                System.out.println("Deletion Cancelled.\n");
+                                                break;
 
-                                        default:
-                                            System.out.println("Invalid choice. Please try again.");
-                                            break;
-                                    }
+                                            default:
+                                                System.out.println("Invalid choice. Please try again.");
+                                                break;
+                                        }
+                                    } while (confirmDelete != "Y" && confirmDelete != "N");
                                     break;
 
                                 // back to select enquiry
