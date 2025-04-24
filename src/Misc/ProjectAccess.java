@@ -36,6 +36,13 @@ public class ProjectAccess implements AccessControl<Project> {
         }
     }
 
+    /**
+     * Checks the access level of a user for a specific project.
+     * Checks by visibility of the project and marital status of the user.
+     * @param project The project to check access for.
+     * @param user The user whose access level is being checked.
+     * @return The access level of the user for the project.
+     */
     public String check(Project project, User user){
         String id = project.getName();
         String userNRIC = user.getNric();
@@ -56,14 +63,14 @@ public class ProjectAccess implements AccessControl<Project> {
                 if (project.isVisible()) {
                     return checkMartitalStatus(user, project);
                 } else {
-                    return "NULL"; // If the project is not visible, return "NULL"\
+                    return "NULL"; // If the project is not visible, return "NULL"
                 }
             }
         } else {
             return userAccessMap.get(id); // Return the access level if it exists
         } 
     }
-
+    
     public void add(Project project, User user, String accessLevel){
         String id = project.getName();
         String userNRIC = user.getNric();

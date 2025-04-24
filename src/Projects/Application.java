@@ -13,7 +13,7 @@ import java.util.List;
  * @version 1.0
  * @since 2025-04-23
  */
-public class Application extends Form {
+public class Application extends Form implements IWithdrawable{
     private static Integer applicationCounter = 1;
     private String flatType;
     protected Status withdrawalStatus; // Null, Pending, Approved, Rejected

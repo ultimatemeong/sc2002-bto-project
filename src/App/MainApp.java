@@ -443,7 +443,7 @@ public class MainApp {
             project.addToApplicationList(application);
             applicant.setApplication(application);
             applicationAccessControl.add(application, applicant, "RW");
-            projAccessControl.add(project, applicant, "R");
+            projAccessControl.add(project, applicant, "R"); 
         }
 
         // Load registrations
