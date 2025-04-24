@@ -385,22 +385,25 @@ public class OfficerApp extends ApplicantApp {
                     System.out.println("Selected Application: ");
                     System.out.println("Applicant: " + application.getUser().getName());
                     System.out.println("Flat Type: " + application.getFlatType());
+                    String confirmBooking;
+
                     System.out.println("Confirm Flat Booking? (Y/N)");
-                    String confirmBooking = scanner.next().toUpperCase();
+                    confirmBooking = scanner.next().toUpperCase();
 
-                    switch (confirmBooking) {
-                        case "Y":
-                            ((Officer) current_user).chooseFlat(projectInCharge, application.getUser().getNric());
-                            break;
-                        case "N":
-                            System.out.println("Booking cancelled.\n");
-                            break;
+                    do {
+                        switch (confirmBooking) {
+                            case "Y":
+                                ((Officer) current_user).chooseFlat(projectInCharge, application.getUser().getNric());
+                                break;
+                            case "N":
+                                System.out.println("Booking cancelled.\n");
+                                break;
 
-                        default:
-                            System.out.println("Invalid choice. Please try again.");
-                            break;
-                    }
-
+                            default:
+                                System.out.println("Invalid choice. Please try again.");
+                                break;
+                        }
+                    } while (!(confirmBooking.equals("Y") || confirmBooking.equals("N")));
 
                 } else if (applicationChoice == i) {
                     System.out.println("Back to Project Actions...\n");
