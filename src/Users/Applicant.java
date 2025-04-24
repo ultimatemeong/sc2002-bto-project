@@ -154,7 +154,7 @@ public class Applicant extends User{
      * If not, informs the user that there is no active application to withdraw from.
      * @return
      */
-    public boolean withdrawApplication() {
+        public boolean withdrawApplication() {
         Application application = this.getApplication();
 
         // user has an active application
@@ -174,6 +174,14 @@ public class Applicant extends User{
      */
     public void addToEnquiryList(Enquiry enquiry) {
         this.enquiryList.add(enquiry);
+    }
+
+    /**
+     * Removes an enquiry from the enquiry list of the applicant.
+     * @param enquiry
+     */
+    public void removeFromEnquiryList(Enquiry enquiry) {
+        this.enquiryList.remove(enquiry);
     }
 
     /**
@@ -217,7 +225,7 @@ public class Applicant extends User{
     public boolean deleteEnquiry(Integer id) {
         for (Enquiry enquiry : enquiryList) {
             if (enquiry.getId().equals(id)) {
-                enquiryList.remove(enquiry);
+                this.removeFromEnquiryList(enquiry);
                 System.out.println("Enquiry successfully deleted!\n");
                 return true;
             }

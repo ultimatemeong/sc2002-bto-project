@@ -49,20 +49,20 @@ public class MainApp {
             String nric = scanner.next();
 
             if (nric.length() != 9) {
-                System.out.println("Invalid NRIC. Please try again.\n");
-                System.out.println("NRIC must be 9 characters long.");
+                System.out.println("Invalid NRIC. Please try again.");
+                System.out.println("NRIC must be 9 characters long.\n");
                 continue;
             } else if (!(nric.charAt(0) == 'T' || nric.charAt(0) == 'S')) {
-                System.out.println("Invalid NRIC. Please try again.\n");
-                System.out.println("NRIC must start with T or S.");
+                System.out.println("Invalid NRIC. Please try again.");
+                System.out.println("NRIC must start with T or S.\n");
                 continue;
             } else if (nric.substring(1,7).matches("[0-9]+") == false) {
-                System.out.println("Invalid NRIC. Please try again.\n");
-                System.out.println("NRIC must contain 7 digits after the first character.");
+                System.out.println("Invalid NRIC. Please try again.");
+                System.out.println("NRIC must contain 7 digits after the first character.\n");
                 continue;
             } else if (!(nric.charAt(8) >= 'A' && nric.charAt(8) <= 'Z')) {
-                System.out.println("Invalid NRIC. Please try again.\n");
-                System.out.println("NRIC must end with an alphabetic character.");
+                System.out.println("Invalid NRIC. Please try again.");
+                System.out.println("NRIC must end with an alphabet.\n");
                 continue;
             }
 
@@ -112,7 +112,7 @@ public class MainApp {
                     break;    
 
                 default:
-                    System.out.println("Invalid password. Please try again.\n");
+                    System.out.println("Invalid login credentials. Please try again.\n");
                     break;
             }
         } while (role == "");
@@ -159,20 +159,24 @@ public class MainApp {
         List<Project> filteredProjects = new ArrayList<>();
         int filter_choice;
         do {
-            System.out.print("Please select an option:");
+            System.out.print("Please select an option: ");
             filter_choice = scanner.nextInt();
+            System.out.println();
             switch (filter_choice) {
                 case 1:
-                    System.out.print("Enter Flat Type: (2-Room or 3-Room) ");
+                    System.out.print("Enter Flat Type: (2-Room or 3-Room): ");
                     String flatType = scanner.next().toUpperCase();
                     current_filter = ProjectFilter.FLAT_TYPE;
                     filteredProjects = Project.filterProjectsByFlatType(readableProjects, flatType);
                     if (filteredProjects.isEmpty()) {
-                        System.out.println("No Projects to View.");
+                        System.out.println("No Projects to View.\n");
                     } else {
+                        int i=1;
                         for (Project project : filteredProjects) {
-                            System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                            System.out.println(i + ". " + project.getName()+ ", " + project.getNeighbourhood());
+                            i++;
                         }
+                        System.out.println();
                     }
                     break;
                 case 2:
@@ -181,15 +185,18 @@ public class MainApp {
                     current_filter = ProjectFilter.NEIGHBOURHOOD;
                     filteredProjects = Project.filterProjectsByNeighbourhood(readableProjects, neighbourhood);
                     if (filteredProjects.isEmpty()) {
-                        System.out.println("No Projects to View.");
+                        System.out.println("No Projects to View.\n");
                     } else {
+                        int i=1;
                         for (Project project : filteredProjects) {
-                            System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                            System.out.println(i + ". " + project.getName()+ ", " + project.getNeighbourhood());
+                            i++;
                         }
+                        System.out.println();
                     }
                     break;
                 case 3:
-                    System.out.print("Enter Price Range: (min) ");
+                    System.out.print("Enter Price Range (min): ");
                     Integer minPrice = scanner.nextInt();
 
                     if (minPrice <= 0) {
@@ -197,7 +204,7 @@ public class MainApp {
                         break;
                     }
 
-                    System.out.print("Enter Price Range: (max) ");
+                    System.out.print("Enter Price Range (max): ");
                     Integer maxPrice = scanner.nextInt();
 
                     if (maxPrice <= 0) {
@@ -212,11 +219,14 @@ public class MainApp {
                     
                     filteredProjects = Project.filterProjectsByPrice(readableProjects, minPrice, maxPrice);
                     if (filteredProjects.isEmpty()) {
-                        System.out.println("No Projects to View.");
+                        System.out.println("No Projects to View.\n");
                     } else {
+                        int i=1;
                         for (Project project : filteredProjects) {
-                            System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                            System.out.println(i + ". " + project.getName()+ ", " + project.getNeighbourhood());
+                            i++;
                         }
+                        System.out.println();
                     }
                     
                     break;

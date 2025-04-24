@@ -287,7 +287,7 @@ public class ApplicantApp extends MainApp {
                     
                 } while (selectedProject == null);
 
-                System.out.println("Enter Enquiry");
+                System.out.println("Enter Enquiry:");
                 String enquiryString = scanner.nextLine();
 
                 ((Applicant) current_user).createEnquiry(selectedProject, enquiryString);
@@ -337,25 +337,28 @@ public class ApplicantApp extends MainApp {
                                 case 1:
                                     System.out.println("Selected Enquiry: " + Enquiry.getEnquiryById(enqList, selectedEnquiryID).getEnquiryString());
                                     System.out.println("Enter updated enquiry string:");
-                                    //////////////////////////////////////////////////////////
+                                    scanner.nextLine();
                                     String newEnquiryString = scanner.nextLine();
-                                    //////////////////////////////////////////////////////////
-                                    System.out.print("Confirm edit? (Y/N): ");
-                                    String confirmEdit = scanner.next().toUpperCase();
-
-                                    switch (confirmEdit) {
-                                        case "Y":
-                                            ((Applicant) current_user).editEnquiry(selectedEnquiryID, newEnquiryString);
-                                            break;
-
-                                        case "N":
-                                            System.out.println("Edit Cancelled.\n");
-                                            break;
-
-                                        default:
-                                            System.out.println("Invalid choice. Please try again.");
-                                            break;
-                                    }
+                                    String confirmEdit;
+                                    do { 
+                                        System.out.print("Confirm edit? (Y/N): ");
+                                        confirmEdit = scanner.next().toUpperCase();
+    
+                                        switch (confirmEdit) {
+                                            case "Y":
+                                                ((Applicant) current_user).editEnquiry(selectedEnquiryID, newEnquiryString);
+                                                break;
+    
+                                            case "N":
+                                                System.out.println("Edit Cancelled.\n");
+                                                break;
+    
+                                            default:
+                                                System.out.println("Invalid choice. Please try again.");
+                                                break;
+                                        }
+                                        
+                                    } while (!confirmEdit.equals("Y") && !confirmEdit.equals("N"));
                                     break;
 
                                 // delete
@@ -379,7 +382,7 @@ public class ApplicantApp extends MainApp {
                                                 System.out.println("Invalid choice. Please try again.");
                                                 break;
                                         }
-                                    } while (confirmDelete != "Y" && confirmDelete != "N");
+                                    } while (!confirmDelete.equals("Y") && !confirmDelete.equals("N"));
                                     break;
 
                                 // back to select enquiry
