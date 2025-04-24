@@ -72,14 +72,6 @@ public class Reply {
     }
 
     /**
-     * This method removes the reply from the enquiry and clears the reference to the enquiry.
-     */
-    public void deleteReply() {
-        this.enquiry.setReply(null); // Remove the reply from the enquiry
-        this.enquiry = null; // Clear the reference to the enquiry
-    }
-
-    /**
      * This method returns a string representation of the reply.
      * @return a string representation of the reply.
      */

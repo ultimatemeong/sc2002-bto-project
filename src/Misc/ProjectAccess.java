@@ -18,14 +18,14 @@ public class ProjectAccess implements AccessControl<Project> {
     private String checkMartitalStatus(User user, Project project) {
         switch (user.getMaritalStatus()) {
             case "SINGLE":
-                if (project.getFlatsInfo().get("2-Room").get(0) > 0) {
+                if (project.getFlatsInfo().get("2-ROOM").get(0) > 0) {
                     return "R";
                 } else {
                     return "NULL"; // If no 2-Rooms are available, return "NULL"
                 }
 
             case "MARRIED":
-                if (project.getFlatsInfo().get("2-Room").get(0) > 0 || project.getFlatsInfo().get("3-Room").get(0) > 0) {
+                if (project.getFlatsInfo().get("2-ROOM").get(0) > 0 || project.getFlatsInfo().get("3-ROOM").get(0) > 0) {
                     return "R";
                 } else {
                     return "NULL"; // If no 2-Rooms are available, return "NULL"

@@ -16,7 +16,7 @@ import java.util.List;
 public class Application extends Form implements IWithdrawable{
     private static Integer applicationCounter = 1;
     private String flatType;
-    protected Status withdrawalStatus; // Null, Pending, Approved, Rejected
+    private Status withdrawalStatus; // Null, Pending, Approved, Rejected
 
     /**
      * Constructor for Application class

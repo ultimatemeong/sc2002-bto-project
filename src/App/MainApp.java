@@ -191,8 +191,23 @@ public class MainApp {
                 case 3:
                     System.out.print("Enter Price Range: (min) ");
                     Integer minPrice = scanner.nextInt();
+
+                    if (minPrice <= 0) {
+                        System.out.println("Invalid Price. Please try again.");
+                        break;
+                    }
+
                     System.out.print("Enter Price Range: (max) ");
                     Integer maxPrice = scanner.nextInt();
+
+                    if (maxPrice <= 0) {
+                        System.out.println("Invalid Price. Please try again.");
+                        break;
+                    } else if (maxPrice < minPrice) {
+                        System.out.println("Invalid Price Range. Please enter a number higher than " + minPrice + ".");
+                        break;
+                    }
+
                     current_filter = ProjectFilter.PRICE;
                     
                     filteredProjects = Project.filterProjectsByPrice(readableProjects, minPrice, maxPrice);
