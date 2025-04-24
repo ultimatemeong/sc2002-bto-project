@@ -24,7 +24,7 @@ public class ManagerApp extends MainApp {
             System.out.println("2. Enquiry Management");
             System.out.println("3. Account Management");
             System.out.println("4. Logout");
-            System.out.print("Please select an option:");
+            System.out.print("Please select an option: ");
 
             choice = scanner.nextInt();
             System.out.println();
@@ -63,19 +63,22 @@ public class ManagerApp extends MainApp {
             System.out.println("3. Work On Project");
             System.out.println("4. Delete Project");
             System.out.println("5. Back to Main Menu");
-            System.out.print("Please select an option:");
+            System.out.print("Please select an option: ");
             choice = scanner.nextInt();
             System.out.println();
             switch (choice) {
                 case 1:
                     System.out.println("1. View All Projects");
                     System.out.println("2. Filter Projects");
-                    System.out.println("Please select an option:");
+                    System.out.print("Please select an option: ");
                     int viewby = scanner.nextInt();
+                    System.out.println();
+                    
                     switch (viewby) {
                         case 1:
                             for (Project project : readableProjects) {
-                                System.out.println(project.getName()+ ", " + project.getNeighbourhood());
+                                int i = 1;
+                                System.out.println("\t" + i + ". " + project.getName()+ ", " + project.getNeighbourhood());
                             }
                             current_filter = ProjectFilter.NULL;
                             break;
@@ -164,8 +167,9 @@ public class ManagerApp extends MainApp {
                         System.out.println("5. Enquiries");
                         System.out.println("6. Generate Report");
                         System.out.println("7. Back to Project Management Interface");
-                        System.out.println("Please select an option:");
+                        System.out.print("Please select an option: ");
                         work_choice = scanner.nextInt();
+                        System.out.println();
                         switch (work_choice) {
                             case 1:
                                 projectDetailsEditInterface(editableProjects);
@@ -185,7 +189,7 @@ public class ManagerApp extends MainApp {
                             case 6:
                                 generateReport();
                             case 7:
-                                System.out.println("Back to Project Management Interface...");
+                                System.out.println("Back to Project Management Interface...\n");
                                 break;
                             default:
                                 System.out.println("Invalid choice. Please try again.");
@@ -214,7 +218,7 @@ public class ManagerApp extends MainApp {
                     }
                     break;
                 case 5:
-                    System.out.println("Back to Main Menu...");
+                    System.out.println("Back to Main Menu...\n");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -319,7 +323,7 @@ public class ManagerApp extends MainApp {
                             break;
                         
                         case 5:
-                            System.out.println("Going Back...");
+                            System.out.println("Going Back...\n");
                             break;
                         default:
                             break;
@@ -334,12 +338,12 @@ public class ManagerApp extends MainApp {
 
                 ((Manager) current_user).editProject(proj, tempProject);
             } else {
-                System.out.println("Back to Project Management Interface...");
+                System.out.println("Back to Project Management Interface...\n");
                 projectInterface();
             }
         } else {
             System.out.println("You have no editable projects.");
-            System.out.println("Back to Project Management Interface...");
+            System.out.println("Back to Project Management Interface...\n");
             projectInterface();
         }
     }
@@ -348,7 +352,7 @@ public class ManagerApp extends MainApp {
 
         if (editableProjects.size() < 1) {
             System.out.println("You have no projects to work on.");
-            System.out.println("Back to Project Management Interface...");
+            System.out.println("Back to Project Management Interface...\n");
             return;
         }
 
@@ -359,14 +363,17 @@ public class ManagerApp extends MainApp {
             System.out.println("Project Application Interface");
             System.out.println("1. View Applications");
             System.out.println("2. Back to Project Work Interface");
-            System.out.println("Please select an option:");
+            System.out.print("Please select an option: ");
             choice = scanner.nextInt();
+            System.out.println();
             switch (choice) {
                 case 1:
                     System.out.println("Viewing Applications...");
                     System.out.println("1. View All Applications");
                     System.out.println("2. View Applications For A Specific Project");
+                    System.out.print("Please select an option: ");
                     int viewby = scanner.nextInt();
+                    System.out.println();
                     switch (viewby) {
                         case 1:
                             appCount = 1;
@@ -477,7 +484,7 @@ public class ManagerApp extends MainApp {
                     }
                     break;
                 case 2:
-                    System.out.println("Back to Project Work Interface...");
+                    System.out.println("Back to Project Work Interface...\n");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -495,7 +502,8 @@ public class ManagerApp extends MainApp {
             System.out.println("1. Approve Application");
             System.out.println("2. Reject Application");
             System.out.println("3. Back to Project Work Interface");
-            System.out.println("Please select an option:");
+            System.out.print("Please select an option: ");
+            System.out.println();
             choice = scanner.nextInt();
             switch (choice) {
                 case 1:
@@ -507,7 +515,7 @@ public class ManagerApp extends MainApp {
                     app.setFormStatus("REJECTED");
                     break;
                 case 3:
-                    System.out.println("Back to Project Work Interface...");
+                    System.out.println("Back to Project Work Interface...\n");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -525,8 +533,9 @@ public class ManagerApp extends MainApp {
             System.out.println("Project Withdrawal Interface");
             System.out.println("1. View Withdrawals");
             System.out.println("2. Back to Project Work Interface");
-            System.out.println("Please select an option:");
+            System.out.print("Please select an option: ");
             choice = scanner.nextInt();
+            System.out.println();
             switch (choice) {
                 case 1:
                     System.out.println("Viewing Withdrawals...");
@@ -644,7 +653,7 @@ public class ManagerApp extends MainApp {
 
                     break;
                 case 2:
-                    System.out.println("Back to Project Management Interface...");
+                    System.out.println("Back to Project Management Interface...\n");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -663,8 +672,9 @@ public class ManagerApp extends MainApp {
             System.out.println("1. Approve Withdrawal");
             System.out.println("2. Reject Withdrawal");
             System.out.println("3. Back to Project Work Interface");
-            System.out.println("Please select an option:");
+            System.out.print("Please select an option: ");
             choice = scanner.nextInt();
+            System.out.println();
             switch (choice) {
                 case 1:
                     System.out.println("Withdrawal Approved");
@@ -675,7 +685,7 @@ public class ManagerApp extends MainApp {
                     app.setWithdrawalStatus("REJECTED");
                     break;
                 case 3:
-                    System.out.println("Back to Project Work Interface...");
+                    System.out.println("Back to Project Work Interface...\n");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -693,8 +703,9 @@ public class ManagerApp extends MainApp {
             System.out.println("Project Registration Interface");
             System.out.println("1. View Registrations");
             System.out.println("2. Back to Project Work Interface");
-            System.out.println("Please select an option:");
+            System.out.print("Please select an option: ");
             choice = scanner.nextInt();
+            System.out.println();
             switch (choice) {
                 case 1:
                     System.out.println("Viewing Registrations...");
@@ -810,7 +821,7 @@ public class ManagerApp extends MainApp {
 
                     break;
                 case 2:
-                    System.out.println("Back to Project Management Interface...");
+                    System.out.println("Back to Project Management Interface...\n");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -828,8 +839,9 @@ public class ManagerApp extends MainApp {
             System.out.println("1. Approve Registration");
             System.out.println("2. Reject Registration");
             System.out.println("3. Back to Project Work Interface");
-            System.out.println("Please select an option:");
+            System.out.print("Please select an option: ");
             choice = scanner.nextInt();
+            System.out.println();
             switch (choice) {
                 case 1:
                     System.out.println("Registration Approved");
@@ -840,7 +852,7 @@ public class ManagerApp extends MainApp {
                     reg.setFormStatus("REJECTED");
                     break;
                 case 3:
-                    System.out.println("Back to Project Work Interface...");
+                    System.out.println("Back to Project Work Interface...\n");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -860,6 +872,7 @@ public class ManagerApp extends MainApp {
             System.out.println("2. Back to Project Work Interface");
             System.out.print("Please select an option: ");
             choice = scanner.nextInt();
+            System.out.println();
             switch (choice) {
                 case 1:
                     System.out.println("Viewing Enquiries...");
@@ -975,7 +988,7 @@ public class ManagerApp extends MainApp {
 
                     break;
                 case 2:
-                    System.out.println("Back to Project Management Interface...");
+                    System.out.println("Back to Project Management Interface...\n");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -992,8 +1005,9 @@ public class ManagerApp extends MainApp {
             System.out.println("Working on Enquiry: " + enq.getApplicant().getName() + ", Enquiry: " + enq.getEnquiryString());
             System.out.println("1. Reply to Enquiry");
             System.out.println("2. Back to Project Work Interface");
-            System.out.println("Please select an option:");
+            System.out.print("Please select an option: ");
             choice = scanner.nextInt();
+            System.out.println();
             switch (choice) {
                 case 1:
                     System.out.println("Reply to Enquiry: ");
@@ -1004,7 +1018,7 @@ public class ManagerApp extends MainApp {
                     choice = 2;
                     break;
                 case 2:
-                    System.out.println("Back to Project Work Interface...");
+                    System.out.println("Back to Project Work Interface...\n");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -1020,8 +1034,9 @@ public class ManagerApp extends MainApp {
             System.out.println("Project Report Interface");
             System.out.println("1. Generate Report");
             System.out.println("2. Back to Project Work Interface");
-            System.out.println("Please select an option:");
+            System.out.print("Please select an option: ");
             choice = scanner.nextInt();
+            System.out.println();
             switch (choice) {
                 case 1:
                     System.out.println("Filter Report By:");
@@ -1030,6 +1045,7 @@ public class ManagerApp extends MainApp {
                     }
                     System.out.println("Please select a filter:");
                     int filterChoice = scanner.nextInt();
+                    System.out.println();
                     do {
                         switch (filterChoice) {
                             case 1:
@@ -1056,6 +1072,7 @@ public class ManagerApp extends MainApp {
                                 System.out.println("Filter by Flat Type");
                                 System.out.println("Please select a flat type (2-Room/3-Room): ");
                                 String flatType = scanner.next();
+                                System.out.println();
                                 List<Application> allApplications2 = ((Manager) current_user).viewAllApplications(all_projects);
                                 if (!flatType.equals("2-Room") && !flatType.equals("3-Room")) {
                                     System.out.println("Invalid flat type. Please try again.");
@@ -1075,6 +1092,7 @@ public class ManagerApp extends MainApp {
                                 System.out.println("Filter by Marital Status: ");
                                 System.out.println("Please select a marital status (Single/Married): ");
                                 String maritalStatus = scanner.next().toUpperCase();
+                                System.out.println();
                                 List<Application> allApplications3 = ((Manager) current_user).viewAllApplications(all_projects);
                                 if (!maritalStatus.equals("SINGLE") && !maritalStatus.equals("MARRIED")) {
                                     System.out.println("Invalid marital status. Please try again.");
@@ -1096,6 +1114,7 @@ public class ManagerApp extends MainApp {
                                 System.out.println("Please select a project name: ");
                                 scanner.nextLine(); // Consume the newline character
                                 String projectName = scanner.nextLine();
+                                System.out.println();
                                 List<Application> allApplications4 = ((Manager) current_user).viewAllApplications(all_projects);
                                 allApplications4 = allApplications4.stream()
                                         .filter(app -> app.getProject().getName().equals(projectName))
@@ -1114,7 +1133,7 @@ public class ManagerApp extends MainApp {
                     } while (filterChoice < 1 || filterChoice > ReportFilter.values().length);
                     break;
                 case 2:
-                    System.out.println("Back to Project Work Interface...");
+                    System.out.println("Back to Project Work Interface...\n");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");

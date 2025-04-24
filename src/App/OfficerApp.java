@@ -92,7 +92,6 @@ public class OfficerApp extends ApplicantApp {
                     break;
 
                 case 5:
-                    System.out.println("Logging out...");
                     System.out.println("Goodbye, " + current_user.getName() + "!");
                     MainApp.logout();
                     break;
@@ -288,7 +287,7 @@ public class OfficerApp extends ApplicantApp {
                             i = 1;
                             System.out.println("Select An Enquiry:");
                             for (Enquiry enquiry : enqList) {
-                                System.out.println(i + ". User: " + enquiry.getApplicant().getName());
+                                System.out.println("\t" + i + ". User: " + enquiry.getApplicant().getName());
                                 System.out.println("\tEnquiry: " + enquiry.getEnquiryString());
                                 i++;
                             }
@@ -315,6 +314,7 @@ public class OfficerApp extends ApplicantApp {
                                         String replyString = scanner.nextLine();
                                         Reply reply = new Reply(enquiry, current_user, LocalDateTime.now(), null);
                                         reply.writeReply(replyString);
+                                        System.out.println("Enquiry successfully replied!\n");
                                         enquiry.setReply(reply);
                                         break;
                                         
@@ -336,6 +336,7 @@ public class OfficerApp extends ApplicantApp {
                                 break;
                             }
                         } while (enqChoice != i);
+                        break;
         
                     // back to main menu
                     case 2:

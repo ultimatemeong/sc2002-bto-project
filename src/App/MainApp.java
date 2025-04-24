@@ -81,7 +81,7 @@ public class MainApp {
             if (role.equals("")) {
                 for (Officer officer : all_officers) {
                     if (officer.getNric().equals(nric) && officer.validatePassword(password)) {
-                        System.out.println("Login successful! Welcome, " + officer.getName() + ".");
+                        System.out.println("Login successful! Welcome, " + officer.getName() + ".\n");
                         current_user = (Officer) officer;
                         role = "Officer";
                     }

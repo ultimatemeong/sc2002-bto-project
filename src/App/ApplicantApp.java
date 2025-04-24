@@ -194,17 +194,19 @@ public class ApplicantApp extends MainApp {
         switch (appChoice) {
             // apply
             case 1:
-                scanner.nextLine();
-                do { 
-                    System.out.println("Enter Project To Apply For: ");
-                    String projName = scanner.nextLine();
-                    selectedProject = Project.getProjectByName(readableProjects, projName);
-
-                    if (selectedProject == null) {
-                        System.out.println("This project does not exist.\n");
-                    }
-                    
-                } while (selectedProject == null);
+                if (selectedProject == null) {
+                    scanner.nextLine();
+                    do { 
+                        System.out.println("Enter Project To Apply For: ");
+                        String projName = scanner.nextLine();
+                        selectedProject = Project.getProjectByName(readableProjects, projName);
+    
+                        if (selectedProject == null) {
+                            System.out.println("This project does not exist.\n");
+                        }
+                        
+                    } while (selectedProject == null);
+                }
 
                 String flatType;
                 do {
