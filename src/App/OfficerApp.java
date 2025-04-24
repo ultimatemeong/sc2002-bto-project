@@ -400,6 +400,7 @@ public class OfficerApp extends ApplicantApp {
                         switch (confirmBooking) {
                             case "Y":
                                 ((Officer) current_user).chooseFlat(projectInCharge, application.getUser().getNric());
+                                approvedAppList.remove(application);
                                 break;
                             case "N":
                                 System.out.println("Booking cancelled.\n");
