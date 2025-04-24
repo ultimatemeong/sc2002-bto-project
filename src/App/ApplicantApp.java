@@ -223,22 +223,25 @@ public class ApplicantApp extends MainApp {
                     } else {
                         System.out.println("Your current application: ");
                         ((Applicant) current_user).viewApplicationStatus();
-                        System.out.print("Confirm Withdrawal? (Y/N): ");
-                        String withdraw = scanner.next().toUpperCase();
-    
-                        switch (withdraw) {
-                            case "Y": 
-                                ((Applicant) current_user).withdrawApplication();
-                                break;
-    
-                            case "N":
-                                System.out.println("Withdrawal Cancelled.\n");
-                                break;
-    
-                            default:
-                                System.out.println("Invalid choice. Please try again.");
-                                break;
-                        }
+                        String withdraw;
+                        do {
+                            System.out.print("Confirm Withdrawal? (Y/N): ");
+                            withdraw = scanner.next().toUpperCase();
+        
+                            switch (withdraw) {
+                                case "Y": 
+                                    ((Applicant) current_user).withdrawApplication();
+                                    break;
+        
+                                case "N":
+                                    System.out.println("Withdrawal Cancelled.\n");
+                                    break;
+        
+                                default:
+                                    System.out.println("Invalid choice. Please try again.");
+                                    break;
+                            }
+                        } while (withdraw != "Y" && withdraw != "N");
                     }
                 }
 
