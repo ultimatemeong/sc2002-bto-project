@@ -303,11 +303,11 @@ public class ApplicantApp extends MainApp {
                     } else {
                         System.out.println("Select An Enquiry:");
                         for (Enquiry enquiry : enqList) {
-                            System.out.println("\t" + i + ". " + enquiry.getEnquiryString());
+                            System.out.println("\t" + i + ". " + enquiry.getProject().getName() + ": " + enquiry.getEnquiryString());
                             i++;
                         }
                     }
-                    System.out.println(i + "Back to Enquiry Management Interface");
+                    System.out.println(i + ". Back to Enquiry Management Interface");
                     System.out.print("Please select an option: ");
 
                     enqChoice = scanner.nextInt();
