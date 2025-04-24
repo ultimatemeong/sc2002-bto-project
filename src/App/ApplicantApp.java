@@ -19,6 +19,7 @@ public class ApplicantApp extends MainApp {
         int choice;
         do {
             System.out.println("Applicant Interface");
+            briefApplicationStatus();
             System.out.println("1. Project Management");
             System.out.println("2. Application Management");
             System.out.println("3. Enquiry Management");
@@ -56,6 +57,16 @@ public class ApplicantApp extends MainApp {
                     break;
             }
         } while (choice != 5);
+    }
+
+    private static void briefApplicationStatus() {
+        Application application = ((Applicant) current_user).getApplication();
+        if (application == null) {
+            System.out.println("You do not have any active applications.\n");
+        } else {
+            System.out.println("Your application is " + application.getFormStatus() + "\n");
+        }
+        
     }
 
     private static void projectInterface(List<Project> readableProjects) {

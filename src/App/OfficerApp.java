@@ -113,7 +113,7 @@ public class OfficerApp extends ApplicantApp {
             System.out.println("1. View Projects");
             System.out.println("2. Filter Projects");
             System.out.println("3. Back to Main Menu");
-            System.out.print("Please select an option:");
+            System.out.print("Please select an option: ");
 
             choice = scanner.nextInt();
             System.out.println();
