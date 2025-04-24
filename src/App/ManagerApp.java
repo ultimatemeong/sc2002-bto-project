@@ -93,22 +93,36 @@ public class ManagerApp extends MainApp {
                     String neighbourhood = scanner.nextLine();
                     System.out.println("Project Unit Type 1: (2-Room)");
                     String unitType1 = scanner.next().toUpperCase();
-                    System.out.println("Project Number of Units for Type 1:");
-                    Integer numUnitsType1 = scanner.nextInt();
-                    System.out.println("Project Unit Price for Type 1:");
-                    Integer priceType1 = scanner.nextInt();
+                    Integer numUnitsType1;
+                    Integer priceType1;
+                    do {
+                        System.out.println("Project Number of Units for Type 1:");
+                        numUnitsType1 = scanner.nextInt();
+                        System.out.println("Project Unit Price for Type 1:");
+                        priceType1 = scanner.nextInt();
+                    } while (numUnitsType1 < 0 || priceType1 < 0);
+
                     System.out.println("Project Unit Type 2: (3-Room)");
                     String unitType2 = scanner.next().toUpperCase();
-                    System.out.println("Project Number of Units for Type 2:");
-                    Integer numUnitsType2 = scanner.nextInt();
-                    System.out.println("Project Unit Price for Type 2:");
-                    Integer priceType2 = scanner.nextInt();
+                    Integer numUnitsType2;
+                    Integer priceType2;
+                    do {
+                        System.out.println("Project Number of Units for Type 2:");
+                        numUnitsType2 = scanner.nextInt();
+                        System.out.println("Project Unit Price for Type 2:");
+                        priceType2 = scanner.nextInt();
+                    } while (numUnitsType2 < 0 || priceType2 < 0);
+
                     System.out.println("Project Opening Date:");
                     LocalDate appOpenDate = LocalDate.parse(scanner.next());
                     System.out.println("Project Closing Date:");
                     LocalDate appCloseDate = LocalDate.parse(scanner.next());
-                    System.out.println("Project Officer Slots: (Max 10)");
-                    Integer officerSlots = scanner.nextInt();
+                    Integer officerSlots;
+
+                    do {
+                        System.out.println("Project Officer Slots: (Max 10)");
+                        officerSlots = scanner.nextInt();
+                    } while (officerSlots < 0 || officerSlots > 10);
                     
                     ((Manager) current_user).createProject(all_projects, proj_name, neighbourhood, unitType1, numUnitsType1, priceType1, unitType2, 
                     numUnitsType2, priceType2, appOpenDate, appCloseDate, true, officerSlots, new ArrayList<Officer>());
@@ -245,7 +259,7 @@ public class ManagerApp extends MainApp {
                                     default:
                                         break;
                                 }
-                            } while ( !toggle.equals("Y") && !toggle.equals("N"));
+                            } while (!toggle.equals("Y") && !toggle.equals("N"));
                             
                             break;
                             
@@ -254,11 +268,14 @@ public class ManagerApp extends MainApp {
                             System.out.println("Number of Flats: " + roomType1Num);
                             System.out.println("Price of Flats: "+ roomType1price);
 
-                            System.out.print("New Number of Flats: ");
-                            roomType1Num = scanner.nextInt();
-                            System.out.print("New Price of Flats: ");
-                            roomType1price = scanner.nextInt();
+                            do {
+                                System.out.print("New Number of Flats: ");
+                                roomType1Num = scanner.nextInt();
 
+                                System.out.print("New Price of Flats: ");
+                                roomType1price = scanner.nextInt();
+
+                            } while (roomType1Num < 0 || roomType1price < 0);
                             break;
 
                         case 3:
@@ -266,19 +283,21 @@ public class ManagerApp extends MainApp {
                             System.out.println("Number of Flats: " + roomType2Num);
                             System.out.println("Price of Flats: "+ roomType2price);
 
-                            System.out.print("New Number of Flats: ");
-                            roomType2Num = scanner.nextInt();
-                            System.out.print("New Price of Flats: ");
-                            roomType2price = scanner.nextInt();
+                            do {
+                                System.out.print("New Number of Flats: ");
+                                roomType2Num = scanner.nextInt();
+                                System.out.print("New Price of Flats: ");
+                                roomType2price = scanner.nextInt();
+                            } while (roomType2Num < 0 || roomType2price < 0);
 
                             break;
 
                         case 4:
                             System.out.println("Project's Current number of Officer Slots: " + proj_officerSlots);
-
-                            System.out.print("New number of Officer Slots: ");
-                            proj_officerSlots = scanner.nextInt();
-
+                            do {
+                                System.out.print("New number of Officer Slots: ");
+                                proj_officerSlots = scanner.nextInt();
+                            } while (proj_officerSlots < 0 || proj_officerSlots > 10);
                             break;
                         
                         case 5:
