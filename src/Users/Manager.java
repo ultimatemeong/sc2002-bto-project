@@ -228,6 +228,7 @@ public class Manager extends User{
             application.setWithdrawalStatus("Approved");
         } else {
             application.setWithdrawalStatus("Rejected");
+            application.setFormStatus("Rejected");
         }
     }
 
