@@ -236,6 +236,14 @@ public class Project {
     }
 
     /**
+     * Removes an application from the application list of the project.
+     * @param application The application to be removed.
+     */
+    public void removeFromApplicationList(Application application) {
+        this.applicationList.remove(application);
+    }
+    
+    /**
      * Add a registration to the registration list of the project.
      * @param registration
      */
@@ -249,6 +257,14 @@ public class Project {
      */
     public void addToEnquiryList(Enquiry enquiry) {
         this.enquiryList.add(enquiry);
+    }
+
+    /**
+     * Removes an enquiry from the enquiry list of the project.
+     * @param enquiry The enquiry to be removed.
+     */
+    public void removeFromEnquiryList(Enquiry enquiry) {
+        this.enquiryList.remove(enquiry);
     }
 
     /**
