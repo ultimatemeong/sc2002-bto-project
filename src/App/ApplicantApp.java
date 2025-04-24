@@ -195,9 +195,11 @@ public class ApplicantApp extends MainApp {
                     
                 } while (selectedProject == null);
 
-
-                System.out.println("Enter Flat Type to Apply");
-                String flatType = scanner.next();
+                String flatType;
+                do {
+                    System.out.println("Enter Flat Type to Apply");
+                    flatType = scanner.next().toUpperCase();
+                } while (flatType != "2-ROOM" && flatType != "3-ROOM");
 
                 ((Applicant) current_user).applyForProject(selectedProject, flatType);
                 break;
