@@ -40,13 +40,12 @@ public class ManagerApp extends MainApp {
                     System.out.println("Logging out...");
                     System.out.println("Goodbye, " + current_user.getName() + "!");
                     logout();
-                    choice = 3;
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
                     break;
             }
-        } while (choice != 3);
+        } while (choice != 4);
     }
 
     private static void projectInterface() {
@@ -93,13 +92,13 @@ public class ManagerApp extends MainApp {
                     System.out.println("Project Neighbourhood:");
                     String neighbourhood = scanner.nextLine();
                     System.out.println("Project Unit Type 1: (2-Room)");
-                    String unitType1 = scanner.next();
+                    String unitType1 = scanner.next().toUpperCase();
                     System.out.println("Project Number of Units for Type 1:");
                     Integer numUnitsType1 = scanner.nextInt();
                     System.out.println("Project Unit Price for Type 1:");
                     Integer priceType1 = scanner.nextInt();
                     System.out.println("Project Unit Type 2: (3-Room)");
-                    String unitType2 = scanner.next();
+                    String unitType2 = scanner.next().toUpperCase();
                     System.out.println("Project Number of Units for Type 2:");
                     Integer numUnitsType2 = scanner.nextInt();
                     System.out.println("Project Unit Price for Type 2:");
@@ -208,10 +207,10 @@ public class ManagerApp extends MainApp {
                 Project proj = editableProjects.get(proj_choice-1);
 
                 boolean proj_visibility = proj.isVisible();
-                Integer roomType1Num = proj.getFlatsInfo().get("2-Room").get(0);
-                Integer roomType1price = proj.getFlatsInfo().get("2-Room").get(1);
-                Integer roomType2Num = proj.getFlatsInfo().get("3-Room").get(0);
-                Integer roomType2price = proj.getFlatsInfo().get("3-Room").get(1);
+                Integer roomType1Num = proj.getFlatsInfo().get("2-ROOM").get(0);
+                Integer roomType1price = proj.getFlatsInfo().get("2-ROOM").get(1);
+                Integer roomType2Num = proj.getFlatsInfo().get("3-ROOM").get(0);
+                Integer roomType2price = proj.getFlatsInfo().get("3-ROOM").get(1);
                 Integer proj_officerSlots = proj.getOfficerSlots();
                 int edit_choice;
                 do {
@@ -290,8 +289,8 @@ public class ManagerApp extends MainApp {
                     }
                 } while (edit_choice != 5);
 
-                Project tempProject = new Project(proj.getName(), proj.getNeighbourhood(), "2-Room", 
-                roomType1Num, roomType1price, "3-Room", roomType2Num, roomType2price, 
+                Project tempProject = new Project(proj.getName(), proj.getNeighbourhood(), "2-ROOM", 
+                roomType1Num, roomType1price, "3-ROOM", roomType2Num, roomType2price, 
                 proj.getApplicationOpenDate(), proj.getApplicationCloseDate(), proj_visibility, proj.getManager(), 
                 proj_officerSlots, proj.getOfficerList(), proj.getApplicationList(), 
                 proj.getRegistrationList(), proj.getEnquiryList());

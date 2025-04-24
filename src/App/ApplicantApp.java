@@ -22,8 +22,8 @@ public class ApplicantApp extends MainApp {
             System.out.println("1. Project Management");
             System.out.println("2. Application Management");
             System.out.println("3. Enquiry Management");
-            System.out.println("3. Account Management");
-            System.out.println("4. Logout");
+            System.out.println("4. Account Management");
+            System.out.println("5. Logout");
             System.out.print("Please select an option: ");
 
             choice = scanner.nextInt();
@@ -49,7 +49,6 @@ public class ApplicantApp extends MainApp {
                 case 5:
                     System.out.println("Goodbye, " + current_user.getName() + "!");
                     MainApp.logout();
-                    choice = 4; // Exit the loop
                     break;
                 
                 default:

@@ -118,7 +118,7 @@ public class MainApp {
         } while (role == "");
     }
 
-    public static void accountInterface() {
+    public static void accountInterface() throws Exception {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Account Management Interface");
         System.out.println("1. Change Password");
@@ -135,6 +135,7 @@ public class MainApp {
                     String newpw = scanner.next();
                     current_user.setPassword(newpw);
                     System.out.println("Password has been changed.\n");
+                    logout();
                     break;
 
                 case 2:
@@ -163,7 +164,7 @@ public class MainApp {
             switch (filter_choice) {
                 case 1:
                     System.out.print("Enter Flat Type: (2-Room or 3-Room) ");
-                    String flatType = scanner.next();
+                    String flatType = scanner.next().toUpperCase();
                     current_filter = ProjectFilter.FLAT_TYPE;
                     filteredProjects = Project.filterProjectsByFlatType(readableProjects, flatType);
                     if (filteredProjects.isEmpty()) {
@@ -389,10 +390,10 @@ public class MainApp {
         for (List<String> record : projectRecords) {
             String name = record.get(0);
             String neighbourhood = record.get(1);
-            String unitType1 = record.get(2);
+            String unitType1 = record.get(2).toUpperCase();
             Integer numUnitsType1 = Integer.parseInt(record.get(3));
             Integer priceType1 = Integer.parseInt(record.get(4));
-            String unitType2 = record.get(5);
+            String unitType2 = record.get(5).toUpperCase();
             Integer numUnitsType2 = Integer.parseInt(record.get(6));
             Integer priceType2 = Integer.parseInt(record.get(7));
             LocalDate appOpenDate = LocalDate.parse(record.get(8));
@@ -478,6 +479,7 @@ public class MainApp {
 
             Enquiry enquiry = new Enquiry(enquiryId, applicant, enquiryString, enquiryDate, project);
             project.addToEnquiryList(enquiry);
+            applicant.addToEnquiryList(enquiry);
             all_enquiries.add(enquiry);
             enquiryAccessControl.add(enquiry, applicant, "RW");
         }
