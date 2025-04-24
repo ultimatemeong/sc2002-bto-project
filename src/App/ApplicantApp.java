@@ -199,7 +199,8 @@ public class ApplicantApp extends MainApp {
                 do {
                     System.out.println("Enter Flat Type to Apply");
                     flatType = scanner.next().toUpperCase();
-                } while (flatType != "2-ROOM" && flatType != "3-ROOM");
+
+                } while (!flatType.equals("2-ROOM") && !flatType.equals("3-ROOM"));
 
                 ((Applicant) current_user).applyForProject(selectedProject, flatType);
                 break;
@@ -241,7 +242,7 @@ public class ApplicantApp extends MainApp {
                                     System.out.println("Invalid choice. Please try again.");
                                     break;
                             }
-                        } while (withdraw != "Y" && withdraw != "N");
+                        } while (!withdraw.equals("Y") && !withdraw.equals("N"));
                     }
                 }
 
@@ -336,7 +337,7 @@ public class ApplicantApp extends MainApp {
                                 // edit
                                 case 1:
                                     System.out.println("Selected Enquiry: " + Enquiry.getEnquiryById(enqList, selectedEnquiryID).getEnquiryString());
-                                    System.out.println("Enter updated enquiry string:");
+                                    System.out.println("Enter updated enquiry string:") ;
                                     scanner.nextLine();
                                     String newEnquiryString = scanner.nextLine();
                                     String confirmEdit;

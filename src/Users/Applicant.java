@@ -225,7 +225,9 @@ public class Applicant extends User{
     public boolean deleteEnquiry(Integer id) {
         for (Enquiry enquiry : enquiryList) {
             if (enquiry.getId().equals(id)) {
+                Project project = enquiry.getProject();
                 this.removeFromEnquiryList(enquiry);
+                project.removeFromEnquiryList(enquiry);
                 System.out.println("Enquiry successfully deleted!\n");
                 return true;
             }
