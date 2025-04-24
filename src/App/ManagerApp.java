@@ -39,7 +39,6 @@ public class ManagerApp extends MainApp {
                     MainApp.accountInterface();
                     break;
                 case 4:
-                    System.out.println("Logging out...");
                     System.out.println("Goodbye, " + current_user.getName() + "!");
                     logout();
                     break;
