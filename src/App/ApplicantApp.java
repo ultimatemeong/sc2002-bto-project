@@ -10,7 +10,7 @@ public class ApplicantApp extends MainApp {
 
     public static void applicantInterface() throws Exception {
         List<Project> readableProjects = Project.viewProjects(all_projects, current_user).stream()
-            .filter(project -> !project.getOfficerList().contains(current_user) && !project.getRegistrationList().contains(((Officer)current_user).getRegistration()))
+            .filter(project -> !project.getOfficerList().contains(current_user) && !project.getRegistrationList().stream().anyMatch(reg -> reg.getUser().equals(current_user)))
             .sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
             .toList();
 
