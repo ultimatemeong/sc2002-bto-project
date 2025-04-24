@@ -206,6 +206,7 @@ public class ManagerApp extends MainApp {
                     System.out.println("Delete Project:");
                     for (Project project : deletableProjects) {
                         System.out.println(projCount + ": " + project.getName()+ ", " + project.getNeighbourhood());
+                        projCount++;
                     }
                     System.out.println("Choose a project to delete:");
                     int proj_choice = scanner.nextInt();
@@ -379,7 +380,7 @@ public class ManagerApp extends MainApp {
                             for (Project project : editableProjects) {
                                 System.out.println(project.getName()+ ", " + project.getNeighbourhood() + ": ");
                                 for (Application app : project.getApplicationList()) {
-                                    System.out.println(String.valueOf(appCount) + ". Name: " + app.getUser().getName() + ", Room Type: " + app.getFlatType());
+                                    System.out.println(String.valueOf(appCount) + ". Name: " + app.getUser().getName() + ", Room Type: " + app.getFlatType() + ", Application Status: " + app.getFormStatus());
                                     appCount++;
                                 }
                             }
@@ -437,7 +438,7 @@ public class ManagerApp extends MainApp {
                                     Project proj = editableProjects.get(proj_choice-1);
                                     appCount = 1;
                                     for (Application app : proj.getApplicationList()) {
-                                        System.out.println(String.valueOf(appCount) + ". Name: " + app.getUser().getName() + ", Room Type: " + app.getFlatType());
+                                        System.out.println(String.valueOf(appCount) + ". Name: " + app.getUser().getName() + ", Room Type: " + app.getFlatType() + ", Application Status: " + app.getFormStatus());
                                         appCount++;
                                     }
                                     System.out.println("Would you like to work on an application? (Y/N): ");
@@ -1010,11 +1011,13 @@ public class ManagerApp extends MainApp {
             switch (choice) {
                 case 1:
                     System.out.println("Reply to Enquiry: ");
+                    scanner.nextLine();
                     String replyString = scanner.nextLine();
                     Reply reply = new Reply(enq, current_user, LocalDateTime.now(), null);
                     reply.writeReply(replyString);
                     enq.setReply(reply);
                     choice = 2;
+                    System.out.println("Reply sent successfully.");
                     break;
                 case 2:
                     System.out.println("Back to Project Work Interface...\n");
@@ -1070,10 +1073,10 @@ public class ManagerApp extends MainApp {
                             case 3:
                                 System.out.println("Filter by Flat Type");
                                 System.out.println("Please select a flat type (2-Room/3-Room): ");
-                                String flatType = scanner.next();
+                                String flatType = scanner.next().toUpperCase();
                                 System.out.println();
                                 List<Application> allApplications2 = ((Manager) current_user).viewAllApplications(all_projects);
-                                if (!flatType.equals("2-Room") && !flatType.equals("3-Room")) {
+                                if (!flatType.equals("2-ROOM") && !flatType.equals("3-ROOM")) {
                                     System.out.println("Invalid flat type. Please try again.");
                                     break;
                                 }

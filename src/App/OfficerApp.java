@@ -336,8 +336,7 @@ public class OfficerApp extends ApplicantApp {
                                 break;
                             }
                         } while (enqChoice != i);
-                        break;
-        
+                        
                     // back to main menu
                     case 2:
                         System.out.println("Back to Main Menu...\n");
