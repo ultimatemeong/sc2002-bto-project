@@ -402,6 +402,7 @@ public class OfficerApp extends ApplicantApp {
                             case "Y":
                                 ((Officer) current_user).chooseFlat(projectInCharge, application.getUser().getNric());
                                 approvedAppList.remove(application);
+                                System.out.println("\nViewing Remaining Applications...\n");
                                 break;
                             case "N":
                                 System.out.println("Booking cancelled.\n");

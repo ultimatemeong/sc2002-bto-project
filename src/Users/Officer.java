@@ -115,10 +115,15 @@ public class Officer extends Applicant{
         Project project = application.getProject();
 
         System.out.println("Applicant Details:");
-        applicant.toString();
+        System.out.println("\tName: " + applicant.getName());
+        System.out.println("\tNRIC: " + applicant.getNric());
+        System.out.println("\tAge: " + applicant.getAge());
+        System.out.println("\tMarital Status: " + applicant.getMaritalStatus());
+        System.out.println("\tFlat Type Applied: " + application.getFlatType());
 
         System.out.println("\nProject Details:");
-        project.toString();
+        System.out.println("\tName: " + project.getName());
+        System.out.println("\tNeighbourhood: " + project.getNeighbourhood());
     }
 
     /**
